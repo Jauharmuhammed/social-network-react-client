@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
+import {PropTypes} from 'prop-types'
 
 export const Layout = ({children, setLoginOverlay, setSignupOverlay, feed}) => {
   return (
@@ -9,3 +10,4 @@ export const Layout = ({children, setLoginOverlay, setSignupOverlay, feed}) => {
     </main>
   )
 }
+

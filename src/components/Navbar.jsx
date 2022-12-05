@@ -1,21 +1,12 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeUser, updateUser } from "redux/userSlice";
+import { useDispatch} from "react-redux";
+import { openLogin, openSignup } from "redux/authModalSlice";
+import { logoutUser } from "redux/userSlice";
 import Button from "./Button";
 
-const Navbar = ({ setLoginOverlay, setSignupOverlay, feed }) => {
-  const user = useSelector((state) => state.user);
+const Navbar = ({feed }) => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(updateUser())
-  }, [user])
-  
-  const handleLogout = () => {
-    localStorage.removeItem("token")
-    dispatch(removeUser())
-    window.location.reload(false)
-  }
+
   return (
     <nav className="flex justify-between items-center w-full rounded-3xl h-20 bg-black bg-opacity-90 px-7 ">
       <div className="font-boogaloo text-yellow text-4xl pb-2">
@@ -24,18 +15,16 @@ const Navbar = ({ setLoginOverlay, setSignupOverlay, feed }) => {
       <div className="flex gap-5">
         {!feed && (
           <>
-            <Button text="Login"  primary onClick={() => setLoginOverlay(true)}/>
-            <Button text="Signup" onClick={() => setSignupOverlay(true)} />
+            <Button text="Login"  primary onClick={() => dispatch(openLogin())}/>
+            <Button text="Signup" onClick={() => dispatch(openSignup())} />
           </>
         )}
         {feed && (
           <Button
             text="Log Out"
-            onClick={handleLogout}
+            onClick={() => dispatch(logoutUser())}
           />
         )}
-        {/* <button className="bg-yellow px-5 py-2 rounded-2xl font-inter font-medium" onClick={()=> setLoginOverlay(true)} >Login</button>
-        <button className="bg-white px-5 py-2 rounded-2xl font-inter font-medium">SignUp</button> */}
       </div>
     </nav>
   );

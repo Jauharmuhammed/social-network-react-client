@@ -2,19 +2,19 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSignup, openLogin } from "redux/authModalSlice";
 
 
-const SignupModal = ({ signupOverlay, setSignupOverlay, setLoginOverlay }) => {
+const SignupModal = () => {
+  const signupOverlay = useSelector((state) => state.authModal.signupModal);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const dispatch = useDispatch()
 
   const handlClose = (e) => {
-    if (e.target.id === "signupModalContainer") setSignupOverlay(false);
+    if (e.target.id === "signupModalContainer") dispatch(closeSignup());
   };
 
-  const handleModalChange = () => {
-    setSignupOverlay(false)
-    setLoginOverlay(true)
-  }
 
   const Eye = ({ handleVisibility }) => {
     const style = "absolute right-5 top-1/2 translate-y-[10%] cursor-pointer";
@@ -63,12 +63,12 @@ const SignupModal = ({ signupOverlay, setSignupOverlay, setLoginOverlay }) => {
                 read our <strong>Privacy Policy</strong>
               </p>
               <p className="text-sm text-center ">
-               Already a member? <strong onClick={handleModalChange} className='cursor-pointer'>Login</strong>
+               Already a member? <strong onClick={()=> dispatch(openLogin())} className='cursor-pointer'>Login</strong>
               </p>
             </div>
             <IoCloseSharp
               className="absolute top-4 right-4 text-white text-3xl cursor-pointer"
-              onClick={() => setSignupOverlay(false)}
+              onClick={() => dispatch(closeSignup())}
             />
           </div>
         </div>

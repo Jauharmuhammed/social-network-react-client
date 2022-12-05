@@ -5,10 +5,11 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../utils/axios";
 import { updateUser } from "redux/userSlice";
-import jwtDecode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { closeLogin, openSignup } from "redux/authModalSlice";
+import PropTypes from 'prop-types'
 
-const LoginModal = ({ loginOverlay, setLoginOverlay, setSignupOverlay }) => {
+const LoginModal = () => {
+  const loginOverlay = useSelector((state) => state.authModal.loginModal);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const dispatch = useDispatch();
 
@@ -17,30 +18,20 @@ const LoginModal = ({ loginOverlay, setLoginOverlay, setSignupOverlay }) => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const data = {
-      email,
-      password,
-    };
+    const data = { email, password };
 
     axios.post("/token/", data).then((response) => {
-      localStorage.setItem("token", JSON.stringify(response.data));
-      console.log(response);
-      const userData = jwtDecode(response.data.access);
-      dispatch(updateUser(userData));
-      window.location.reload(false)
+      dispatch(updateUser(response.data));
+      dispatch(closeLogin())
+      // window.location.reload(false);
     });
   };
-  const handlClose = (e) => {
-    if (e.target.id === "loginModalContainer") {
-      setLoginOverlay(false);
-    }
-  };
 
-  const handleModalChange = () => {
-    if (loginOverlay) {
-      setLoginOverlay(false);
-      setSignupOverlay(true);
-    }
+
+
+
+  const handlClose = (e) => {
+    if (e.target.id === "loginModalContainer") dispatch(closeLogin());
   };
 
   const Eye = ({ handleVisibility }) => {
@@ -50,6 +41,10 @@ const LoginModal = ({ loginOverlay, setLoginOverlay, setSignupOverlay }) => {
     }
     return <BsEye className={style} onClick={handleVisibility} />;
   };
+
+  Eye.propTypes = {
+    handleVisibility: PropTypes.func
+  }
 
   return (
     <>
@@ -98,20 +93,23 @@ const LoginModal = ({ loginOverlay, setLoginOverlay, setSignupOverlay }) => {
                 google
               </button>
               <p className="text-xs text-center mx-6 my-4">
-                By continuing, you agree to Showyourworks' <br />
-                <strong>Terms of Service</strong> and acknowledge that you've
+                By continuing, you agree to Showyourworks&apos; <br />
+                <strong>Terms of Service</strong> and acknowledge that you&apos;ve
                 read our <strong>Privacy Policy</strong>
               </p>
               <p className="text-sm text-center ">
                 Not on Showyourwork yet?
-                <strong onClick={handleModalChange} className="cursor-pointer">
+                <strong
+                  onClick={() => dispatch(openSignup())}
+                  className="cursor-pointer"
+                >
                   Sign up
                 </strong>
               </p>
             </div>
             <IoCloseSharp
               className="absolute top-4 right-4 text-white text-3xl cursor-pointer"
-              onClick={() => setLoginOverlay(false)}
+              onClick={() => dispatch(closeLogin())}
             />
           </div>
         </div>
