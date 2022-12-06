@@ -13,9 +13,8 @@ const PrivateRoute = ({children}) => {
   const updateToken = () => {
     console.log('update token triggered');
     console.log(token);
-    console.log(JSON.parse( token));
     axios
-      .post("/token/refresh/", { refresh: JSON.parse(token)?.refresh })
+      .post("/token/refresh/", { refresh: token?.refresh })
       .then((response) => {
         console.log(response.data);
         dispatch(updateUser(response.data));
