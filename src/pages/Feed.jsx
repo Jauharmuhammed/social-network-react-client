@@ -1,3 +1,4 @@
+import React from 'react'
 import Post from "components/Post";
 import { useSelector } from "react-redux";
 import { Layout } from "../components/Layout";
@@ -5,7 +6,6 @@ import { Layout } from "../components/Layout";
 const Feed = () => {
 
   const user = useSelector((state) => state.user.user);
-  console.log(user);
 
   return (
     <>

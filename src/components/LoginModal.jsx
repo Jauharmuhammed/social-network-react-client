@@ -10,20 +10,17 @@ import PropTypes from 'prop-types'
 
 const LoginModal = () => {
   const loginOverlay = useSelector((state) => state.authModal.loginModal);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const dispatch = useDispatch();
 
   const loginUser = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
 
-    const data = { email, password };
-
-    axios.post("/token/", data).then((response) => {
+    axios.post("/token/", { email, password }).then((response) => {
       dispatch(updateUser(response.data));
       dispatch(closeLogin())
-      // window.location.reload(false);
     });
   };
 
@@ -66,6 +63,8 @@ const LoginModal = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoFocus
                   className="w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300 mt-5"
                 />
@@ -75,6 +74,8 @@ const LoginModal = () => {
                     type={passwordVisibility ? "text" : "password"}
                     placeholder="Password"
                     name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <Eye
                     handleVisibility={() =>
