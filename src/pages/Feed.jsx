@@ -5,7 +5,7 @@ import { Layout } from "../components/Layout";
 
 const Feed = () => {
 
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <>

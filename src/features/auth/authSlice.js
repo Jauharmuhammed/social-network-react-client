@@ -1,17 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
+import jwtDecode from "jwt-decode";
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState: {user: null, token: null},
+    initialState: {
+        user: localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token')) : null,
+        token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null,
+    },
     reducers: {
         setCredentials: (state, action) => {
-            const {user, accessToken} = action.payload
-            state.user = user
-            state.token = accessToken
+            console.log(action.payload);
+            localStorage.setItem("token", JSON.stringify(action.payload));
+            state.user = jwtDecode(action.payload.access)
+            console.log(action.payload);
+            state.token = action.payload
+            console.log('userUpdated');
         },
         logOut: (state) => {
+            localStorage.removeItem("token")
             state.user = null
-            state.accessToken = null
+            state.token = null
         }
     }
 })

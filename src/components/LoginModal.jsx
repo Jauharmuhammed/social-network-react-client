@@ -3,16 +3,19 @@ import { IoCloseSharp } from "react-icons/io5";
 import { BiErrorCircle } from "react-icons/bi";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "../utils/axios";
-import { updateUser } from "redux/userSlice";
-import { closeLogin, openSignup } from "redux/authModalSlice";
+import { closeLogin, openSignup } from "features/auth/authModalSlice";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import GoogleAuth from "./GoogleAuth";
+import { useLoginMutation } from "app/api/authApiSlice";
+import { setCredentials } from "features/auth/authSlice";
+import ButtonSpinner from "./ButtonSpinner";
 
 const LoginModal = () => {
   const loginOverlay = useSelector((state) => state.authModal.loginModal);
   const signupOverlay = useSelector((state) => state.authModal.signupModal);
+
+  const [login, { isLoading }] = useLoginMutation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,8 +40,11 @@ const LoginModal = () => {
     setErrMsg("");
   }, [email, password]);
 
-  const loginUser = (e) => {
+  const loginUser = async (e) => {
     e.preventDefault();
+    
+    if(isLoading) return
+    
     const validation = EMAIL_REGEX.test(email);
     if (!validation) {
       setErrMsg("Invalid Entry");
@@ -46,28 +52,29 @@ const LoginModal = () => {
       return;
     }
 
-    axios
-      .post("/token/", { email, password })
-      .then((response) => {
-        dispatch(updateUser(response.data));
-        dispatch(closeLogin());
-        toast.success("Logged in successfully.", {
-          style: {
-            borderRadius: "100px",
-          },
-        });
-        setEmail('')
-        setPassword('')
-
-      })
-      .catch((err) => {
-        console.log(err);
-        if (!err?.response) {
-          setErrMsg("No Server Response");
-        } else {
-          setErrMsg("Email or password is incorrect.");
-        }
+    try {
+      const response = await login({ email, password }).unwrap();
+      console.log(response);
+      dispatch(setCredentials(response));
+      dispatch(closeLogin());
+      toast.success("Logged in successfully.", {
+        style: {
+          borderRadius: "100px",
+        },
       });
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.log(err);
+      if (!err?.data) {
+        setErrMsg("No Server Response");
+      } else if (err.status === 401) {
+        setErrMsg('No active account found with the given credentials')
+      }else {
+        setErrMsg("Email or password is incorrect.");
+      }
+    }
+
   };
 
   const handlClose = (e) => {
@@ -112,7 +119,7 @@ const LoginModal = () => {
             <h3 className="font-semibold text-xl mt-3">Login</h3>
             <form onSubmit={loginUser} className="w-full text-center">
               <input
-                type="email"
+                type="text"
                 placeholder="Email"
                 name="email"
                 value={email}
@@ -135,14 +142,10 @@ const LoginModal = () => {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className='w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300'
-
+                  className="w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300"
                 />
                 {errMsg && (
-                  <p className="text-red-700 my-1 flex items-start ml-2 text-sm">
-                    <span className="text-base mt-0.5 mr-1">
-                      <BiErrorCircle />
-                    </span>
+                  <p className="text-red-700 my-1 flex justify-center items-start text-sm">
                     <span>{errMsg}</span>
                   </p>
                 )}
@@ -153,8 +156,10 @@ const LoginModal = () => {
                 />
               </div>
               <p className="font-medium text-sm mt-3">Forgot Password?</p>
-              <button className="w-full rounded-3xl mt-5 py-3 px-4 bg-yellow text-black font-semibold outline-none">
-                Login
+              <button
+               disabled={isLoading}
+               className="w-full rounded-3xl mt-5 py-3 px-4 bg-yellow text-black font-semibold outline-none">
+                { isLoading ? <ButtonSpinner/> : 'Login' }
               </button>
             </form>
             <p className="py-3 font-semibold">OR</p>

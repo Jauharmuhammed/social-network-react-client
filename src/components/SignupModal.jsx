@@ -3,25 +3,28 @@ import { IoCloseSharp } from "react-icons/io5";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLogin, closeSignup, openLogin } from "redux/authModalSlice";
-import axios from "../utils/axios";
+import { closeLogin, closeSignup, openLogin } from "features/auth/authModalSlice";
 import { BiErrorCircle } from "react-icons/bi";
-import { updateUser } from "redux/userSlice";
 import { toast } from "react-hot-toast";
 import GoogleAuth from "./GoogleAuth";
+import { useLoginMutation, useRegisterMutation } from "app/api/authApiSlice";
+import { setCredentials } from "features/auth/authSlice";
+import ButtonSpinner from "./ButtonSpinner";
 
 const SignupModal = () => {
   const signupOverlay = useSelector((state) => state.authModal.signupModal);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const dispatch = useDispatch();
 
+  const [register, {isLoading}] = useRegisterMutation()
+  const [login, { isLoginLoading }] = useLoginMutation();
+
+
   const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const MOBILE_REGEX = /^[0-9]{10}$/;
   const PWD_REGEX =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,24}$/;
 
-  const REGISTER_URL = "/register/";
-  const TOKEN_URL = "/token/";
 
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState("");
@@ -73,6 +76,8 @@ const SignupModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isLoginLoading || isLoading) return
+
     // if button enabled with JS hack
     const v1 = EMAIL_REGEX.test(email);
     const v2 = MOBILE_REGEX.test(mobile);
@@ -83,20 +88,19 @@ const SignupModal = () => {
       return;
     }
     try {
-      const response = await axios.post(REGISTER_URL, {
+      const userData = await register({
         email,
         mobile_number: mobile,
         password,
-      });
-      console.log(response?.data);
-      console.log(response);
+      }).unwrap()
+      console.log(userData);
       setSuccessMsg(true);
 
       //authenicate the newly created user
       try {
-        const res = await axios.post(TOKEN_URL, { email, password });
+        const res = await login({ email, password }).unwrap()
         console.log(res);
-        dispatch(updateUser(res.data));
+        dispatch(setCredentials(res));
         dispatch(closeLogin());
         dispatch(closeSignup());
 
@@ -117,11 +121,11 @@ const SignupModal = () => {
       setPassword("");
     } catch (err) {
       console.log(err);
-      if (!err?.response) {
+      if (!err?.data) {
         setErrMsg("No Server Response");
-      } else if (err.response?.data?.email) {
+      } else if (err.data?.email) {
         setEmailErr("An account already exists with this email");
-      } else if (err.response?.data?.mobile_number) {
+      } else if (err.data?.mobile_number) {
         setMobileErr("This mobile number is already registered.");
       } else {
         setErrMsg("Registration failed, Please try again.");
@@ -206,12 +210,12 @@ const SignupModal = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300  ${
-                  passwordErr ? "border-red-700" : "mb-5"
+                className={`w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300 mb-5 ${
+                  passwordErr ? "border-red-700" : ""
                 }`}
               />
               {passwordErr && (
-                <p className="text-red-700 my-1 flex items-start ml-2 text-sm">
+                <p className="text-red-700 my-1 flex items-start ml-2 text-sm -mt-4">
                   <span className="text-base mt-0.5 mr-1">
                     <BiErrorCircle />
                   </span>
@@ -224,7 +228,7 @@ const SignupModal = () => {
                 </p>
               )}
               {errMsg && (
-                <p className="text-red-700 my-1 flex items-start ml-2 text-sm">
+                <p className="text-red-700 my-1 flex justify-center items-start ml-2 text-sm -mt-4">
                   <span className="text-base mt-0.5 mr-1">
                     <BiErrorCircle />
                   </span>
@@ -238,10 +242,11 @@ const SignupModal = () => {
               />
             </div>
             <button
+              disabled={isLoading || isLoginLoading}
               type="submit"
               className="w-full rounded-3xl  py-3 px-4 bg-yellow text-black font-semibold outline-none"
             >
-              Signup
+              { (isLoading || isLoginLoading) ? <ButtonSpinner/> : 'Signup'}
             </button>
           </form>
           <p className="py-3 font-semibold">OR</p>

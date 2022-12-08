@@ -2,21 +2,20 @@ import Post from "components/Post";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/Layout";
-import { openSignup } from "redux/authModalSlice";
+import { openSignup } from "features/auth/authModalSlice";
 import LoginModal from "components/LoginModal";
 import SignupModal from "components/SignupModal";
 
 const LandingPage = () => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  // const [loginOverlay, setLoginOverlay] = useState(false)
-  // const [signupOverlay, setSignupOverlay] = useState(false)
 
 
   return (
     <>
       {!user && (
         <Layout>
+
           <div className="flex justify-center text-white ">
             <div className="flex flex-col items-start">
               <h1 className="block text-7xl font-semibold mt-20">

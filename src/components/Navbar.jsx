@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch} from "react-redux";
-import { openLogin, openSignup } from "redux/authModalSlice";
-import { logoutUser } from "redux/userSlice";
+import { openLogin, openSignup } from "features/auth/authModalSlice";
 import Button from "./Button";
+import { logOut } from 'features/auth/authSlice';
 
 const Navbar = ({ feed }) => {
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Navbar = ({ feed }) => {
         {feed && (
           <Button
             text="Log Out"
-            onClick={() => dispatch(logoutUser())}
+            onClick={() => dispatch(logOut())}
           />
         )}
       </div>

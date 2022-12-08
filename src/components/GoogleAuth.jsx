@@ -1,30 +1,33 @@
-import axios from "../utils/axios";
-import jwtDecode from "jwt-decode";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateUser } from "redux/userSlice";
-import { closeLogin, closeSignup } from "redux/authModalSlice";
+import { closeLogin, closeSignup } from "features/auth/authModalSlice";
 import toast from "react-hot-toast";
+import { useGoogleAuthMutation } from "app/api/authApiSlice";
+import { setCredentials } from "features/auth/authSlice";
 
 const GoogleAuth = () => {
   const dispatch = useDispatch();
+  const [googleAuth, {isLoading}] = useGoogleAuthMutation()
+
   const handleGoogleAuth = async (response) => {
-    console.log(response.credential);
-    console.log(jwtDecode(response.credential));
-    await axios
-      .post("/auth/google/", { token: response.credential })
-      .then((response) => {
-        console.log(response);
-        dispatch(updateUser(response.data));
-        dispatch(closeLogin());
-        dispatch(closeSignup());
-        toast.success("Logged in successfully.", {
-          style: {
-            borderRadius: "100px",
-          },
-        });
+    // console.log(response.credential);
+    // console.log(jwtDecode(response.credential));
+    try{
+      const userCredentials = await googleAuth({token: response.credential}).unwrap()
+      console.log(userCredentials);
+      dispatch(setCredentials(userCredentials));
+      dispatch(closeLogin());
+      dispatch(closeSignup());
+      toast.success("Logged in successfully.", {
+        style: {
+          borderRadius: "100px",
+        },
       });
+    }
+    catch (err){
+      console.log(err);
+    }
   };
   useEffect(() => {
     //   global google

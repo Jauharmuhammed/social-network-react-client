@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage";
 
 const Home = () => {
   useEffect(() => {
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user.user);
   }, [user]);
 
   return user ? <Feed /> : <LandingPage />;
