@@ -12,11 +12,11 @@ const LandingPage = () => {
   // const [loginOverlay, setLoginOverlay] = useState(false)
   // const [signupOverlay, setSignupOverlay] = useState(false)
 
+
   return (
     <>
       {!user && (
         <Layout>
-           
           <div className="flex justify-center text-white ">
             <div className="flex flex-col items-start">
               <h1 className="block text-7xl font-semibold mt-20">

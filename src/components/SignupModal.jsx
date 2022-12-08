@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { AiOutlineGoogle } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
@@ -8,6 +7,8 @@ import { closeLogin, closeSignup, openLogin } from "redux/authModalSlice";
 import axios from "../utils/axios";
 import { BiErrorCircle } from "react-icons/bi";
 import { updateUser } from "redux/userSlice";
+import { toast } from "react-hot-toast";
+import GoogleAuth from "./GoogleAuth";
 
 const SignupModal = () => {
   const signupOverlay = useSelector((state) => state.authModal.signupModal);
@@ -32,7 +33,7 @@ const SignupModal = () => {
   const [passwordErr, setPasswordErr] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState('')
+  const [successMsg, setSuccessMsg] = useState("");
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
@@ -96,13 +97,18 @@ const SignupModal = () => {
         const res = await axios.post(TOKEN_URL, { email, password });
         console.log(res);
         dispatch(updateUser(res.data));
-        dispatch(closeLogin())
-        dispatch(closeSignup())
+        dispatch(closeLogin());
+        dispatch(closeSignup());
 
+        toast.success("Account created successfully", {
+          style: {
+            borderRadius: "10px",
+          },
+        });
       } catch (err) {
         console.log(err);
         // if an error occured during authentication open login modal
-        dispatch(openLogin())
+        dispatch(openLogin());
       }
 
       //clear state
@@ -222,9 +228,7 @@ const SignupModal = () => {
                   <span className="text-base mt-0.5 mr-1">
                     <BiErrorCircle />
                   </span>
-                  <span>
-                    {errMsg}
-                  </span>
+                  <span>{errMsg}</span>
                 </p>
               )}
               <Eye
@@ -241,8 +245,8 @@ const SignupModal = () => {
             </button>
           </form>
           <p className="py-3 font-semibold">OR</p>
-          <button className="w-full rounded-3xl  py-3 px-4 bg-white text-black font-semibold outline-none flex items-center justify-center gap-2">
-            <AiOutlineGoogle className="inline text-2xl" /> Continue with google
+          <button className="w-full rounded-3xl min-h-[44px] relative bg-transparent font-semibold outline-none flex items-center justify-center ">
+            { signupOverlay && <GoogleAuth />}
           </button>
           <p className="text-xs text-center mx-6 my-4">
             By continuing, you agree to Showyourworks&apos; <br />

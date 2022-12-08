@@ -1,9 +1,10 @@
+import React from 'react'
 import { useDispatch} from "react-redux";
 import { openLogin, openSignup } from "redux/authModalSlice";
 import { logoutUser } from "redux/userSlice";
 import Button from "./Button";
 
-const Navbar = ({feed }) => {
+const Navbar = ({ feed }) => {
   const dispatch = useDispatch()
 
 
