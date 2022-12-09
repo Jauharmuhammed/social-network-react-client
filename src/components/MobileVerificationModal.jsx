@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 
-const MobileVerification = () => {
+const MobileVerificationModal = () => {
 
   const MOBILE_REGEX = /^[0-9]{10}$/;
 
@@ -41,4 +41,4 @@ const MobileVerification = () => {
   );
 };
 
-export default MobileVerification;
+export default MobileVerificationModal;

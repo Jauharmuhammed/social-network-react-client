@@ -5,7 +5,8 @@ import { Layout } from "../components/Layout";
 import { openSignup } from "features/auth/authModalSlice";
 import LoginModal from "components/LoginModal";
 import SignupModal from "components/SignupModal";
-import EmailVerification from "components/EmailVerification";
+import EmailVerificationModal from "components/EmailVerificationModal";
+import ForgotPasswordModal from "components/ForgotPasswordModal";
 
 const LandingPage = () => {
   const user = useSelector((state) => state.auth.user);
@@ -96,7 +97,8 @@ const LandingPage = () => {
           </section>
           <LoginModal />
           <SignupModal />
-          <EmailVerification/>
+          <EmailVerificationModal/>
+          <ForgotPasswordModal/>
         </Layout>
       )}
     </>

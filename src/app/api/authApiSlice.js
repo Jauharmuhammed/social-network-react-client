@@ -31,6 +31,27 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials }
             })
         }),
+        forgotPassowrd: builder.mutation({
+            query: credentials => ({
+                url: '/api/forgot-password/',
+                method: 'POST',
+                body: { ...credentials }
+            })
+        }),
+        forgotPassowrdVerify: builder.mutation({
+            query: credentials => ({
+                url: '/api/forgot-password/verify/',
+                method: 'POST',
+                body: { ...credentials }
+            })
+        }),
+        changePassowrd: builder.mutation({
+            query: credentials => ({
+                url: '/api/reset-password/',
+                method: 'POST',
+                body: { ...credentials }
+            })
+        }),
     })
 }) 
 
@@ -39,4 +60,7 @@ export const {
     useRegisterMutation,
     useGoogleAuthMutation,
     useVerifyMailMutation,
+    useForgotPassowrdMutation,
+    useForgotPassowrdVerifyMutation,
+    useChangePassowrdMutation,
 } = authApiSlice

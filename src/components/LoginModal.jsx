@@ -3,7 +3,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { BiErrorCircle } from "react-icons/bi";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLogin, openSignup } from "features/auth/authModalSlice";
+import { closeLogin, openForgotPassword, openSignup } from "features/auth/authModalSlice";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import GoogleAuth from "./GoogleAuth";
@@ -170,7 +170,7 @@ const LoginModal = () => {
                   }
                 />
               </div>
-              <p className="font-medium text-sm ">Forgot Password?</p>
+              <p className="font-medium text-sm cursor-pointer" onClick={() => dispatch(openForgotPassword())}>Forgot Password?</p>
               <button
                 disabled={isLoading}
                 className="w-full rounded-3xl mt-5 py-3 px-4 bg-yellow text-black font-semibold outline-none"

@@ -2,9 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import {FiExternalLink} from 'react-icons/fi'
 
-const EmailVerification = () => {
+const EmailVerificationModal = () => {
   const email = useSelector((state) => state.auth.newUser.email);
   const emailOverlay = useSelector((state) => state.authModal.emailModal);
+
+
 
 
   return (
@@ -63,4 +65,4 @@ const EmailVerification = () => {
   );
 };
 
-export default EmailVerification;
+export default EmailVerificationModal;

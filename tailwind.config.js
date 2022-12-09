@@ -22,9 +22,6 @@ module.exports = {
         '3/4': '3 / 4',
         '9/16': '9 / 16',
       },
-      gridTemplateRows: {
-        'masonry': 'masonry',
-      },
     },
   },
   plugins: [],
