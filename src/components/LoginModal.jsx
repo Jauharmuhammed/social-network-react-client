@@ -24,6 +24,7 @@ const LoginModal = () => {
 
   const [errMsg, setErrMsg] = useState("");
   const [emailErr, setEmailErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
 
   const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -38,17 +39,24 @@ const LoginModal = () => {
 
   useEffect(() => {
     setErrMsg("");
+    setEmailErr("");
+    setPasswordErr("");
   }, [email, password]);
 
   const loginUser = async (e) => {
     e.preventDefault();
-    
-    if(isLoading) return
-    
-    const validation = EMAIL_REGEX.test(email);
-    if (!validation) {
-      setErrMsg("Invalid Entry");
-      console.log("Invalid Entry");
+
+    if (isLoading) return;
+
+    const emailValidation = EMAIL_REGEX.test(email);
+    if (!emailValidation || !password) {
+      if (!emailValidation) {
+        setEmailErr("This field is required");
+      }
+
+      if (!password) {
+        setPasswordErr("This field is required");
+      }
       return;
     }
 
@@ -69,12 +77,11 @@ const LoginModal = () => {
       if (!err?.data) {
         setErrMsg("No Server Response");
       } else if (err.status === 401) {
-        setErrMsg('No active account found with the given credentials')
-      }else {
+        setErrMsg("No active account found with the given credentials");
+      } else {
         setErrMsg("Email or password is incorrect.");
       }
     }
-
   };
 
   const handlClose = (e) => {
@@ -126,7 +133,7 @@ const LoginModal = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 autoFocus
                 className={`w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300 mt-5 mb-5 ${
-                  emailErr ? "border-red-700" : " "
+                  emailErr ? "border-red-700" : "border-white "
                 }`}
               />
               {emailErr && (
@@ -142,8 +149,16 @@ const LoginModal = () => {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300"
+                  className={`w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300 mb-5 ${
+                    passwordErr ? "border-red-700" : ""
+                  }`}
                 />
+                {passwordErr && (
+                  <p className="text-red-700 -mt-4   my-1 flex ml-2 items-center text-sm">
+                    <BiErrorCircle />
+                    &nbsp;{passwordErr}
+                  </p>
+                )}
                 {errMsg && (
                   <p className="text-red-700 my-1 flex justify-center items-start text-sm">
                     <span>{errMsg}</span>
@@ -155,11 +170,12 @@ const LoginModal = () => {
                   }
                 />
               </div>
-              <p className="font-medium text-sm mt-3">Forgot Password?</p>
+              <p className="font-medium text-sm ">Forgot Password?</p>
               <button
-               disabled={isLoading}
-               className="w-full rounded-3xl mt-5 py-3 px-4 bg-yellow text-black font-semibold outline-none">
-                { isLoading ? <ButtonSpinner/> : 'Login' }
+                disabled={isLoading}
+                className="w-full rounded-3xl mt-5 py-3 px-4 bg-yellow text-black font-semibold outline-none"
+              >
+                {isLoading ? <ButtonSpinner /> : "Login"}
               </button>
             </form>
             <p className="py-3 font-semibold">OR</p>

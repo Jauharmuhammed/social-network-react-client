@@ -6,6 +6,7 @@ const authSlice = createSlice({
     initialState: {
         user: localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token')) : null,
         token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null,
+        newUser: {email:null}
     },
     reducers: {
         setCredentials: (state, action) => {
@@ -20,10 +21,13 @@ const authSlice = createSlice({
             localStorage.removeItem("token")
             state.user = null
             state.token = null
-        }
+        },
+        setNewUser: (state, action) => {
+            state.newUser.email = action.payload
+        },
     }
 })
 
-export const { setCredentials, logOut} = authSlice.actions
+export const { setCredentials, logOut, setNewUser} = authSlice.actions
 
 export default authSlice.reducer

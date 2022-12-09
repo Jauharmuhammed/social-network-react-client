@@ -1,8 +1,44 @@
-import React from 'react'
+import { useVerifyMailMutation } from 'app/api/authApiSlice'
+import React, { useEffect } from 'react'
+import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { setCredentials } from './authSlice'
 
-const BackdropSpinner = () => {
+
+const VerifyMail = () => {
+  const [verifyMail, {isLoading}] = useVerifyMailMutation() 
+  const dispatch = useDispatch()
+  const { uid, token } = useParams();
+  const navigate = useNavigate()
+
+  console.log(uid, token);
+
+  const verify = async () => {
+    try{
+
+      const response = await verifyMail({uidb64:uid, token:token}).unwrap()
+      console.log(response);
+      dispatch(setCredentials(response));
+      navigate('/')
+    }
+    catch {
+      navigate('/')
+      toast.error("Verification failed, Please contact customer support", {
+        style: {
+          borderRadius: "10px",
+        },
+      });
+    }
+  }
+
+  useEffect(() => {
+    verify()
+  }, [])
+  
   return (
-    <div className='fixed  inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center'>
+    <>
+    { isLoading && <div className='fixed  inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center'>
         <div className='flex justify-center items-center\'>
             <div role="status">
                 <svg aria-hidden="true" className="mr-2 w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-gray" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,8 +48,9 @@ const BackdropSpinner = () => {
                 <span className="sr-only">Loading...</span>
             </div>
         </div>
-    </div>
+    </div>}
+    </>
   )
 }
 
-export default BackdropSpinner
+export default VerifyMail
