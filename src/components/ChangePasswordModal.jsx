@@ -54,6 +54,8 @@ const ChangePasswordModal = ({ uid }) => {
       return;
     }
 
+    console.log(uid);
+
     try {
       const response = await changePassword({
         password,
@@ -61,12 +63,13 @@ const ChangePasswordModal = ({ uid }) => {
         uid,
       }).unwrap();
       console.log(response);
-      dispatch(openLogin())
       toast.success("Password changed successfully.", {
         style: {
           borderRadius: "10px",
         },
       });
+      dispatch(openLogin())
+      navigate("/");
     } catch (err) {
       console.log(err);
       setErrMsg(err);

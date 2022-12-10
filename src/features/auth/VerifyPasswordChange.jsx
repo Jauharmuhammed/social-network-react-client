@@ -18,7 +18,7 @@ const VerifyPasswordChange = () => {
   const verify = async () => {
     try{
       const response = await verifyForgotPassword({uidb64:uid, token:token}).unwrap()
-      console.log(response);
+      setId(response);
       dispatch(openChangePassword())
     }
     catch {
