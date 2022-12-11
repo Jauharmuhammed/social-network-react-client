@@ -143,7 +143,7 @@ const ChangePasswordModal = ({ uid }) => {
             <button
               disabled={isLoading}
               type="submit"
-              className="w-full rounded-3xl  py-3 px-4 bg-yellow text-black font-semibold outline-none"
+              className="w-full rounded-3xl  py-3 px-4 bg-custom-yellow text-black font-semibold outline-none"
             >
               {isLoading ? <ButtonSpinner /> : "Change Password"}
             </button>

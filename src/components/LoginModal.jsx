@@ -3,7 +3,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { BiErrorCircle } from "react-icons/bi";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLogin, openForgotPassword, openSignup } from "features/auth/authModalSlice";
+import { closeLogin, openForgotPassword, openLoginWithOtp, openSignup } from "features/auth/authModalSlice";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import GoogleAuth from "./GoogleAuth";
@@ -84,6 +84,11 @@ const LoginModal = () => {
     }
   };
 
+  const handleOpenOTP = () => {
+    dispatch(openLoginWithOtp())
+    dispatch(closeLogin())
+  }
+
   const handlClose = (e) => {
     if (e.target.id === "loginModalContainer") dispatch(closeLogin());
   };
@@ -120,7 +125,7 @@ const LoginModal = () => {
           }
         >
           <div className="flex flex-col items-center">
-            <h1 className="font-boogaloo text-yellow text-5xl pb-2 mt-4">
+            <h1 className="font-boogaloo text-custom-yellow text-5xl pb-2 mt-4">
               showyourwork
             </h1>
             <h3 className="font-semibold text-xl mt-3">Login</h3>
@@ -170,10 +175,13 @@ const LoginModal = () => {
                   }
                 />
               </div>
-              <p className="font-medium text-sm cursor-pointer" onClick={() => dispatch(openForgotPassword())}>Forgot Password?</p>
+              <div className="flex justify-center gap-5">
+                <p className="font-medium text-sm cursor-pointer" onClick={() => dispatch(openForgotPassword())}>Forgot Password?</p>
+                <p className="font-medium text-sm cursor-pointer" onClick={handleOpenOTP}>Login With OTP</p>
+              </div>
               <button
                 disabled={isLoading}
-                className="w-full rounded-3xl mt-5 py-3 px-4 bg-yellow text-black font-semibold outline-none"
+                className="w-full rounded-3xl mt-5 py-3 px-4 bg-custom-yellow text-black font-semibold outline-none"
               >
                 {isLoading ? <ButtonSpinner /> : "Login"}
               </button>

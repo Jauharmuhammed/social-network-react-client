@@ -26,7 +26,7 @@ const EmailVerificationModal = () => {
           }
         >
           <div className="flex flex-col items-center">
-            <h1 className="font-boogaloo text-yellow text-5xl pb-2 mt-4">
+            <h1 className="font-boogaloo text-custom-yellow text-5xl pb-2 mt-4">
               showyourwork
             </h1>
             <h3 className="font-semibold text-center text-xl mt-8">

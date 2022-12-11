@@ -8,6 +8,7 @@ export const authModalSlice = createSlice({
         emailModal: false,
         forgotPasswordModal: false,
         changePasswordModal: false,
+        loginWithOtpModal: false,
     },
     reducers: {
         openLogin: (state) => {
@@ -44,9 +45,15 @@ export const authModalSlice = createSlice({
         closeChangePassword: (state) => {
             state.changePasswordModal = false
         },
+        openLoginWithOtp: (state) => {
+            state.loginWithOtpModal = true
+        },
+        closeLoginWithOtp: (state) => {
+            state.loginWithOtpModal = false
+        },
     }
 })
 
 
-export const { openLogin, openSignup, closeLogin, closeSignup, openEmail, closeEmail, openForgotPassword, closeForgotPassword, openChangePassword, closeChangePassword } = authModalSlice.actions
+export const { openLogin, openSignup, closeLogin, closeSignup, openEmail, closeEmail, openForgotPassword, closeForgotPassword, openChangePassword, closeChangePassword, openLoginWithOtp, closeLoginWithOtp } = authModalSlice.actions
 export default authModalSlice.reducer

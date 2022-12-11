@@ -7,6 +7,8 @@ import LoginModal from "components/LoginModal";
 import SignupModal from "components/SignupModal";
 import EmailVerificationModal from "components/EmailVerificationModal";
 import ForgotPasswordModal from "components/ForgotPasswordModal";
+import GoogleAuth from "components/GoogleAuth";
+import MobileVerificationModal from "components/MobileVerificationModal";
 
 const LandingPage = () => {
   const user = useSelector((state) => state.auth.user);
@@ -17,17 +19,23 @@ const LandingPage = () => {
     <>
       {!user && (
         <Layout>
+          <LoginModal />
+          <SignupModal />
+          <EmailVerificationModal/>
+          <ForgotPasswordModal/>
+          <GoogleAuth/>
+          <MobileVerificationModal/>
 
           <div className="flex justify-center text-white ">
             <div className="flex flex-col items-start">
               <h1 className="block text-7xl font-semibold mt-20">
-                <span className="text-yellow text-8xl"> Share </span> <br />
+                <span className="text-custom-yellow text-8xl"> Share </span> <br />
                 Something Small <br />
                 Every day.
               </h1>
               <h4
                 onClick={() => dispatch(openSignup())}
-                className="signupNow mt-2 text-xl font-medium text-yellow cursor-pointer"
+                className="signupNow mt-2 text-xl font-medium text-custom-yellow cursor-pointer"
               >
                 Signup Now
               </h4>
@@ -95,10 +103,7 @@ const LandingPage = () => {
               title=""
             />
           </section>
-          <LoginModal />
-          <SignupModal />
-          <EmailVerificationModal/>
-          <ForgotPasswordModal/>
+          
         </Layout>
       )}
     </>

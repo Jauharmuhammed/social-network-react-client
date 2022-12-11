@@ -4,14 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
     fontFamily:{
       'boogaloo': 'Boogaloo',
       // 'inter': 'Inter',
     },
     extend:{
       colors: {
-        'yellow': '#F0DB04',
+        'custom-yellow': '#F0DB04',
         'gray': '#6B6B6B',
         // 'gray': 'rgb(36 36 36)',
         'darkgray': '#1E2023',

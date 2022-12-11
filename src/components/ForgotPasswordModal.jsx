@@ -45,9 +45,14 @@ const ForgotPasswordModal = () => {
       console.log(response);
       setMailed(true);
     } catch (err) {
-      console.log(err);
+      console.log(err?.data);
+      setErrMsg(err?.data)
     }
   };
+
+  useEffect(()=> {
+    setErrMsg('')
+  }, [email])
 
   const handlClose = (e) => {
     if (e.target.id === "forgotPasswordModalContainer")
@@ -102,9 +107,14 @@ const ForgotPasswordModal = () => {
                       &nbsp;{emailErr}
                     </p>
                   )}
+                  {errMsg && (
+                    <p className="text-red-700 -mt-4 mb-1 flex justify-center items-center text-sm">
+                      {errMsg}
+                    </p>
+                  )}
                   <button
                   disabled={isLoading}
-                   className="w-full rounded-3xl  py-3 px-4 bg-yellow text-black font-semibold outline-none">
+                   className="w-full rounded-3xl  py-3 px-4 bg-custom-yellow text-black font-semibold outline-none">
                     {isLoading ? <ButtonSpinner/> : 'Send me a password reset link'}
                   </button>
                 </form>
