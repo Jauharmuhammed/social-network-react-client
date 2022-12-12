@@ -10,10 +10,8 @@ const authSlice = createSlice({
     },
     reducers: {
         setCredentials: (state, action) => {
-            console.log(action.payload);
             localStorage.setItem("token", JSON.stringify(action.payload));
             state.user = jwtDecode(action.payload.access)
-            console.log(action.payload);
             state.token = action.payload
             console.log('userUpdated');
         },

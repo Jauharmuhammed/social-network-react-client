@@ -159,13 +159,13 @@ const LoginModal = () => {
                   }`}
                 />
                 {passwordErr && (
-                  <p className="text-red-700 -mt-4   my-1 flex ml-2 items-center text-sm">
+                  <p className="text-red-700 -mt-3 my-1 flex ml-2 items-center text-sm">
                     <BiErrorCircle />
                     &nbsp;{passwordErr}
                   </p>
                 )}
                 {errMsg && (
-                  <p className="text-red-700 my-1 flex justify-center items-start text-sm">
+                  <p className="text-red-700 -mt-3 my-1 flex justify-center items-start text-sm">
                     <span>{errMsg}</span>
                   </p>
                 )}

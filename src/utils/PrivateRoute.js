@@ -44,6 +44,8 @@ const PrivateRoute = ({ children }) => {
     return () => clearInterval(interval);
   }, [token]);
 
+ 
+
 
   return (
     token
