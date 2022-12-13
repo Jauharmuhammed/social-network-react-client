@@ -46,7 +46,6 @@ const PrivateRoute = ({ children }) => {
 
  
 
-
   return (
     token
       ? children
