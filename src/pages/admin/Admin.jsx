@@ -1,4 +1,4 @@
-import { Layout } from "components/admin/Layout";
+import { Layout } from "features/admin/components/Layout";
 import React from "react";
 
 const Admin = () => {

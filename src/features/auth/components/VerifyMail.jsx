@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { setCredentials } from './authSlice'
+import { setCredentials } from '../services/authSlice'
 
 
 const VerifyMail = () => {

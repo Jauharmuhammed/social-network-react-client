@@ -1,5 +1,5 @@
 import { useBlockUserMutation, useGetUsersMutation } from "app/api/adminApiSlice";
-import { Layout } from "components/admin/Layout";
+import { Layout } from "features/admin/components/Layout";
 import TimeAgo from "components/TimeAgo";
 import React, { useEffect, useState } from "react";
 

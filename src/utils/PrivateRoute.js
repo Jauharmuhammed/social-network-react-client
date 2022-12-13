@@ -1,8 +1,8 @@
 import LandingPage from "pages/LandingPage";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut, setCredentials } from "features/auth/authSlice";
-import axios from '../utils/axios'
+import { logOut, setCredentials } from "features/auth/services/authSlice";
+import axios from '../lib/axios'
 
 const PrivateRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
@@ -23,8 +23,8 @@ const PrivateRoute = ({ children }) => {
         console.log(err);
         dispatch(logOut())
       });
-    
-    if (loading){
+
+    if (loading) {
       setLoading(false)
     }
   };
@@ -44,7 +44,7 @@ const PrivateRoute = ({ children }) => {
     return () => clearInterval(interval);
   }, [token]);
 
- 
+
 
   return (
     token

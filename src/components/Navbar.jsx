@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch} from "react-redux";
-import { openLogin, openSignup } from "features/auth/authModalSlice";
+import { openLogin, openSignup } from "features/auth/services/authModalSlice";
 import Button from "./Button";
-import { logOut } from 'features/auth/authSlice';
+import { logOut } from 'features/auth/services/authSlice';
 
 const Navbar = ({ feed }) => {
   const dispatch = useDispatch()

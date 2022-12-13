@@ -1,13 +1,11 @@
 import React from 'react'
 import './App.css';
 import { Routes, Route } from 'react-router-dom'
-import Feed from 'pages/Feed';
+import { Feed, Admin, UserManagement } from 'pages/index';
 import PrivateRoute from 'utils/PrivateRoute';
 import { Toaster } from 'react-hot-toast';
-import VerifyMail from 'features/auth/VerifyMail';
-import VerifyPasswordChange from 'features/auth/VerifyPasswordChange';
-import UserManagement from 'pages/admin/UserManagement';
-import Admin from 'pages/admin/Admin';
+import VerifyMail from 'features/auth/components/VerifyMail';
+import VerifyPasswordChange from 'features/auth/components/VerifyPasswordChange';
 import AdminRoute from 'utils/AdminRoute';
 
 function App() {
@@ -16,11 +14,11 @@ function App() {
       <div><Toaster /></div>
       <Routes>
         <Route path='/' element={<PrivateRoute><Feed /></PrivateRoute>} />
-        <Route path='/auth/email/verify/:uid/:token' element={<VerifyMail/>} />
-        <Route path='/auth/forgot/password/:uid/:token' element={<VerifyPasswordChange/>} />
+        <Route path='/auth/email/verify/:uid/:token' element={<VerifyMail />} />
+        <Route path='/auth/forgot/password/:uid/:token' element={<VerifyPasswordChange />} />
 
-        <Route path='/admin' element={<AdminRoute><Admin/></AdminRoute>} />
-        <Route path='/admin/user-management' element={<PrivateRoute><AdminRoute><UserManagement/></AdminRoute></PrivateRoute>} />
+        <Route path='/admin' element={<AdminRoute><Admin /></AdminRoute>} />
+        <Route path='/admin/user-management' element={<PrivateRoute><AdminRoute><UserManagement /></AdminRoute></PrivateRoute>} />
       </Routes>
     </>
   );

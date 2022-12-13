@@ -2,13 +2,13 @@ import Post from "components/Post";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/Layout";
-import { openSignup } from "features/auth/authModalSlice";
-import LoginModal from "components/LoginModal";
-import SignupModal from "components/SignupModal";
-import EmailVerificationModal from "components/EmailVerificationModal";
-import ForgotPasswordModal from "components/ForgotPasswordModal";
-import GoogleAuth from "components/GoogleAuth";
-import MobileVerificationModal from "components/MobileVerificationModal";
+import { openSignup } from "features/auth/services/authModalSlice";
+import LoginModal from "features/auth/components/LoginModal";
+import SignupModal from "features/auth/components/SignupModal";
+import EmailVerificationModal from "features/auth/components/EmailVerificationModal";
+import ForgotPasswordModal from "features/auth/components/ForgotPasswordModal";
+import GoogleAuth from "features/auth/components/GoogleAuth";
+import MobileVerificationModal from "features/auth/components/LoginWithOtpModal";
 
 const LandingPage = () => {
   const user = useSelector((state) => state.auth.user);
