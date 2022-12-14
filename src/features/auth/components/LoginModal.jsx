@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { IoCloseSharp } from "react-icons/io5";
-import { BiErrorCircle } from "react-icons/bi";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLogin, openForgotPassword, openLoginWithOtp, openSignup } from "features/auth/services/authModalSlice";
-import PropTypes from "prop-types";
-import toast from "react-hot-toast";
 import GoogleAuth from "./GoogleAuth";
 import { useLoginMutation } from "app/api/authApiSlice";
 import { setCredentials } from "features/auth/services/authSlice";
 import ButtonSpinner from "../../../components/ButtonSpinner";
 import PasswordEye from "./PasswordEye";
 import successToast from "utils/toasts/successToast";
+import Button from "./Button";
+import Input from "./Input";
+import ErrorMessage from "./ErrorMessage";
+import Modal from "./Modal";
 
 const LoginModal = () => {
     const loginOverlay = useSelector((state) => state.authModal.loginModal);
@@ -41,10 +40,13 @@ const LoginModal = () => {
         }
     }, [email]);
 
+    // set error message to null when inputs changes
     useEffect(() => {
         setErrMsg("");
     }, [email, password]);
 
+
+    // login function
     const loginUser = async (e) => {
         e.preventDefault();
 
@@ -90,114 +92,69 @@ const LoginModal = () => {
         dispatch(closeLogin());
     };
 
-    // close the modal if click outside of it
-    const handlClose = (e) => {
-        if (e.target.id === "loginModalContainer") dispatch(closeLogin());
-    };
-
     return (
-        <>
-            <div
-                id="loginModalContainer"
-                onClick={handlClose}
-                className={
-                    (loginOverlay ? "flex" : "hidden") +
-                    " fixed  inset-0 bg-black bg-opacity-40 backdrop-blur-sm  justify-center items-center"
-                }>
-                {/* overlay */}
-                <div
-                    className={
-                        (loginOverlay ? "opacity-100" : "translate-y-96 opacity-0") +
-                        " transform w-[450px] h-fit relative rounded-[2rem] bg-black back text-white p-12 transition-transform duration-1000  mt-16"
-                    }>
-                    <div className="flex flex-col items-center">
-                        <h1 className="font-boogaloo text-custom-yellow text-5xl pb-2 mt-4">showyourwork</h1>
-                        <h3 className="font-semibold text-xl mt-3">Login</h3>
-                        <form onSubmit={loginUser} className="w-full text-center">
-                            <input
-                                type="text"
-                                placeholder="Email"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                autoFocus
-                                className={`w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300 mt-5 mb-5 ${
-                                    emailErr ? "border-red-700" : "border-white "
-                                }`}
-                            />
-                            {emailErr && (
-                                <p className="text-red-700 -mt-4 mb-1 flex ml-2 items-center text-sm">
-                                    <BiErrorCircle />
-                                    &nbsp;{emailErr}
-                                </p>
-                            )}
-                            <div className="w-full h-fit relative">
-                                <input
-                                    type={passwordVisibility ? "text" : "password"}
-                                    placeholder="Password"
-                                    name="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className={`w-full relative rounded-3xl border border-white py-3 px-4 bg-transparent outline-none placeholder:text-zinc-300 mb-5 ${
-                                        passwordErr ? "border-red-700" : ""
-                                    }`}
-                                />
-                                {passwordErr && (
-                                    <p className="text-red-700 -mt-3 my-1 flex ml-2 items-center text-sm">
-                                        <BiErrorCircle />
-                                        &nbsp;{passwordErr}
-                                    </p>
-                                )}
-                                {errMsg && (
-                                    <p className="text-red-700 -mt-3 my-1 flex justify-center items-start text-sm">
-                                        <span>{errMsg}</span>
-                                    </p>
-                                )}
-                                <PasswordEye
-                                    visible={passwordVisibility}
-                                    handleVisibility={() => setPasswordVisibility(!passwordVisibility)}
-                                />
-                            </div>
-                            <div className="flex justify-center gap-5">
-                                <p
-                                    className="font-medium text-sm cursor-pointer"
-                                    onClick={() => dispatch(openForgotPassword())}>
-                                    Forgot Password?
-                                </p>
-                                <p className="font-medium text-sm cursor-pointer" onClick={handleOpenOTP}>
-                                    Login With OTP
-                                </p>
-                            </div>
-                            <button
-                                disabled={isLoading}
-                                className="w-full rounded-3xl mt-5 py-3 px-4 bg-custom-yellow text-black font-semibold outline-none">
-                                {isLoading ? <ButtonSpinner /> : "Login"}
-                            </button>
-                        </form>
-                        <p className="py-3 font-semibold">OR</p>
-                        <button className="w-full rounded-3xl min-h-[44px] relative  bg-transparent outline-none flex items-center justify-center ">
-                            {!signupOverlay && <GoogleAuth />}
-                        </button>
+        <Modal id='loginModalContainer' active={loginOverlay} closeActive={()=>dispatch(closeLogin())}>
+                <div className="flex flex-col items-center">
+                    <h1 className="font-boogaloo text-custom-yellow text-5xl pb-2 mt-4">showyourwork</h1>
+                    <h3 className="font-semibold text-xl my-3">Login</h3>
+                    <form onSubmit={loginUser} className="w-full text-center">
+                        <Input
+                            type="text"
+                            placeholder="Email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className={emailErr ? "border-red-700" : "border-white "}
+                            error={emailErr}
+                        />
 
-                        <p className="text-xs text-center mx-6 my-4">
-                            By continuing, you agree to Showyourworks&apos; <br />
-                            <strong>Terms of Service</strong> and acknowledge that you&apos;ve read our{" "}
-                            <strong>Privacy Policy</strong>
-                        </p>
-                        <p className="text-sm text-center ">
-                            Not on Showyourwork yet?
-                            <strong onClick={() => dispatch(openSignup())} className="cursor-pointer">
-                                Sign up
-                            </strong>
-                        </p>
-                    </div>
-                    <IoCloseSharp
-                        className="absolute top-4 right-4 text-white text-3xl cursor-pointer"
-                        onClick={() => dispatch(closeLogin())}
-                    />
+                        <div className="w-full h-fit relative">
+                            <Input
+                                type={passwordVisibility ? "text" : "password"}
+                                placeholder="Password"
+                                name="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className={passwordErr ? "border-red-700" : "border-white"}
+                                error={passwordErr}
+                            />
+                            <PasswordEye
+                                visible={passwordVisibility}
+                                onClick={() => setPasswordVisibility(!passwordVisibility)}
+                            />
+                        </div>
+                        <ErrorMessage error={errMsg} />
+
+                        <div className="flex justify-center gap-5 mb-5">
+                            <p
+                                className="font-medium text-sm cursor-pointer"
+                                onClick={() => dispatch(openForgotPassword())}>
+                                Forgot Password?
+                            </p>
+                            <p className="font-medium text-sm cursor-pointer" onClick={handleOpenOTP}>
+                                Login With OTP
+                            </p>
+                        </div>
+                        <Button disabled={isLoading} content={isLoading ? <ButtonSpinner /> : "Login"} />
+                    </form>
+                    <p className="py-3 font-semibold">OR</p>
+                    <button className="w-full rounded-3xl min-h-[44px] relative  bg-transparent outline-none flex items-center justify-center ">
+                        {!signupOverlay && <GoogleAuth />}
+                    </button>
+
+                    <p className="text-xs text-center mx-6 my-4">
+                        By continuing, you agree to Showyourworks&apos; <br />
+                        <strong>Terms of Service</strong> and acknowledge that you&apos;ve read our
+                        <strong>Privacy Policy</strong>
+                    </p>
+                    <p className="text-sm text-center ">
+                        Not on Showyourwork yet?
+                        <strong onClick={() => dispatch(openSignup())} className="cursor-pointer">
+                            Sign up
+                        </strong>
+                    </p>
                 </div>
-            </div>
-        </>
+        </Modal>
     );
 };
 

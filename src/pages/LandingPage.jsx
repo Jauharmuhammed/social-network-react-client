@@ -9,6 +9,7 @@ import EmailVerificationModal from "features/auth/components/EmailVerificationMo
 import ForgotPasswordModal from "features/auth/components/ForgotPasswordModal";
 import GoogleAuth from "features/auth/components/GoogleAuth";
 import MobileVerificationModal from "features/auth/components/LoginWithOtpModal";
+import Modal from "features/auth/components/Modal";
 
 const LandingPage = () => {
   const user = useSelector((state) => state.auth.user);
@@ -23,7 +24,6 @@ const LandingPage = () => {
           <SignupModal />
           <EmailVerificationModal/>
           <ForgotPasswordModal/>
-          <GoogleAuth/>
           <MobileVerificationModal/>
 
           <div className="flex justify-center text-white ">
