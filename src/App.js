@@ -1,27 +1,43 @@
-import React from 'react'
-import './App.css';
-import { Routes, Route } from 'react-router-dom'
-import { Feed, Admin, UserManagement } from 'pages/index';
-import PrivateRoute from 'utils/PrivateRoute';
-import { Toaster } from 'react-hot-toast';
-import VerifyMail from 'features/auth/components/VerifyMail';
-import VerifyPasswordChange from 'features/auth/components/VerifyPasswordChange';
-import AdminRoute from 'utils/AdminRoute';
+import React from "react";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { Home, Admin, UserManagement, Error404 } from "pages/index";
+import PrivateRoute from "utils/PrivateRoute";
+import { Toaster } from "react-hot-toast";
+import VerifyMail from "features/auth/components/VerifyMail";
+import VerifyPasswordChange from "features/auth/components/VerifyPasswordChange";
+import AdminRoute from "utils/AdminRoute";
 
 function App() {
-  return (
-    <>
-      <div><Toaster /></div>
-      <Routes>
-        <Route path='/' element={<PrivateRoute><Feed /></PrivateRoute>} />
-        <Route path='/auth/email/verify/:uid/:token' element={<VerifyMail />} />
-        <Route path='/auth/forgot/password/:uid/:token' element={<VerifyPasswordChange />} />
+    return (
+        <>
+            <Toaster />
 
-        <Route path='/admin' element={<AdminRoute><Admin /></AdminRoute>} />
-        <Route path='/admin/user-management' element={<PrivateRoute><AdminRoute><UserManagement /></AdminRoute></PrivateRoute>} />
-      </Routes>
-    </>
-  );
+            <Routes>
+                <Route path="/" element={<Home />} />
+
+                <Route path="/" element={<PrivateRoute />}>
+
+
+                    <Route path="auth" >
+                        <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
+                        <Route path="forgot/password/:uid/:token" element={<VerifyPasswordChange />} />
+                    </Route>
+
+
+                    <Route path="admin" element={<AdminRoute />}>
+                        <Route index element={<Admin />} />
+                        <Route path="user-management" element={<UserManagement />} />
+                    </Route>
+
+
+                    {/* Catch all - replace with 404 component */}
+                    <Route path="*" element={<Error404 />} />
+                </Route>
+
+            </Routes>
+        </>
+    );
 }
 
 export default App;

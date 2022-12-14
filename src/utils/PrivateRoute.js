@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut, setCredentials } from "features/auth/services/authSlice";
 import axios from '../lib/axios'
+import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -48,8 +49,8 @@ const PrivateRoute = ({ children }) => {
 
   return (
     token
-      ? children
-      : <LandingPage />
+      ? <Outlet/>
+      : <Navigate to='/' />
   )
 }
 
