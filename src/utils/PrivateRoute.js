@@ -43,7 +43,7 @@ const PrivateRoute = () => {
       }
     }, fourMinutes);
     return () => clearInterval(interval);
-  }, [token]);
+  }, [token, loading]);
 
 
 

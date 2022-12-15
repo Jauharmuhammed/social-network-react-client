@@ -19,7 +19,7 @@ const LandingPage = () => {
   return (
     <>
       {!user && (
-        <Layout>
+        <Layout landing>
           <LoginModal />
           <SignupModal />
           <EmailVerificationModal/>

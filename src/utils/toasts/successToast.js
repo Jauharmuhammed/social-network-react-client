@@ -4,6 +4,7 @@ const successToast = (text) => {
     toast.success(text, {
         style: {
             borderRadius: "100px",
+            padding:'20px'
         },
     });
 }

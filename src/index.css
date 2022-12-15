@@ -10,7 +10,7 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */
-  font-family: 'Inter';
+  font-family: 'Apercu';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,6 +18,32 @@ body {
 @font-face {
   font-family: 'Boogaloo';
   src: url('./assets/fonts/Boogaloo-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Apercu';
+  src: url('./assets/fonts/Apercu\ Bold.otf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Apercu';
+  src: url('./assets/fonts/Apercu\ Regular.otf');
+}
+@font-face {
+  font-family: 'Apercu';
+  src: url('./assets/fonts/Apercu\ Medium.otf');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Apercu';
+  src: url('./assets/fonts/Apercu\ Light.otf');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Apercu';
+  src: url('./assets/fonts/Apercu\ Italic.otf');
+  font-style: italic;
 }
 
 /* @font-face {

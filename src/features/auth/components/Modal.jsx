@@ -7,7 +7,7 @@ const Modal = ({children, id, active, closeActive}) => {
 
     // close the modal if click outside of it
     const handlClose = (e) => {
-        if (e.target.id === {id}) closeActive();
+        if (e.target.id === id) closeActive();
     };
     return (
         // modal container
@@ -26,7 +26,7 @@ const Modal = ({children, id, active, closeActive}) => {
                 }>
                 {children}
            
-                <CloseButton onClick={() => closeActive()} />
+                <CloseButton onClick={closeActive} />
             </div>
         </div>
     );

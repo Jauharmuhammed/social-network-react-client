@@ -9,7 +9,7 @@ const Feed = () => {
 
   return (
     <>
-   {user && <Layout feed >
+   {user && <Layout >
       <section className="columns-2 md:columns-3 lg:columns-5 gap-5 mt-28 ">
         <Post imageUrl='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=890&q=80' title='painting'/>
         <Post imageUrl='https://images.unsplash.com/photo-1487260211189-670c54da558d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60' title='Minimal HD white wallpaper'/>

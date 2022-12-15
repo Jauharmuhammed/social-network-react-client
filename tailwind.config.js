@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     fontFamily:{
       'boogaloo': 'Boogaloo',
+      'apercu': 'Apercu',
       // 'inter': 'Inter',
     },
     extend:{
