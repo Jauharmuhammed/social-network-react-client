@@ -1,4 +1,3 @@
-import LandingPage from "pages/LandingPage";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut, setCredentials } from "features/auth/services/authSlice";

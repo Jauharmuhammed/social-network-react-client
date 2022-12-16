@@ -36,9 +36,7 @@ const GoogleAuth = () => {
 
     // initialize the google auhtentication and render the button in html
     useEffect(() => {
-        //   global google
-        const google = window.google;
-
+        /* global google */
         google.accounts.id.initialize({
             client_id: "988264526174-66jbkht9o0b40d84a35jvvksvuu93oq7.apps.googleusercontent.com",
             callback: handleGoogleAuth,

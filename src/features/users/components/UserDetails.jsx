@@ -1,6 +1,7 @@
 import {useFollowUserMutation, useGetUserDetailsMutation} from "app/api/usersApiSlice";
 import BackdropSpinner from "components/BackdropSpinner";
 import Button from "components/Button";
+import ButtonSpinner from "components/ButtonSpinner";
 import {Error404} from "pages";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,7 +10,7 @@ import {setUserDetails} from "../services/userSlice";
 const UserDetails = ({username}) => {
     const user = useSelector((state) => state.user.details);
     const [getUserDetails, {isLoading}] = useGetUserDetailsMutation();
-    const [followUser] = useFollowUserMutation();
+    const [followUser , {isFetching}] = useFollowUserMutation();
     const dispatch = useDispatch();
 
     async function fetchData() {
@@ -45,12 +46,13 @@ const UserDetails = ({username}) => {
             <div className="w-100 flex justify-start py-10 gap-10  text-gray-100 ">
                 <img
                     className="w-56 aspect-square max-h-56 rounded-full object-cover"
-                    src={`http://127.0.0.1:8000${user?.profile_pic}`}
+                    src={user?.profile_pic}
                     alt={`${user?.username} profile`}
                 />
                 <div className="flex flex-col justify-center">
                     <h1 className="text-5xl font-bold ">{user?.full_name}</h1>
-                    <div className="font-600 p-1">
+                    <p className="text-gray-400 pl-1">@{user?.username}</p>
+                    <div className="font-600 pl-1">
                         <span>{user?.followers_count} followers</span>
                         <strong>&nbsp;&#183;&nbsp;</strong>
                         <span>{user?.followings_count} following</span>
@@ -64,7 +66,7 @@ const UserDetails = ({username}) => {
                             {user.is_following ? (
                                 <Button primary text={"Following"} onClick={handleFollow} />
                             ) : (
-                                <Button text={"Follow"} onClick={handleFollow} />
+                                <Button text={isFetching ? <ButtonSpinner/> : 'Follow'} onClick={handleFollow} />
                             )}
                             <Button text={"Message"} />
                         </div>
