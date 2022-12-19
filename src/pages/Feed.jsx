@@ -1,16 +1,47 @@
 import React from 'react'
-import Post from "components/Post";
+// import Post from "components/Post";
 import { useSelector } from "react-redux";
 import { Layout } from "../components/Layout";
+import { useEffect } from 'react';
+import { useGetAllPostMutation } from 'app/api/postApiSlice';
+import Post from 'features/posts/components/Post';
+import { useState } from 'react';
 
 const Feed = () => {
-
+  const [posts, setPosts] = useState([])
   const user = useSelector((state) => state.auth.user);
+
+  const [getAllPosts, {isLoading}] = useGetAllPostMutation()
+
+  async function getPosts() {
+    try{
+      const response = await getAllPosts().unwrap()
+      console.log(response);
+      setPosts(response);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getPosts()
+  }, [])
+
+  
+  
 
   return (
     <>
    {user && <Layout >
       <section className="columns-2 md:columns-3 lg:columns-5 gap-5 mt-28 ">
+
+        {
+          posts?.map((post, index) => (
+            <Post key={index} imageUrl={post.image} title={post.title} />
+          ))
+        }
+
         <Post imageUrl='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=890&q=80' title='painting'/>
         <Post imageUrl='https://images.unsplash.com/photo-1487260211189-670c54da558d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60' title='Minimal HD white wallpaper'/>
         <Post imageUrl='https://images.unsplash.com/photo-1669544695426-88d5bac4fc3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60' title=''/>

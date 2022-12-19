@@ -1,8 +1,9 @@
 import React from "react";
+import classNames from "classnames";
 
-const Button = ({ text, primary, onClick }) => {
+const Button = ({text, primary, onClick, className}) => {
     const attr = {
-        className:
+        class:
             (primary
                 ? "border-custom-yellow text-custom-yellow hover:bg-custom-yellow"
                 : "border-white text-white hover:bg-white") +
@@ -10,7 +11,7 @@ const Button = ({ text, primary, onClick }) => {
     };
 
     return (
-        <button {...attr} onClick={onClick}>
+        <button className={classNames(attr.class, className)} onClick={onClick}>
             {text}
         </button>
     );

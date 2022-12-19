@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Home, Admin, UserManagement, Error404, Profile } from "pages/index";
+import { Home, Admin, UserManagement, Error404, Profile, CreatePostPage } from "pages/index";
 import PrivateRoute from "utils/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import VerifyMail from "features/auth/components/VerifyMail";
@@ -29,6 +29,8 @@ function App() {
                         <Route index element={<Admin />} />
                         <Route path="user-management" element={<UserManagement />} />
                     </Route>
+
+                    <Route path="create" element={<CreatePostPage/>} />
 
 
                 </Route>
