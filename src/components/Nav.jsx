@@ -16,7 +16,7 @@ const Nav = ({landing}) => {
     ))
 
   return (
-    !landing && <nav className='fixed bottom-4 left-1/2 -translate-x-1/2 py-3 px-5 bg-black bg-opacity-70 text-white backdrop-blur-md rounded-2xl'>
+    !landing && <nav className='fixed bottom-4 left-1/2 -translate-x-1/2 py-3 px-5 bg-black bg-opacity-70 text-white backdrop-blur-md rounded-2xl z-[999] '>
         <ul className='list-none flex gap-2'>
             {items}
         </ul>

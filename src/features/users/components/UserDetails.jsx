@@ -1,5 +1,4 @@
 import {useFollowUserMutation, useGetUserDetailsMutation} from "app/api/usersApiSlice";
-import BackdropSpinner from "components/BackdropSpinner";
 import Button from "components/Button";
 import ButtonSpinner from "components/ButtonSpinner";
 import {Error404} from "pages";
@@ -25,7 +24,7 @@ const UserDetails = ({username}) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [username]);
 
     async function handleFollow() {
         try {

@@ -4,14 +4,19 @@ import React, {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import Textarea from "react-expanding-textarea";
 // import {useCreatePostMutation} from "../../../app/api/postApiSlice";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import successToast from "utils/toasts/successToast";
+import BackdropSpinner from "components/BackdropSpinner";
+import axios from "../../../lib/axios";
+import errorToast from "utils/toasts/errorToast";
 
 const CreatePost = () => {
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.token);
 
-    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     // const [createPost, {isLoading}] = useCreatePostMutation();
 
@@ -23,7 +28,8 @@ const CreatePost = () => {
         setImage(e.target.files[0]);
     }
 
-    async function handleSubmit() {
+    function handleSubmit() {
+        setIsLoading(true);
         const data = new FormData(); // creates a new data object
 
         console.log(user);
@@ -35,20 +41,43 @@ const CreatePost = () => {
 
         console.log(data);
         console.log(title.current.value);
-        fetch("http://127.0.0.1:8000/api/post/", {
-            method: "POST",
-            header: {
-                Authorization: `Bearer ${token?.access}`,
-            },
-            body: data,
-        })
+        axios
+            .post("/post/", data, {
+                header: {
+                    Authorization: `Bearer ${token?.access}`,
+                },
+            })
             .then((res) => {
                 console.log(res);
-                navigate('/')
-                successToast('Post created successfully')
-                setImage(null)
+                navigate("/");
+                successToast("Post created successfully");
+                setIsLoading(false);
+                setImage(null);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            });
+
+        // fetch("http://127.0.0.1:8000/api/post/", {
+        //     method: "POST",
+        //     header: {
+        //         Authorization: `Bearer ${token?.access}`,
+        //     },
+        //     body: data,
+        // })
+        //     .then((res) => {
+        //         console.log(res);
+        //         navigate("/");
+        //         successToast("Post created successfully");
+        //         setIsLoading(false);
+        //         setImage(null);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //         setIsLoading(false);
+        //         successToast(error.data);
+        //     });
 
         // try{
         //     const response = await createPost({
@@ -70,6 +99,7 @@ const CreatePost = () => {
 
     return (
         <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
+            {isLoading && <BackdropSpinner />}
             {image ? (
                 <div className=" w-100 md:w-2/5 relative rounded-3xl  h-fit overflow-hidden">
                     <img

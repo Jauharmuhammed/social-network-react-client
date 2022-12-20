@@ -1,48 +1,46 @@
-import React from 'react'
+import React from "react";
 // import Post from "components/Post";
-import { useSelector } from "react-redux";
-import { Layout } from "../components/Layout";
-import { useEffect } from 'react';
-import { useGetAllPostMutation } from 'app/api/postApiSlice';
-import Post from 'features/posts/components/Post';
-import { useState } from 'react';
+import {useSelector} from "react-redux";
+import {Layout} from "../components/Layout";
+import {useEffect} from "react";
+import {useGetAllPostMutation} from "app/api/postApiSlice";
+import Post from "features/posts/components/Post";
+import {useState} from "react";
+import BackdropSpinner from "components/BackdropSpinner";
 
 const Feed = () => {
-  const [posts, setPosts] = useState([])
-  const user = useSelector((state) => state.auth.user);
+    const [posts, setPosts] = useState([]);
+    const user = useSelector((state) => state.auth.user);
 
-  const [getAllPosts, {isLoading}] = useGetAllPostMutation()
+    const [getAllPosts, {isLoading}] = useGetAllPostMutation();
 
-  async function getPosts() {
-    try{
-      const response = await getAllPosts().unwrap()
-      console.log(response);
-      setPosts(response);
-    }
-    catch (err) {
-      console.log(err);
-    }
-  }
-
-  useEffect(() => {
-    getPosts()
-  }, [])
-
-  
-  
-
-  return (
-    <>
-   {user && <Layout >
-      <section className="columns-2 md:columns-3 lg:columns-5 gap-5 mt-28 ">
-
-        {
-          posts?.map((post, index) => (
-            <Post key={index} imageUrl={post.image} title={post.title} />
-          ))
+    async function fetchAllPost() {
+        try {
+            const response = await getAllPosts().unwrap();
+            console.log(response);
+            setPosts(response);
+        } catch (err) {
+            console.log(err);
         }
+    }
 
-        <Post imageUrl='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=890&q=80' title='painting'/>
+    useEffect(() => {
+        fetchAllPost();
+    }, []);
+
+    if (isLoading) return;
+
+    return (
+        <>
+            {isLoading && <BackdropSpinner />}
+            {user && (
+                <Layout>
+                    <section className="columns-2 md:columns-3 lg:columns-5 gap-5 mt-28 ">
+                        {posts?.map((post, index) => (
+                            <Post key={index} post={post} />
+                        ))}
+
+                        {/* <Post imageUrl='https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=890&q=80' title='painting'/>
         <Post imageUrl='https://images.unsplash.com/photo-1487260211189-670c54da558d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60' title='Minimal HD white wallpaper'/>
         <Post imageUrl='https://images.unsplash.com/photo-1669544695426-88d5bac4fc3b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60' title=''/>
         <Post imageUrl='https://images.unsplash.com/photo-1669618888359-16e67f0cf56e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60' title=''/>
@@ -56,11 +54,12 @@ const Feed = () => {
         <Post imageUrl='https://images.unsplash.com/photo-1669046638627-4836eb278767?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDh8eEh4WVRNSExnT2N8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60' title=''/>
         <Post imageUrl='https://images.unsplash.com/photo-1553374402-559e8b431161?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHF1b3Rlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60' title=''/>
         <Post imageUrl='https://images.unsplash.com/photo-1531913764164-f85c52e6e654?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60' title=''/>
-        <Post imageUrl='https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60' title=''/>
-      </section>
-    </Layout>}
-    </>
-  );
+        <Post imageUrl='https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60' title=''/> */}
+                    </section>
+                </Layout>
+            )}
+        </>
+    );
 };
 
 export default Feed;
