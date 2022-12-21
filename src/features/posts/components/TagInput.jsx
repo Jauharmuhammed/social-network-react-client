@@ -90,7 +90,7 @@ const TagInput = ({tags, setTags, ref}) => {
     }
 
     const options = availableTags?.map((tag) => (
-        <option onClick={handleSelect} name="tag" className="capitalize w-full" key={tag.name} value={tag.name}>
+        <option onClick={handleSelect} name="tag" className="lowercase w-full" key={tag.name} value={tag.name}>
             {tag.name}
         </option>
     ));

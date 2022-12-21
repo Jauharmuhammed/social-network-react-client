@@ -5,3 +5,11 @@
 .tagInput::-webkit-calendar-picker-indicator {
     display: none !important;
 }
+
+.postPreviewTags::-webkit-scrollbar {
+    display: none;
+}
+
+.postPreviewTags {
+    scroll-behavior: smooth;
+}
