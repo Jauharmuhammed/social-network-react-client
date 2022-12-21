@@ -8,11 +8,15 @@ import {useNavigate} from "react-router-dom";
 import successToast from "utils/toasts/successToast";
 import BackdropSpinner from "components/BackdropSpinner";
 import axios from "../../../lib/axios";
+import TagInput from "./TagInput";
 import errorToast from "utils/toasts/errorToast";
 
 const CreatePost = () => {
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.token);
+    const [tags, setTags] = useState([]);
+
+    const [addTags, setAddTags] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -24,17 +28,23 @@ const CreatePost = () => {
     const description = useRef();
     const [image, setImage] = useState(null);
 
+
     function handleImage(e) {
         setImage(e.target.files[0]);
     }
 
     function handleSubmit() {
+        if (!image) {
+            errorToast('Please upload an image')
+            return
+        }
         setIsLoading(true);
         const data = new FormData(); // creates a new data object
 
-        console.log(user);
+        console.log(tags);
 
         data.append("user", user.user_id);
+        data.append("tags", tags);
         data.append("image", image, image.name);
         data.append("title", title.current.value);
         data.append("description", description.current.value);
@@ -42,8 +52,8 @@ const CreatePost = () => {
         console.log(data);
         console.log(title.current.value);
         axios
-            .post("/post/", data, {
-                header: {
+            .post("/create-post/", data, {
+                headers: {
                     Authorization: `Bearer ${token?.access}`,
                 },
             })
@@ -138,7 +148,7 @@ const CreatePost = () => {
                 </div>
             )}
 
-            <div className="md:w-3/5 flex flex-col gap-10">
+            <div className="md:w-3/5 flex flex-col gap-8">
                 <Button primary text="Save" className="place-self-end" onClick={() => handleSubmit()} />
                 <Textarea
                     type="text"
@@ -157,6 +167,7 @@ const CreatePost = () => {
                     placeholder="Tell everyone what is your post about"
                     className="bg-transparent border-b border-gray-400 py-2 outline-none resize-none"
                 />
+                {addTags ? <TagInput tags={tags} setTags={setTags} /> : <Button onClick={()=> setAddTags(true)} text="Add Tags" className="place-self-start"/>}
             </div>
         </div>
     );

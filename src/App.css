@@ -1,3 +1,7 @@
-.signupNow{
+.signupNow {
     margin-inline-start: 3px;
+}
+
+.tagInput::-webkit-calendar-picker-indicator {
+    display: none !important;
 }

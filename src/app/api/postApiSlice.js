@@ -27,6 +27,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        getAllTags: builder.query({
+            query: () => ({
+                url: '/api/tag/',
+                method: 'GET',
+            })
+        }),
     })
 })
 
@@ -34,4 +40,5 @@ export const {
     useCreatePostMutation,
     useGetAllPostMutation,
     useGetSinglePostMutation,
+    useGetAllTagsQuery,
 } = postApiSlice

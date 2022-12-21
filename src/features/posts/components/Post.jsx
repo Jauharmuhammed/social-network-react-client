@@ -17,7 +17,7 @@ const Post = ({post}) => {
             onMouseLeave={() => setHover(false)}
             id="singlePost"
             onClick={handleClick}
-            className="min-w-[150px] min-h-[150px] w-full h-fit mb-2 cursor-pointer transition-all duration-300 flex flex-col gap-2">
+            className="min-w-[150px] min-h-[150px] w-full h-fit mb-2 cursor-pointer transition-all duration-300 flex flex-col gap-1">
             <div className="w-full h-[95%] relative rounded-3xl overflow-hidden transition-all duration-300 ">
                 <img className="w-full h-full object-cover " src={post?.image} alt={post?.title} />
                 {hover && (
@@ -29,7 +29,7 @@ const Post = ({post}) => {
                             <Button
                                 primary
                                 text="Save"
-                                className="text-darkgray bg-custom-yellow hover:bg-opacity-90"
+                                className="text-darkgray bg-custom-yellow hover:bg-opacity-90 px-2 py-1"
                             />
                         </div>
                         <div
