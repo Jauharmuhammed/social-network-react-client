@@ -19,7 +19,7 @@ const Post = ({post}) => {
             onClick={handleClick}
             className="min-w-[150px] min-h-[150px] w-full h-fit mb-2 cursor-pointer transition-all duration-300 flex flex-col gap-1">
             <div className="w-full h-[95%] relative rounded-3xl overflow-hidden transition-all duration-300 ">
-                <img className="w-full h-full object-cover " src={post?.image} alt={post?.title} />
+                <img className="w-full h-full min-h-[150px] object-cover " src={post?.image} alt={post?.title} />
                 {hover && (
                     <div
                         id="singlePostContainer"

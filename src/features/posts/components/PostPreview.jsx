@@ -5,9 +5,13 @@ import Button from "components/Button";
 import {ProfileCard} from "features/users";
 import React, {useEffect, useRef} from "react";
 import {useState} from "react";
+import { BiLink } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoShareOutline } from "react-icons/io5";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import imageToast from "utils/toasts/imageToast";
+import uniqueToast from "utils/toasts/uniqueToast";
 
 const PostPreview = ({postId}) => {
     const [post, setPost] = useState({});
@@ -59,20 +63,6 @@ const PostPreview = ({postId}) => {
     const scroll = (scrollOffset) => {
         tag.current.scrollLeft += scrollOffset
 
-
-        // if ((tag.current.scrollLeft + scrollOffset) < 0 ){
-        //     // if reached all the way to the left hide left arrow
-        //     setLeftArrow(false)
-        // }else{
-        //     setLeftArrow(true)
-        // }
-
-        // // if scrolled all the way to the right side 
-        // if ((tag.current.scrollLeft + tag.current.clientWidth + scrollOffset) >= tag.current.scrollWidth) {
-        //     setRightArrow(false);
-        // }else{
-        //     setRightArrow(true)
-        // }
     };
 
     function handleScroll() {
@@ -85,12 +75,15 @@ const PostPreview = ({postId}) => {
         }
 
         
-        if (tag.current.scrollLeft + tag.current.clientWidth >= tag.current.scrollWidth){
+        if ((tag.current.scrollLeft + tag.current.clientWidth + 1 ) >= tag.current.scrollWidth){
             // if scrolled all the way to the right side 
             setRightArrow(false)
         }else{
             setRightArrow(true)
         }
+        console.log(tag.current.scrollLeft);
+        console.log(tag.current.clientWidth);
+        console.log(tag.current.scrollWidth);
 
     }
     
@@ -102,6 +95,14 @@ const PostPreview = ({postId}) => {
         }
     }, [post]);
 
+    function handleCopyLink() {
+        window.navigator.clipboard.writeText(window.location.href)
+        uniqueToast({
+            imageUrl: post?.image,
+            text: "Link copied to clipboard",
+        })
+    }
+
     return (
         <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
             {isLoading && isInitialLoading ? (
@@ -111,9 +112,16 @@ const PostPreview = ({postId}) => {
                     <div className=" w-100 md:w-2/5 relative rounded-3xl  h-fit overflow-hidden">
                         <img src={post?.image} alt={post?.title} className=" object-cover w-full h-full" />
                     </div>
-                    <div className="md:w-3/5 flex flex-col gap-4">
-                        <Button primary text="Save" className="place-self-end" />
-                        <h1 className="text-5xl">{post?.title}</h1>
+                    <div className="md:w-3/5 flex flex-col  gap-4">
+                        <div className="flex justify-between items-center">
+                            <div className="flex gap-4">
+                                <BsThreeDotsVertical  size={'1.3rem'} className='cursor-pointer'/>
+                                <IoShareOutline size={'1.3rem'} className='cursor-pointer'/>
+                                <BiLink onClick={handleCopyLink} size={'1.3rem'} className='cursor-pointer'/>
+                                </div>
+                            <Button primary text="Save" className="" />
+                            </div>
+                        <h1 className="text-5xl mt-5">{post?.title}</h1>
 
                         <p>{post?.description}</p>
                         <div className="flex justify-between">
