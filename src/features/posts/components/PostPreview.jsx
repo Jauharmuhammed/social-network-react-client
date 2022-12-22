@@ -5,13 +5,14 @@ import Button from "components/Button";
 import {ProfileCard} from "features/users";
 import React, {useEffect, useRef} from "react";
 import {useState} from "react";
-import { BiLink } from "react-icons/bi";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoShareOutline } from "react-icons/io5";
+import {BiLink} from "react-icons/bi";
+import {BsThreeDotsVertical} from "react-icons/bs";
+import {IoShareOutline} from "react-icons/io5";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import imageToast from "utils/toasts/imageToast";
 import uniqueToast from "utils/toasts/uniqueToast";
+import Menu from "./Menu";
 
 const PostPreview = ({postId}) => {
     const [post, setPost] = useState({});
@@ -19,6 +20,11 @@ const PostPreview = ({postId}) => {
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [followUser] = useFollowUserMutation();
     const navigate = useNavigate();
+
+    const [mouseOverTags, setMouseOverTags] = useState(false);
+
+    const [isTrackPad, setIsTrackPad] = useState();
+    const [scrolling, setScrolling] = useState(false);
 
     const [leftArrow, setLeftArrow] = useState(false);
     const [rightArrow, setRightArrow] = useState(false);
@@ -60,48 +66,91 @@ const PostPreview = ({postId}) => {
         fetchSingePost(postId);
     }, []);
 
-    const scroll = (scrollOffset) => {
-        tag.current.scrollLeft += scrollOffset
+    // fucntion to copy the current link and add to clipboard
+    function handleCopyLink() {
+        window.navigator.clipboard.writeText(window.location.href);
+        uniqueToast({
+            imageUrl: post?.image,
+            text: "Link copied to clipboard",
+        });
+    }
 
+    // scroll using left and right arrows
+    const scroll = (scrollOffset) => {
+        tag.current.scrollLeft += scrollOffset;
     };
 
     function handleScroll() {
         // if started scrolling show left arrow
-        if (tag.current.scrollLeft > 0){
-            setLeftArrow(true)
-        }else{
+        if (tag.current.scrollLeft > 0) {
+            setLeftArrow(true);
+        } else {
             // if reached all the way to the left hide left arrow
-            setLeftArrow(false)
+            setLeftArrow(false);
         }
 
-        
-        if ((tag.current.scrollLeft + tag.current.clientWidth + 1 ) >= tag.current.scrollWidth){
-            // if scrolled all the way to the right side 
-            setRightArrow(false)
-        }else{
-            setRightArrow(true)
+        if (tag.current.scrollLeft + tag.current.clientWidth + 1 >= tag.current.scrollWidth) {
+            // if scrolled all the way to the right side
+            setRightArrow(false);
+        } else {
+            setRightArrow(true);
         }
-        console.log(tag.current.scrollLeft);
-        console.log(tag.current.clientWidth);
-        console.log(tag.current.scrollWidth);
-
     }
-    
 
     useEffect(() => {
         // coditionally render right arrow only if the tags exceeds the available space
-        if ( tag.current.scrollWidth > tag.current.clientWidth) {
+        if (tag?.current?.scrollWidth > tag?.current?.clientWidth) {
             setRightArrow(true);
         }
     }, [post]);
 
-    function handleCopyLink() {
-        window.navigator.clipboard.writeText(window.location.href)
-        uniqueToast({
-            imageUrl: post?.image,
-            text: "Link copied to clipboard",
-        })
+    // fucntion for horizontal scroll called  when scrolled on tags
+    const onWheel = (e) => {
+        const el = tag.current;
+        if (e.deltaY === 0) return;
+        el.scrollTo({
+            left: el.scrollLeft + e.deltaY,
+            behavior: "smooth",
+        });
+    };
+
+    // block the body from verticall scrolling (or any other element) if mouse is over tags
+    useEffect(() => {
+        const cancelWheel = (e) => mouseOverTags && e.preventDefault();
+        document.body.addEventListener("wheel", cancelWheel, {passive: false});
+        return () => document.body.removeEventListener("wheel", cancelWheel);
+    }, [mouseOverTags]);
+
+    // function to check if scrolling using mouse or trackpad to choose the scrolling behaviour
+    // 1. if scrolling using mouse change the default vertical scrolling behaviour to horizontal
+    // 2. else keep the default behaviour for trackpad scrolling
+    function checkScroll(e) {
+        const isTouchPad = e.wheelDeltaY ? e.wheelDeltaY === -3 * e.deltaY : e.deltaMode === 0;
+
+        if (isTouchPad) {
+            setIsTrackPad(true);
+        } else {
+            setIsTrackPad(false);
+        }
     }
+
+    // add event listener to document when scroll happens to check if it is trackpad or mouse
+    useEffect(() => {
+        document.addEventListener("mousewheel", checkScroll, false);
+        document.addEventListener("DOMMouseScroll", checkScroll, false);
+        return () => {
+            document.removeEventListener("mousewheel", checkScroll);
+            document.removeEventListener("DOMMouseScroll", checkScroll);
+        };
+    }, [scrolling]);
+
+    // if scrolling using trackpad keep default scrolling behaviour
+    // is mouseOverTags is true it will disable the verticall scrolling
+    useEffect(() => {
+        if (isTrackPad) {
+            setMouseOverTags(false);
+        }
+    }, [isTrackPad, mouseOverTags]);
 
     return (
         <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
@@ -115,12 +164,15 @@ const PostPreview = ({postId}) => {
                     <div className="md:w-3/5 flex flex-col  gap-4">
                         <div className="flex justify-between items-center">
                             <div className="flex gap-4">
-                                <BsThreeDotsVertical  size={'1.3rem'} className='cursor-pointer'/>
-                                <IoShareOutline size={'1.3rem'} className='cursor-pointer'/>
-                                <BiLink onClick={handleCopyLink} size={'1.3rem'} className='cursor-pointer'/>
+                                <div className="relative">
+                                    <BsThreeDotsVertical size={"1.3rem"} className="cursor-pointer" />
+                                    <Menu />
                                 </div>
-                            <Button primary text="Save" className="" />
+                                <IoShareOutline size={"1.3rem"} className="cursor-pointer" />
+                                <BiLink onClick={handleCopyLink} size={"1.3rem"} className="cursor-pointer" />
                             </div>
+                            <Button primary text="Save" className="" />
+                        </div>
                         <h1 className="text-5xl mt-5">{post?.title}</h1>
 
                         <p>{post?.description}</p>
@@ -141,11 +193,14 @@ const PostPreview = ({postId}) => {
                                 </div>
                             )}
                         </div>
-                        <div className="relative w-full">
+                        <div onScroll={() => setScrolling(true)} id="tagsContainer" className="relative w-full">
                             <ul
                                 ref={tag}
                                 onScroll={handleScroll}
-                                className="postPreviewTags list-none flex gap-1.5 w-full overflow-x-scroll transition-all duration-150">
+                                onMouseOver={() => setMouseOverTags(true)}
+                                onMouseLeave={() => setMouseOverTags(false)}
+                                onWheel={onWheel}
+                                className="postPreviewTags list-none flex gap-1.5 w-full overflow-x-auto transition-all duration-150">
                                 {post?.tags?.map((tag) => (
                                     <li
                                         className="px-3 py-1  bg-white text-darkgray bg-opacity-90 whitespace-nowrap rounded-3xl "
@@ -193,7 +248,6 @@ const PostPreview = ({postId}) => {
                                 </div>
                             )}
                         </div>
-                        
                     </div>
                 </>
             )}
