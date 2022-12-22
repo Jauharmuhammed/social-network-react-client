@@ -17,7 +17,7 @@ const PostPreview = ({postId}) => {
     const navigate = useNavigate();
 
     const [leftArrow, setLeftArrow] = useState(false);
-    const [rightArrow, setRightArrow] = useState(false)
+    const [rightArrow, setRightArrow] = useState(false);
 
     const tag = useRef();
 
@@ -57,33 +57,50 @@ const PostPreview = ({postId}) => {
     }, []);
 
     const scroll = (scrollOffset) => {
-        if ((tag.current.scrollLeft + scrollOffset) < 0) {
-            tag.current.scrollLeft = 0
-            setLeftArrow(false)
-        } else{
-            tag.current.scrollLeft += scrollOffset;
+        tag.current.scrollLeft += scrollOffset
+
+
+        // if ((tag.current.scrollLeft + scrollOffset) < 0 ){
+        //     // if reached all the way to the left hide left arrow
+        //     setLeftArrow(false)
+        // }else{
+        //     setLeftArrow(true)
+        // }
+
+        // // if scrolled all the way to the right side 
+        // if ((tag.current.scrollLeft + tag.current.clientWidth + scrollOffset) >= tag.current.scrollWidth) {
+        //     setRightArrow(false);
+        // }else{
+        //     setRightArrow(true)
+        // }
+    };
+
+    function handleScroll() {
+        // if started scrolling show left arrow
+        if (tag.current.scrollLeft > 0){
             setLeftArrow(true)
-            setRightArrow(true)
+        }else{
+            // if reached all the way to the left hide left arrow
+            setLeftArrow(false)
         }
 
-        if( tag.current.scrollLeft + tag.current.clientWidth === tag.current.scrollWidth){
+        
+        if (tag.current.scrollLeft + tag.current.clientWidth >= tag.current.scrollWidth){
+            // if scrolled all the way to the right side 
             setRightArrow(false)
         }else{
             setRightArrow(true)
         }
 
-        console.log(tag.current.scrollLeft);
-        if(tag.current.scrollLeft === tag.current.scrollLeftMax){
-            console.log('hi');
-        }
-    };
+    }
+    
 
     useEffect(() => {
-      if (tag.current.clientWidth < tag.current.scrollWidth){
-        setRightArrow(true)
-      }
-    }, [post])
-    
+        // coditionally render right arrow only if the tags exceeds the available space
+        if ( tag.current.scrollWidth > tag.current.clientWidth) {
+            setRightArrow(true);
+        }
+    }, [post]);
 
     return (
         <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
@@ -119,7 +136,7 @@ const PostPreview = ({postId}) => {
                         <div className="relative w-full">
                             <ul
                                 ref={tag}
-                                onScroll={()=> setLeftArrow(true)}
+                                onScroll={handleScroll}
                                 className="postPreviewTags list-none flex gap-1.5 w-full overflow-x-scroll transition-all duration-150">
                                 {post?.tags?.map((tag) => (
                                     <li
@@ -129,41 +146,46 @@ const PostPreview = ({postId}) => {
                                     </li>
                                 ))}
                             </ul>
-                            { rightArrow && <div className="absolute right-0 top-0 bg-gradient-to-l from-darkgray to-transparent z-10 w-28 h-full flex justify-end items-center ">
-                                <span
-                                    onClick={() => scroll(200)}
-                                    className="text-white rounded-full hover:bg-slate-100 hover:bg-opacity-20 cursor-pointer">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="1.5em"
-                                        height="1.5em"
-                                        preserveAspectRatio="xMidYMid meet"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            fill="currentColor"
-                                            d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z"
-                                        />
-                                    </svg>
-                                </span>
-                            </div>}
-                            { leftArrow && <div className="absolute left-0 top-0 bg-gradient-to-r from-darkgray to-transparent z-10 w-28 h-full flex justify-start items-center ">
-                                <span
-                                    onClick={() => scroll(-200)}
-                                    className="text-white rotate-180 rounded-full hover:bg-slate-100 hover:bg-opacity-20 cursor-pointer">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="1.5em"
-                                        height="1.5em"
-                                        preserveAspectRatio="xMidYMid meet"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            fill="currentColor"
-                                            d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z"
-                                        />
-                                    </svg>
-                                </span>
-                            </div>}
+                            {leftArrow && (
+                                <div className="absolute left-0 top-0 bg-gradient-to-r from-darkgray to-transparent z-10 w-28 h-full flex justify-start items-center ">
+                                    <span
+                                        onClick={() => scroll(-200)}
+                                        className="text-white rotate-180 rounded-full hover:bg-slate-100 hover:bg-opacity-20 cursor-pointer">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="1.5em"
+                                            height="1.5em"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                fill="currentColor"
+                                                d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z"
+                                            />
+                                        </svg>
+                                    </span>
+                                </div>
+                            )}
+                            {rightArrow && (
+                                <div className="absolute right-0 top-0 bg-gradient-to-l from-darkgray to-transparent z-10 w-28 h-full flex justify-end items-center ">
+                                    <span
+                                        onClick={() => scroll(200)}
+                                        className="text-white rounded-full hover:bg-slate-100 hover:bg-opacity-20 cursor-pointer">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="1.5em"
+                                            height="1.5em"
+                                            preserveAspectRatio="xMidYMid meet"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                fill="currentColor"
+                                                d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z"
+                                            />
+                                        </svg>
+                                    </span>
+                                </div>
+                            )}
                         </div>
+                        
                     </div>
                 </>
             )}
