@@ -29,6 +29,8 @@ const PostPreview = ({postId}) => {
     const [leftArrow, setLeftArrow] = useState(false);
     const [rightArrow, setRightArrow] = useState(false);
 
+    const [showMenu, setShowMenu] = useState(false)
+
     const tag = useRef();
 
     const [getSinglePost, {isLoading}] = useGetSinglePostMutation();
@@ -165,8 +167,8 @@ const PostPreview = ({postId}) => {
                         <div className="flex justify-between items-center">
                             <div className="flex gap-4">
                                 <div className="relative">
-                                    <BsThreeDotsVertical size={"1.3rem"} className="cursor-pointer" />
-                                    <Menu />
+                                    <BsThreeDotsVertical onClick={()=> setShowMenu((prev) => !prev)} size={"1.3rem"} className="cursor-pointer" />
+                                    {showMenu && <Menu post={post} id='postMenuToggleButton' setShowMenu={setShowMenu} />}
                                 </div>
                                 <IoShareOutline size={"1.3rem"} className="cursor-pointer" />
                                 <BiLink onClick={handleCopyLink} size={"1.3rem"} className="cursor-pointer" />
