@@ -46,6 +46,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        getReplies: builder.mutation({
+            query: (id) => ({
+                url: `/api/comment/${id}/replies/`,
+                method: 'GET',
+            })
+        }),
     })
 })
 
@@ -56,4 +62,5 @@ export const {
     useGetAllTagsQuery,
     useAddCommentMutation,
     useGetCommentsByPostMutation,
+    useGetRepliesMutation,
 } = postApiSlice

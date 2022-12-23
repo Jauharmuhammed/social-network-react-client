@@ -6,29 +6,38 @@ import React, {useEffect, useState} from "react";
 import {useRef} from "react";
 import {useSelector} from "react-redux";
 import errorToast from "utils/toasts/errorToast";
-import Comment  from "./Comment";
+import Comment from "./Comment";
 
 const Comments = ({post}) => {
     const user = useSelector((state) => state.auth.user);
     const [toggle, setToggle] = useState(false);
-    const comment = useRef();
+    const commentRef = useRef();
     const [addComment, {isLoading}] = useAddCommentMutation();
     const [getCommetnsByPost] = useGetCommentsByPostMutation();
     const [comments, setComments] = useState([]);
+    const [replyTo, setReplyTo] = useState(null);
 
     async function handleSubmit() {
-        if (comment.current.value === "") return;
+        if (commentRef.current.value === "" || commentRef.current.value.trim() === `@${replyTo?.username}`) return;
         try {
             const response = await addComment({
+                parent: replyTo ? replyTo.id : "",
                 user: user.user_id,
                 post: post.id,
-                body: comment.current.value,
+                body: commentRef.current.value,
             }).unwrap();
 
-            setComments([response, ...comments]);
+            if (!replyTo) {
+                setComments([response, ...comments]);
+                setToggle(true);
+            } else {
+                fetchComments();
+            }
 
             // set input as empty
-            comment.current.value = "";
+            commentRef.current.value = "";
+
+            setReplyTo(null);
         } catch (err) {
             errorToast(err);
         }
@@ -51,10 +60,19 @@ const Comments = ({post}) => {
         }
     }, [post]);
 
+    function handleBackspace(e) {
+        if (e.key === "Backspace" && commentRef.current.value === `@${replyTo?.username} `) {
+            commentRef.current.value = "";
+            setReplyTo(null);
+        }
+    }
+
     return (
         <div className="flex flex-col ">
             <div className="flex gap-1 items-center">
-                <h2 className="text-2xl font-medium my-5">Comments</h2>
+                <h2 className="text-2xl font-medium my-5">
+                    {post?.comments_count > 0 && post?.comments_count} Comments
+                </h2>
                 <span
                     className={classNames("cursor-pointer", toggle && "rotate-90 ")}
                     onClick={() => setToggle((prev) => !prev)}>
@@ -73,30 +91,34 @@ const Comments = ({post}) => {
             </div>
 
             {toggle && (
-                <ul className="list-none my-3 flex gap-2 flex-col">
+                <ul className="list-none my-3 flex gap-3 flex-col">
                     {comments?.map((comment) => (
-                        <Comment key={comment.id} comment={comment} />
+                        <Comment
+                            key={comment.id}
+                            comment={comment}
+                            commentRef={commentRef}
+                            setReplyTo={setReplyTo}
+                            comments={comments}
+                        />
                     ))}
                 </ul>
             )}
             <div className="flex gap-2 items-center mb-10">
                 <img className="w-10 h-10 rounded-full object-cover" src={user?.profile_pic} alt={user?.username} />
                 <input
-                    ref={comment}
+                    ref={commentRef}
                     type="text"
                     className="bg-transparent w-full rounded-3xl border py-2 px-3 outline-none"
                     placeholder="Add a comment"
+                    onKeyDown={handleBackspace}
                 />
-                {isLoading ? (
-                    <ButtonSpinner />
-                ) : (
-                    <Button
-                        disabled={isLoading}
-                        text="Done"
-                        className="bg-white text-darkgray"
-                        onClick={handleSubmit}
-                    />
-                )}
+
+                <Button
+                    disabled={isLoading}
+                    text={isLoading ? <ButtonSpinner /> : replyTo ? "Reply" : "Done"}
+                    className="bg-white text-darkgray"
+                    onClick={handleSubmit}
+                />
             </div>
         </div>
     );
