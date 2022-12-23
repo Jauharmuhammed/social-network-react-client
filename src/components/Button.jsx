@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-const Button = ({text, primary, onClick, className}) => {
+const Button = ({text, primary, onClick, className, ...others}) => {
     const attr = {
         class:
             (primary
@@ -11,7 +11,7 @@ const Button = ({text, primary, onClick, className}) => {
     };
 
     return (
-        <button className={classNames(attr.class, className)} onClick={onClick}>
+        <button className={classNames(attr.class, className)} onClick={onClick} {...others}>
             {text}
         </button>
     );

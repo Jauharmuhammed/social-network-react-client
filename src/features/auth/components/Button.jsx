@@ -6,8 +6,8 @@ const Button = ({ type = "", className = "", disabled = false, content='', ...ot
         <button
             disabled={disabled}
             className={classNames(
+                "w-full rounded-3xl py-3 px-4 bg-custom-yellow text-black font-semibold outline-none",
                 className,
-                "w-full rounded-3xl py-3 px-4 bg-custom-yellow text-black font-semibold outline-none"
             )}
             {...others}
             >

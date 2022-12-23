@@ -1,3 +1,4 @@
+
 export function forceDownload(post){
     let xhr = new XMLHttpRequest();
     xhr.open("GET", post?.image, true);
@@ -7,10 +8,11 @@ export function forceDownload(post){
         let imageUrl = urlCreator.createObjectURL(this.response);
         let tag = document.createElement('a');
         tag.href = imageUrl;
-        tag.download = post?.id;
+        tag.download = post?.title ? post?.title : post?.id;
         document.body.appendChild(tag);
         tag.click();
         document.body.removeChild(tag);
     }
     xhr.send();
+
 }

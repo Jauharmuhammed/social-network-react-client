@@ -6,7 +6,6 @@ const Post = ({post}) => {
     const [hover, setHover] = useState(false);
     const navigate = useNavigate();
     function handleClick(e) {
-        console.log(e.target.id);
         if (e.target.id === "singlePostContainer") {
             navigate(`/post/${post.id}`);
         }

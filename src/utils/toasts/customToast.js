@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 import styles from "../../App.module.css";
 
-const uniqueToast = ({ imageUrl, text = '' }) =>
+const customToast = ({ imageUrl, text = '' }) =>
   toast.custom(
     (t) => (
       <div
@@ -33,4 +33,4 @@ const uniqueToast = ({ imageUrl, text = '' }) =>
   );
 
 
-export default uniqueToast
+export default customToast

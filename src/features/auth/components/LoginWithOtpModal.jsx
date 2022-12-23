@@ -26,7 +26,7 @@ const MobileVerificationModal = () => {
     const [otpErr, setOtpErr] = useState("");
 
     const [sendOtp, { isLoading }] = useSendOtpMutation();
-    const [loginWithOtp, { isLoginLoading }] = useLoginWithOtpMutation();
+    const [loginWithOtp, { isLoading : isLoginLoading }] = useLoginWithOtpMutation();
 
     const dispatch = useDispatch();
 

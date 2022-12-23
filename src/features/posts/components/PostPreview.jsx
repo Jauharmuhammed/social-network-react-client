@@ -11,8 +11,9 @@ import {IoShareOutline} from "react-icons/io5";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import imageToast from "utils/toasts/imageToast";
-import uniqueToast from "utils/toasts/uniqueToast";
+import customToast from "utils/toasts/customToast";
 import Menu from "./Menu";
+import Comments from "./Comments";
 
 const PostPreview = ({postId}) => {
     const [post, setPost] = useState({});
@@ -71,7 +72,7 @@ const PostPreview = ({postId}) => {
     // fucntion to copy the current link and add to clipboard
     function handleCopyLink() {
         window.navigator.clipboard.writeText(window.location.href);
-        uniqueToast({
+     customToast({
             imageUrl: post?.image,
             text: "Link copied to clipboard",
         });
@@ -250,6 +251,7 @@ const PostPreview = ({postId}) => {
                                 </div>
                             )}
                         </div>
+                        <Comments post={post}/>
                     </div>
                 </>
             )}

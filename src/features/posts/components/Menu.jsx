@@ -1,4 +1,4 @@
-import {forceDownload} from "hooks/forceDownload";
+import {forceDownload} from "utils/forceDownload";
 import React from "react";
 
 const Menu = ({post, id, setShowMenu}) => {
