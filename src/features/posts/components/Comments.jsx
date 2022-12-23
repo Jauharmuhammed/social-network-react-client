@@ -24,7 +24,7 @@ const Comments = ({post}) => {
                 parent: replyTo ? replyTo.id : "",
                 user: user.user_id,
                 post: post.id,
-                body: commentRef.current.value,
+                body: replyTo ? commentRef.current.value.replace(`@${replyTo?.username} `,'') : commentRef.current.value,
             }).unwrap();
 
             if (!replyTo) {

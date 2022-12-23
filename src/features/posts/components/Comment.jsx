@@ -53,7 +53,7 @@ const Comment = ({comment, setReplyTo, commentRef, comments}) => {
                                 commentRef.current.focus();
                                 commentRef.current.value = `@${comment.username} `;
                             }}
-                            className="text-gray-400 text-sm cursor-pointer">
+                            className="text-gray-400 text-sm cursor-pointer ">
                             Reply
                         </span>
                         {comment?.replies_count > 0 && (

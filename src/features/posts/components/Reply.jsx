@@ -20,7 +20,7 @@ const Reply = ({reply, setReplyTo, commentRef, comments}) => {
             <div className="flex-col">
                 <p className="text-sm font-light text-gray-100">
                     <span className="text-base font-normal text-white mr-2">{reply.username}</span>
-                    {replyBody}
+                    {replyBody} 
                     {clipped && (
                         <span
                             onClick={() => {
