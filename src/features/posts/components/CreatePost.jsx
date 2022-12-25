@@ -10,11 +10,13 @@ import BackdropSpinner from "components/BackdropSpinner";
 import axios from "../../../lib/axios";
 import TagInput from "./TagInput";
 import errorToast from "utils/toasts/errorToast";
+import Autocomplete from "react-google-autocomplete";
 
 const CreatePost = () => {
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.token);
     const [tags, setTags] = useState([]);
+    const [location, setLocation] = useState('')
 
     const [addTags, setAddTags] = useState(false);
 
@@ -28,15 +30,14 @@ const CreatePost = () => {
     const description = useRef();
     const [image, setImage] = useState(null);
 
-
     function handleImage(e) {
         setImage(e.target.files[0]);
     }
 
     function handleSubmit() {
         if (!image) {
-            errorToast('Please upload an image')
-            return
+            errorToast("Please upload an image");
+            return;
         }
         setIsLoading(true);
         const data = new FormData(); // creates a new data object
@@ -107,6 +108,11 @@ const CreatePost = () => {
         title.current.focus();
     }, []);
 
+    useEffect(() => {
+      console.log(location);
+    }, [location])
+    
+
     return (
         <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
             {isLoading && <BackdropSpinner />}
@@ -167,7 +173,20 @@ const CreatePost = () => {
                     placeholder="Tell everyone what is your post about"
                     className="bg-transparent border-b border-gray-400 py-2 outline-none resize-none"
                 />
-                {addTags ? <TagInput tags={tags} setTags={setTags} /> : <Button onClick={()=> setAddTags(true)} text="Add Tags" className="place-self-start"/>}
+                <Autocomplete
+                    apiKey={process.env.GOOGLE_MAPS_API_KEY}
+                    onPlaceSelected={(place) => {
+                        console.log(place);
+                        setLocation(place)
+                    }}
+                    defaultValue="Amsterdam"
+                    className='bg-transparent py-2 border-b outline-none'
+                />
+                {addTags ? (
+                    <TagInput tags={tags} setTags={setTags} />
+                ) : (
+                    <Button onClick={() => setAddTags(true)} text="Add Tags" className="place-self-start" />
+                )}
             </div>
         </div>
     );

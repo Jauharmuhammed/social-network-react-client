@@ -27,7 +27,7 @@ const Comment = ({comment, setReplyTo, commentRef, comments}) => {
     return (
         <li className="flex flex-col gap-2">
             <div className="flex gap-2">
-                <img className="w-8 h-8 rounded-full object-cover" src={comment.profile_pic} alt="" />
+                <img className="w-8 h-8 rounded-full object-cover cursor-pointer" src={comment.profile_pic} alt={comment.username} />
                 <div className="flex-col">
                     <p className="text-sm font-light text-gray-100">
                         <span className="text-base font-normal text-white mr-2">{comment.username}</span>

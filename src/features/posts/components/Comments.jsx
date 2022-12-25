@@ -19,13 +19,24 @@ const Comments = ({post}) => {
 
     async function handleSubmit() {
         if (commentRef.current.value === "" || commentRef.current.value.trim() === `@${replyTo?.username}`) return;
-        try {
-            const response = await addComment({
+        const mention = `@${replyTo?.username}`
+        let data
+        if ( commentRef.current.value.includes(mention) === false ){
+            data ={
+                user: user.user_id,
+                post: post.id,
+                body: commentRef.current.value,
+            }
+        } else {
+            data = {
                 parent: replyTo ? replyTo.id : "",
                 user: user.user_id,
                 post: post.id,
-                body: replyTo ? commentRef.current.value.replace(`@${replyTo?.username} `,'') : commentRef.current.value,
-            }).unwrap();
+                body: commentRef.current.value.replace(`@${replyTo?.username} `, ""),
+            }
+        }
+        try {
+            const response = await addComment(data).unwrap();
 
             if (!replyTo) {
                 setComments([response, ...comments]);
