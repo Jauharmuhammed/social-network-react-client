@@ -126,7 +126,7 @@ const CreatePost = () => {
                     <div
                         title="Remove image?"
                         onClick={() => setImage(null)}
-                        className="absolute bottom-5 left-1/2 -translate-x-1/2 p-3 cursor-pointer rounded-full bg-custom-yellow">
+                        className="absolute bottom-5 left-1/2 -translate-x-1/2 p-3 cursor-pointer rounded-full bg-custom-yellow text-darkgray">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="0.88em"
@@ -175,10 +175,10 @@ const CreatePost = () => {
                 />
                 <Autocomplete
                     apiKey={process.env.GOOGLE_MAPS_API_KEY}
-                    onPlaceSelected={(place) => {
+                    onPlaceSelected={(place, inputRef, autocomplete) => {
                         console.log(place);
-                        setLocation(place)
-                    }}
+                        console.log(inputRef.current.value);
+                      }} 
                     defaultValue="Amsterdam"
                     className='bg-transparent py-2 border-b outline-none'
                 />

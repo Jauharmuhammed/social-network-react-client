@@ -60,7 +60,6 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/" element={<PrivateRoute />}>
 
-                    <Route path=":username" element={<Profile />} />
 
                     <Route path="auth" >
                         <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
@@ -77,6 +76,7 @@ function App() {
 
                     <Route path="post/:id" element={<PostPage />} />
                     
+                    <Route path=":username" element={<Profile />} />
 
                 </Route>
                 <Route path="notfound" element={<Error404 />} />

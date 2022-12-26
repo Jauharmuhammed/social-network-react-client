@@ -83,8 +83,10 @@ const TagInput = ({tags, setTags, ref}) => {
     }
 
     function handleSelect(e) {
-        if (checkExists(e.target.value) === true) {
-            addTag(e.target.value);
+        if (checkExists(e.target.value)) {
+        console.log(e.target.value);
+        console.log(tag.current.value)
+        addTag(e.target.value);
             e.target.value = "";
         }
     }

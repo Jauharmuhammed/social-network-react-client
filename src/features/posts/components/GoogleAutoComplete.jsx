@@ -7,7 +7,7 @@ const GoogleAutoComplete = () => {
             console.log(place);
         },
     });
-    return <input ref={ref} type="text" className='bg-transparent py-2 outline-none' />;
+    return <input ref={autocompleteRef} type="text" className='bg-transparent py-2 outline-none' />;
 };
 
 export default GoogleAutoComplete;
