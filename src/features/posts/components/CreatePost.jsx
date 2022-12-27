@@ -1,10 +1,10 @@
 import Button from "components/Button";
-import {ProfileCard} from "features/users";
-import React, {useEffect, useRef, useState} from "react";
-import {useSelector} from "react-redux";
+import { ProfileCard } from "features/users";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import Textarea from "react-expanding-textarea";
 // import {useCreatePostMutation} from "../../../app/api/postApiSlice";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import successToast from "utils/toasts/successToast";
 import BackdropSpinner from "components/BackdropSpinner";
 import axios from "../../../lib/axios";
@@ -16,10 +16,8 @@ const CreatePost = () => {
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.token);
     const [tags, setTags] = useState([]);
-    const [location, setLocation] = useState('')
 
     const [addTags, setAddTags] = useState(false);
-
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -28,6 +26,7 @@ const CreatePost = () => {
 
     const title = useRef();
     const description = useRef();
+    const location = useRef();
     const [image, setImage] = useState(null);
 
     function handleImage(e) {
@@ -42,16 +41,13 @@ const CreatePost = () => {
         setIsLoading(true);
         const data = new FormData(); // creates a new data object
 
-        console.log(tags);
-
         data.append("user", user.user_id);
         data.append("tags", tags);
         data.append("image", image, image.name);
         data.append("title", title.current.value);
         data.append("description", description.current.value);
+        data.append("location", location.current.value);
 
-        console.log(data);
-        console.log(title.current.value);
         axios
             .post("/create-post/", data, {
                 headers: {
@@ -108,10 +104,6 @@ const CreatePost = () => {
         title.current.focus();
     }, []);
 
-    useEffect(() => {
-      console.log(location);
-    }, [location])
-    
 
     return (
         <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
@@ -147,7 +139,13 @@ const CreatePost = () => {
                         htmlFor="image">
                         Drag and drop or click to upload
                     </label>
-                    <input type="file" name="image" id="image" hidden onChange={(e) => handleImage(e)} />
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        hidden
+                        onChange={(e) => handleImage(e)}
+                    />
                     <p className="my-auto lg:p-10 text-center font-base text-sm">
                         We recommend using high quality file under 10MB
                     </p>
@@ -155,7 +153,12 @@ const CreatePost = () => {
             )}
 
             <div className="md:w-3/5 flex flex-col gap-8">
-                <Button primary text="Save" className="place-self-end" onClick={() => handleSubmit()} />
+                <Button
+                    primary
+                    text="Save"
+                    className="place-self-end"
+                    onClick={() => handleSubmit()}
+                />
                 <Textarea
                     type="text"
                     name="title"
@@ -164,7 +167,11 @@ const CreatePost = () => {
                     placeholder="Add your title"
                     className="bg-transparent border-b border-gray-400 py-2 outline-none resize-none text-4xl"
                 />
-                <ProfileCard imgUrl={user.profile_pic} name={user.name} followers={user.followers} />
+                <ProfileCard
+                    imgUrl={user.profile_pic}
+                    name={user.name}
+                    followers={user.followers}
+                />
                 <Textarea
                     type="text"
                     name="description"
@@ -175,17 +182,21 @@ const CreatePost = () => {
                 />
                 <Autocomplete
                     apiKey={process.env.GOOGLE_MAPS_API_KEY}
-                    onPlaceSelected={(place, inputRef, autocomplete) => {
+                    onPlaceSelected={(place) => {
                         console.log(place);
-                        console.log(inputRef.current.value);
-                      }} 
+                    }}
+                    ref={location}
                     defaultValue="Amsterdam"
-                    className='bg-transparent py-2 border-b outline-none'
+                    className="bg-transparent py-2 border-b outline-none"
                 />
                 {addTags ? (
                     <TagInput tags={tags} setTags={setTags} />
                 ) : (
-                    <Button onClick={() => setAddTags(true)} text="Add Tags" className="place-self-start" />
+                    <Button
+                        onClick={() => setAddTags(true)}
+                        text="Add Tags"
+                        className="place-self-start"
+                    />
                 )}
             </div>
         </div>

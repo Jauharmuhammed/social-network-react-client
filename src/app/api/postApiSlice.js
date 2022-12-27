@@ -21,6 +21,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        getPostsByTag: builder.mutation({
+            query: ({tag}) => ({
+                url: `/api/tag/${tag}/`,
+                method: 'GET',
+            })
+        }),
         getSinglePost: builder.mutation({
             query: ({id}) => ({
                 url: `/api/post/${id}`,
@@ -52,6 +58,13 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        likeComment: builder.mutation({
+            query: ({id, credentials}) => ({
+                url: `/api/comment/like/${id}/`,
+                method: 'POST',
+                body: {...credentials},
+            })
+        }),
     })
 })
 
@@ -63,4 +76,6 @@ export const {
     useAddCommentMutation,
     useGetCommentsByPostMutation,
     useGetRepliesMutation,
+    useGetPostsByTagMutation,
+    useLikeCommentMutation,
 } = postApiSlice

@@ -115,7 +115,7 @@ const Comments = ({post}) => {
                 </ul>
             )}
             <div className="flex gap-2 items-center mb-10">
-                <img className="w-10 h-10 rounded-full object-cover" src={user?.profile_pic} alt={user?.username} />
+                <img className="w-10 aspect-square rounded-full object-cover" src={user?.profile_pic} alt={user?.username} />
                 <input
                     ref={commentRef}
                     type="text"

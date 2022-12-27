@@ -34,7 +34,7 @@ const TagInput = ({tags, setTags, ref}) => {
 
     function handleRemove(e) {
         if (e.key === "Backspace" && input === "") {
-            removeTag(tags[tags.length - 1]);
+            removeTag(tags[tags?.length - 1]);
         }
     }
 
@@ -46,7 +46,7 @@ const TagInput = ({tags, setTags, ref}) => {
         tag.current.focus()
     }, []);
 
-    const renderedTags = tags.map((tag) => (
+    const renderedTags = tags?.map((tag) => (
         <li key={tag} className="flex items-center gap-2 px-3 py-1 bg-slate-500 bg-opacity-50 rounded-3xl">
             <span className="whitespace-nowrap">{tag}</span>
             <span className="cursor-pointer" onClick={() => removeTag(tag)}>
@@ -99,7 +99,7 @@ const TagInput = ({tags, setTags, ref}) => {
 
     return (
         <div className="w-full border-b border-gray-400 py-2 flex flex-wrap gap-1.5">
-            {tags.length !== 0 && <ul className=" list-none flex flex-wrap gap-1.5">{renderedTags}</ul>}
+            {tags?.length !== 0 && <ul className=" list-none flex flex-wrap gap-1.5">{renderedTags}</ul>}
             <input
                 className="tagInput min-w-[200px] w-72 border-none bg-transparent text-white outline-none"
                 type="text"

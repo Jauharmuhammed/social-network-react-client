@@ -16,7 +16,7 @@ const Reply = ({reply, setReplyTo, commentRef, comments}) => {
     }, [reply.body]);
     return (
         <li className="pl-10 flex gap-2">
-            <img className="w-8 h-8 rounded-full object-cover" src={reply.profile_pic} alt="" />
+            <img className="w-8 h-8 aspect-square rounded-full object-cover" src={reply.profile_pic} alt="" />
             <div className="flex-col">
                 <p className="text-sm font-light text-gray-100">
                     <span className="text-base font-normal text-white mr-2">{reply.username}</span>

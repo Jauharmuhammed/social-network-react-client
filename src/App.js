@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Home, Admin, UserManagement, Error404, Profile, CreatePostPage, PostPage } from "pages/index";
+import { Home, Admin, UserManagement, Error404, Profile, CreatePostPage, PostPage, Feed } from "pages/index";
 import PrivateRoute from "utils/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import VerifyMail from "features/auth/components/VerifyMail";
@@ -75,6 +75,8 @@ function App() {
                     <Route path="create" element={<CreatePostPage />} />
 
                     <Route path="post/:id" element={<PostPage />} />
+
+                    <Route path="tag/:tag" element={<Feed />} />
                     
                     <Route path=":username" element={<Profile />} />
 
