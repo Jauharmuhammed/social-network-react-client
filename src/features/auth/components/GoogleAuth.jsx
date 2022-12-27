@@ -45,7 +45,7 @@ const GoogleAuth = () => {
         google.accounts.id.renderButton(document.getElementById("googleAuthButton"), {
             theme: "outline",
             size: "large",
-            width: "354",
+            width: window.innerWidth > 500 ? "354" : '294',
             shape: "pill",
             logo_alignment: "center",
             text: "continue_with",

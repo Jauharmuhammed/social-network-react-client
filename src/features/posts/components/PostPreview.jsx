@@ -73,7 +73,7 @@ const PostPreview = ({ postId }) => {
     }
 
     return (
-        <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
+        <div className="min-h-[700px] bg-[#323232] sm:rounded-3xl sm:my-8 xl:mx-24 p-5 text-white flex flex-col sm:flex-row gap-4 sm:gap-10">
             {isLoading && isInitialLoading ? (
                 <BackdropSpinner />
             ) : (
@@ -112,7 +112,7 @@ const PostPreview = ({ postId }) => {
                             </div>
                             <Button primary text="Save" className="" />
                         </div>
-                        <h1 className="text-5xl mt-5">{post?.title}</h1>
+                        <h1 className="text-5xl mt-1 sm:mt-5">{post?.title}</h1>
                         {post?.location && <div className="flex gap-1 items-center">
                             <span>
                                 <svg

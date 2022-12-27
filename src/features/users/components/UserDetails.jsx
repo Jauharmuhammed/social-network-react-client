@@ -42,14 +42,14 @@ const UserDetails = ({username}) => {
 
     return (
         user && (
-            <div className="w-100 flex justify-start py-10 gap-10  text-gray-100 ">
+            <div className="w-100 flex flex-col sm:flex-row justify-start items-center px-3  py-10 gap-3 sm:gap-10  text-gray-100 ">
                 <img
-                    className="w-56 aspect-square max-h-56 rounded-full object-cover"
+                    className="w-36 sm:w-56 aspect-square max-h-56 rounded-full object-cover"
                     src={user?.profile_pic}
                     alt={`${user?.username} profile`}
                 />
-                <div className="flex flex-col justify-center">
-                    <h1 className="text-5xl font-bold ">{user?.full_name}</h1>
+                <div className="flex flex-col justify-center items-center sm:items-start">
+                    <h1 className="text-3xl md:text-5xl font-bold ">{user?.full_name}</h1>
                     <p className="text-gray-400 pl-1">@{user?.username}</p>
                     <div className="font-600 pl-1">
                         <span>{user?.followers_count} followers</span>

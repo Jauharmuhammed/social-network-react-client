@@ -81,7 +81,7 @@ const Comments = ({post}) => {
     return (
         <div className="flex flex-col ">
             <div className="flex gap-1 items-center">
-                <h2 className="text-2xl font-medium my-5">
+                <h2 className="text-2xl font-medium my-4">
                     {post?.comments_count > 0 && post?.comments_count} Comments
                 </h2>
                 <span
@@ -101,7 +101,7 @@ const Comments = ({post}) => {
                 </span>
             </div>
 
-            {toggle && (
+            {(toggle && comments.length) && (
                 <ul className="list-none my-3 flex gap-3 flex-col">
                     {comments?.map((comment) => (
                         <Comment

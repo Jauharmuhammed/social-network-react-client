@@ -138,7 +138,7 @@ const LoginModal = () => {
                         <Button disabled={isLoading} content={isLoading ? <ButtonSpinner /> : "Login"} />
                     </form>
                     <p className="py-3 font-semibold">OR</p>
-                    <button className="w-full rounded-3xl min-h-[44px] relative  bg-transparent outline-none flex items-center justify-center ">
+                    <button className="w-full rounded-3xl min-h-[44px] relative  bg-transparent outline-none flex items-center justify-center">
                         {!signupOverlay && <GoogleAuth />}
                     </button>
 

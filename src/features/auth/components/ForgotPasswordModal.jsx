@@ -86,7 +86,7 @@ const ForgotPasswordModal = () => {
                         </form>
                         <button
                             onClick={() => dispatch(closeForgotPassword())}
-                            className="w-full mb-5 rounded-3xl mt-5 py-3 px-4 bg-transparent border-white border-2 box-border text-white font-semibold outline-none">
+                            className=" mt-5 bg-transparent box-border text-white font-semibold outline-none">
                             Cancel
                         </button>
                     </>

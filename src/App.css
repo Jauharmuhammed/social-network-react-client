@@ -14,3 +14,7 @@
     scroll-behavior: smooth;
 }
 
+.MuiMasonry-root{
+    margin: 0 !important;
+}
+

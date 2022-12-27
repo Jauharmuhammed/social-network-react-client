@@ -10,7 +10,7 @@ const Menu = ({ post, id, setShowMenu, setEdit }) => {
         <>
             <div
                 id={id}
-                className="absolute -translate-x-1/2 mt-3 rounded-3xl p-3 bg-darkgray text-gray w-56 z-10 ">
+                className="absolute sm:-translate-x-1/2 mt-3 rounded-3xl p-3 bg-darkgray text-gray w-56 z-10 ">
                 <ul className="flex flex-col shadow-2xl list-none">
                     <li
                         onClick={() => forceDownload(post)}

@@ -10,8 +10,8 @@ const TagInput = ({tags, setTags, ref}) => {
     const {data: tagsList} = useGetAllTagsQuery();
 
     function addTag(tagToAdd) {
-        if (tagToAdd !== "") {
-            setTags([...tags, tagToAdd]);
+        if (tagToAdd.trim() !== "") {
+            setTags([...tags, tagToAdd.trim()]);
             setInput("");
         }
     }
@@ -25,10 +25,10 @@ const TagInput = ({tags, setTags, ref}) => {
 
     function handleInput(e) {
         if (e.key === "Enter") {
-            addTag(input);
+            addTag(input.trim());
         }
         if (e.key === ",") {
-            addTag(input.substring(0, input.length - 1));
+            addTag(input.substring(0, input.length - 1).trim());
         }
     }
 
@@ -66,7 +66,7 @@ const TagInput = ({tags, setTags, ref}) => {
     ));
 
     useEffect(() => {
-        const filteredTags = tagsList?.filter((tag) => tag.name.toLowerCase().includes(input.toLowerCase()));
+        const filteredTags = tagsList?.filter((tag) => tag.name.toLowerCase().includes(input.toLowerCase().trim()));
         setAvailableTags(filteredTags);
     }, [tagsList, input]);
 
@@ -75,7 +75,7 @@ const TagInput = ({tags, setTags, ref}) => {
         let i;
         let flag = false;
         for (i = 0; i < x.options.length; i++) {
-            if (inputValue === x.options[i].value) {
+            if (inputValue.trim() === x.options[i].value) {
                 flag = true;
             }
         }

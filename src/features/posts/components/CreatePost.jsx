@@ -106,10 +106,10 @@ const CreatePost = () => {
 
 
     return (
-        <div className="min-h-[700px] bg-[#323232] rounded-3xl my-8 xl:mx-24 p-5 text-white flex gap-10">
+        <div className="min-h-[700px] bg-[#323232] sm:rounded-3xl sm:my-8 xl:mx-24 p-5 text-white flex gap-10 flex-col sm:flex-row">
             {isLoading && <BackdropSpinner />}
             {image ? (
-                <div className=" w-100 md:w-2/5 relative rounded-3xl  h-fit overflow-hidden">
+                <div className="w-1/2 md:w-2/5 relative rounded-3xl  h-fit overflow-hidden">
                     <img
                         src={image ? URL.createObjectURL(image) : ""}
                         alt="uploaded"
@@ -133,7 +133,7 @@ const CreatePost = () => {
                     </div>
                 </div>
             ) : (
-                <div className="bg-slate-200 w-100 md:w-2/5 h-[660px] rounded-3xl p-5 flex flex-col text-darkgray">
+                <div className="bg-slate-200 w-100 md:w-2/5 h-96 md:h-[660px] rounded-3xl p-5 flex flex-col text-darkgray">
                     <label
                         className="border border-gray-400 border-dashed w-full h-4/5 rounded-2xl font-semibold flex items-center justify-center lg:p-16 text-center cursor-pointer"
                         htmlFor="image">
@@ -156,7 +156,7 @@ const CreatePost = () => {
                 <Button
                     primary
                     text="Save"
-                    className="place-self-end"
+                    className="place-self-end order-1 sm:-order-1"
                     onClick={() => handleSubmit()}
                 />
                 <Textarea

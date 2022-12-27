@@ -22,7 +22,7 @@ const Modal = ({children, id, active, closeActive}) => {
             <div
                 className={
                     (active ? "opacity-100" : "translate-y-96 opacity-0") +
-                    " transform w-[450px] h-fit relative rounded-[2rem] bg-black back text-white p-12 transition-transform duration-1000  mt-16"
+                    " transform w-full sm:w-[450px] h-full flex justify-center items-center sm:h-fit relative sm:rounded-[2rem] bg-black text-white p-12 transition-transform duration-1000  sm:mt-16"
                 }>
                 {children}
            
