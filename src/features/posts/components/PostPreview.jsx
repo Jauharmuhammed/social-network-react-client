@@ -98,6 +98,7 @@ const PostPreview = ({ postId }) => {
                                         <Menu
                                             post={post}
                                             id="postMenuToggleButton"
+                                            showMenu={showMenu}
                                             setShowMenu={setShowMenu}
                                             setEdit={setEdit}
                                         />

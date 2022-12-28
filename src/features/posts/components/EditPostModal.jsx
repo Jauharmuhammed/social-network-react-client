@@ -4,7 +4,7 @@ import TagInput from "./TagInput";
 import Textarea from "react-expanding-textarea";
 import Button from "components/Button";
 import { useEffect } from "react";
-import Modal from "components/Modal";
+import Modal from "features/posts/components/Modal";
 import axios from "../../../lib/axios";
 import { useSelector } from "react-redux";
 import successToast from "utils/toasts/successToast";

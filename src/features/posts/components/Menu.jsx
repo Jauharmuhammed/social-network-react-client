@@ -1,40 +1,43 @@
 import { forceDownload } from "utils/forceDownload";
-import React from "react";
+import React, { useState } from "react";
+import Modal from "components/Modal";
+import DeletePostModal from "./DeletePostModal";
 
-const Menu = ({ post, id, setShowMenu, setEdit }) => {
+const Menu = ({ post, id, showMenu, setShowMenu, setEdit }) => {
+    const [postDelete, setPostDelete] = useState(false);
     function handleEditClick() {
         setEdit((prev) => !prev);
         setShowMenu(false);
     }
     return (
-        <>
-            <div
-                id={id}
-                className="absolute sm:-translate-x-1/2 mt-3 rounded-3xl p-3 bg-darkgray text-gray w-56 z-10 ">
-                <ul className="flex flex-col shadow-2xl list-none">
+            <Modal id={id} active={showMenu} closeActive={() => setShowMenu(false)}>
+                <ul className="flex flex-col items-center list-none">
                     <li
                         onClick={() => forceDownload(post)}
-                        className="py-2 px-3 hover:bg-slate-500 rounded-2xl cursor-pointer">
+                        className="py-2.5 px-3 w-full text-center hover:bg-stone-600 rounded-2xl cursor-pointer">
                         Download Image
                     </li>
-                    <li className="py-2 px-3 hover:bg-slate-500 rounded-2xl cursor-pointer">
+                    <li className="py-2.5 px-3 w-full text-center hover:bg-stone-600 rounded-2xl cursor-pointer">
                         Report Post
                     </li>
-                    <li className="py-2 px-3 hover:bg-slate-500 rounded-2xl cursor-pointer">
+                    <li className="py-2.5 px-3 w-full text-center hover:bg-stone-600 rounded-2xl cursor-pointer">
                         Report User
                     </li>
                     <li
                         onClick={handleEditClick}
-                        className="py-2 px-3 hover:bg-slate-500 rounded-2xl cursor-pointer">
+                        className="py-2.5 px-3 w-full text-center hover:bg-stone-600 rounded-2xl cursor-pointer">
                         Edit post
                     </li>
-                    <li className="py-2 px-3 hover:bg-slate-500 rounded-2xl cursor-pointer">
+                    <li
+                        onClick={() => {
+                            setShowMenu(false);
+                            setPostDelete(true);
+                        }}
+                        className="py-2.5 px-3 w-full text-center hover:bg-stone-600 rounded-2xl cursor-pointer">
                         Delete post
                     </li>
                 </ul>
-            </div>
-            <div onClick={() => setShowMenu(false)} className="fixed inset-0 z-[9]"></div>
-        </>
+            </Modal>
     );
 };
 

@@ -33,6 +33,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        deletePost: builder.mutation({
+            query: ({id}) => ({
+                url: `/api/post/${id}`,
+                method: 'DELETE',
+            })
+        }),
         getAllTags: builder.query({
             query: () => ({
                 url: '/api/tag/',
@@ -78,4 +84,5 @@ export const {
     useGetRepliesMutation,
     useGetPostsByTagMutation,
     useLikeCommentMutation,
+    useDeletePostMutation,
 } = postApiSlice

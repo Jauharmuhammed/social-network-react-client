@@ -1,5 +1,5 @@
+import CloseButton from "components/CloseButton";
 import React from "react";
-import CloseButton from "./CloseButton";
 
 
 
@@ -16,15 +16,18 @@ const Modal = ({children, id, active, closeActive}) => {
             onClick={handlClose}
             className={
                 (active ? "flex" : "hidden") +
-                " fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm justify-center items-center z-40"
+                " fixed top-0 left-0 bg-black bg-opacity-40 backdrop-blur-sm  justify-center items-center z-50"
             }>
             {/* modal  */}
             <div
-                className='absolute mt-3 rounded-3xl p-3 bg-stone-700 text-gray w-96 z-50'>
+                className={
+                    (active ? "opacity-100" : "translate-y-96 opacity-0") +
+                    " transform w-full py-8 xl:px-24 relative rounded-[2rem] text-white transition-transform duration-1000 "
+                }>
                 {children}
            
-            </div>
                 <CloseButton onClick={closeActive} />
+            </div>
         </div>
     );
 };
