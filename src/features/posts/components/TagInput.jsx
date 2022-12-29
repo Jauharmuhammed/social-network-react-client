@@ -1,15 +1,23 @@
-import {useGetAllTagsQuery} from "app/api/postApiSlice";
-import React, {useEffect, useRef, useState} from "react";
+import { useGetAllTagsQuery } from "app/api/postApiSlice";
+import React, { useEffect, useRef, useState } from "react";
 
-const TagInput = ({tags, setTags, ref}) => {
+const TagInput = ({ tags, setTags, ref }) => {
     const [input, setInput] = useState("");
     const [availableTags, setAvailableTags] = useState([]);
 
-    const tag = useRef()
 
-    const {data: tagsList} = useGetAllTagsQuery();
+    const tag = useRef();
+
+    const { data: tagsList } = useGetAllTagsQuery();
 
     function addTag(tagToAdd) {
+        // if tag is alredy adde return
+        if (tags?.some((tag) => tag === tagToAdd.trim())) {
+            setInput("");
+            return;
+        }
+
+        // else add as a new tag
         if (tagToAdd.trim() !== "") {
             setTags([...tags, tagToAdd.trim()]);
             setInput("");
@@ -24,6 +32,10 @@ const TagInput = ({tags, setTags, ref}) => {
     }
 
     function handleInput(e) {
+        if (e.key === "Unidentified") {
+            handleSelect()
+        }
+
         if (e.key === "Enter") {
             addTag(input.trim());
         }
@@ -39,15 +51,39 @@ const TagInput = ({tags, setTags, ref}) => {
     }
 
     useEffect(() => {
-        console.log(tagsList);
-    }, [tagsList]);
-
-    useEffect(() => {
-        tag.current.focus()
+        tag.current.focus();
     }, []);
 
+    useEffect(() => {
+        const filteredTags = tagsList?.filter((tag) =>
+            tag.name.toLowerCase().includes(input.toLowerCase().trim())
+        );
+        setAvailableTags(filteredTags);
+    }, [tagsList, input]);
+
+    function checkExists(inputValue) {
+        const x = document.getElementById("availableTags");
+        let i;
+        let flag = false;
+        for (i = 0; i < x.options.length; i++) {
+            if (inputValue.trim() === x.options[i].value) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    function handleSelect() {
+        if (checkExists(tag.current.value)) {
+            addTag(tag.current.value);
+            tag.current.value = "";
+        }
+    }
+
     const renderedTags = tags?.map((tag) => (
-        <li key={tag} className="flex items-center gap-2 px-3 py-1 bg-slate-500 bg-opacity-50 rounded-3xl">
+        <li
+            key={tag}
+            className="flex items-center gap-2 px-3 py-1 bg-slate-500 bg-opacity-50 rounded-3xl">
             <span className="whitespace-nowrap">{tag}</span>
             <span className="cursor-pointer" onClick={() => removeTag(tag)}>
                 <svg
@@ -65,52 +101,32 @@ const TagInput = ({tags, setTags, ref}) => {
         </li>
     ));
 
-    useEffect(() => {
-        const filteredTags = tagsList?.filter((tag) => tag.name.toLowerCase().includes(input.toLowerCase().trim()));
-        setAvailableTags(filteredTags);
-    }, [tagsList, input]);
-
-    function checkExists(inputValue) {
-        const x = document.getElementById("availableTags");
-        let i;
-        let flag = false;
-        for (i = 0; i < x.options.length; i++) {
-            if (inputValue.trim() === x.options[i].value) {
-                flag = true;
-            }
-        }
-        return flag;
-    }
-
-    function handleSelect(e) {
-        if (checkExists(e.target.value)) {
-        console.log(e.target.value);
-        console.log(tag.current.value)
-        addTag(e.target.value);
-            e.target.value = "";
-        }
-    }
-
     const options = availableTags?.map((tag) => (
-        <option onClick={handleSelect} name="tag" className="lowercase w-full" key={tag.name} value={tag.name}>
+        <option
+            onClick={handleSelect}
+            name="tag"
+            className="lowercase w-full"
+            key={tag.name}
+            value={tag.name}>
             {tag.name}
         </option>
     ));
 
     return (
         <div className="w-full border-b border-gray-400 py-2 flex flex-wrap gap-1.5">
-            {tags?.length !== 0 && <ul className=" list-none flex flex-wrap gap-1.5">{renderedTags}</ul>}
+            {tags?.length !== 0 && (
+                <ul className=" list-none flex flex-wrap gap-1.5">{renderedTags}</ul>
+            )}
             <input
                 className="tagInput min-w-[200px] w-72 border-none bg-transparent text-white outline-none"
                 type="text"
                 value={input}
-                onInput={handleSelect}
-                list="availableTags"
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Press Enter or comma to add tag"
                 onKeyUp={handleInput}
                 onKeyDown={handleRemove}
                 ref={tag}
+                list="availableTags"
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Press Enter or comma to add tag"
             />
             <datalist id="availableTags" className="w-full">
                 {input && options}

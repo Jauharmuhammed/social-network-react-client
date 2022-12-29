@@ -101,7 +101,7 @@ const Comments = ({post}) => {
                 </span>
             </div>
 
-            {(toggle && comments.length) && (
+            {(toggle && comments.length > 0 ) && (
                 <ul className="list-none my-3 flex gap-3 flex-col">
                     {comments?.map((comment) => (
                         <Comment

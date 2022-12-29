@@ -16,7 +16,7 @@ const EditPostModal = ({ post, setPost, edit, setEdit }) => {
     const title = useRef();
     const description = useRef();
     const location = useRef();
-    const [tags, setTags] = useState(post?.tags);
+    const [tags, setTags] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit() {
