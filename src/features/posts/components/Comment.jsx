@@ -13,12 +13,22 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
     const [showReplies, setShowReplies] = useState(false);
     const [liked, setliked] = useState(false);
 
+    const [likeCount, setLikeCount] = useState(0);
+
     const [likeComment] = useLikeCommentMutation();
 
     async function handleLike() {
         try {
             const response = await likeComment({ id: comment?.id }).unwrap();
             console.log(response);
+            if (response === "Comment liked") {
+                setliked(true);
+                setLikeCount((prev) => Number(prev) + 1);
+            }
+            if (response === "Comment disliked") {
+                setliked(false);
+                setLikeCount((prev) => Number(prev) - 1);
+            }
         } catch (err) {
             console.log(err);
         }
@@ -40,10 +50,15 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
     }, [comment]);
 
     useEffect(() => {
-      const is_liked = comment?.like?.some(liked_user => liked_user === user.user_id)
-      console.log(is_liked)
-    }, [comment])
-    
+        const is_liked = comment?.like?.some((liked_user) => liked_user === user.user_id);
+        if (is_liked) {
+            setliked(true);
+        }
+    }, [comment]);
+
+    useEffect(() => {
+        setLikeCount(comment?.likes_count > 0 ? comment?.likes_count : "");
+    }, [comment]);
 
     return (
         <li className="flex flex-col gap-2">
@@ -131,7 +146,7 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
                             )}
 
                             <span className="text-sm text-gray-400 ">
-                                {comment?.likes_count > 0 ? comment?.likes_count : ""}
+                                {likeCount > 0 ? likeCount : ""}
                             </span>
                         </span>
                     </div>

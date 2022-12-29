@@ -27,7 +27,7 @@ const Replies = ({comment, commentRef, setReplyTo, comments}) => {
         <ul>
             {replies &&
                 replies?.map((reply) => (
-                    <Reply key={reply.id} reply={reply} commentRef={commentRef} setReplyTo={setReplyTo} comments={comments} />
+                    <Reply key={reply.id} reply={reply} setReplies={setReplies} commentRef={commentRef} setReplyTo={setReplyTo} comments={comments} />
                 ))}
         </ul>
     );
