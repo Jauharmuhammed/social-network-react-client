@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import Modal from "components/Modal";
 import DeletePostModal from "./DeletePostModal";
 
-const Menu = ({ post, id, showMenu, setShowMenu, setEdit }) => {
-    const [postDelete, setPostDelete] = useState(false);
+const Menu = ({ post, id, showMenu, setShowMenu, setEdit, setPostDelete }) => {
 
     function handleEditClick() {
         setEdit((prev) => !prev);

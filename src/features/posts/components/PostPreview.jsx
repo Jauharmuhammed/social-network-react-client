@@ -16,6 +16,7 @@ import Menu from "./Menu";
 import Comments from "./Comments";
 import Tags from "./Tags";
 import EditPostModal from "./EditPostModal";
+import DeletePostModal from "./DeletePostModal";
 
 const PostPreview = ({ postId }) => {
     const [post, setPost] = useState({});
@@ -25,6 +26,7 @@ const PostPreview = ({ postId }) => {
     const navigate = useNavigate();
 
     const [edit, setEdit] = useState(false);
+    const [postDelete, setPostDelete] = useState(false);
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -101,6 +103,7 @@ const PostPreview = ({ postId }) => {
                                             showMenu={showMenu}
                                             setShowMenu={setShowMenu}
                                             setEdit={setEdit}
+                                            setPostDelete={setPostDelete}
                                         />
                                     )}
                                 </div>
@@ -157,6 +160,7 @@ const PostPreview = ({ postId }) => {
                 </>
             )}
             {edit && <EditPostModal post={post} setPost={setPost} edit={edit} setEdit={setEdit} />}
+            {postDelete && <DeletePostModal post={post} setPost={setPost} postDelete={postDelete} setPostDelete={setPostDelete} />}
         </div>
     );
 };
