@@ -3,12 +3,12 @@ import { useFollowUserMutation } from "app/api/usersApiSlice";
 import BackdropSpinner from "components/BackdropSpinner";
 import Button from "components/Button";
 import { ProfileCard } from "features/users";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect} from "react";
 import { useState } from "react";
 import { BiLink } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoShareOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import imageToast from "utils/toasts/imageToast";
 import customToast from "utils/toasts/customToast";
@@ -17,16 +17,20 @@ import Comments from "./Comments";
 import Tags from "./Tags";
 import EditPostModal from "./EditPostModal";
 import DeletePostModal from "./DeletePostModal";
+import { setPost, singlePost } from "../services/postSlice";
+
 
 const PostPreview = ({ postId }) => {
-    const [post, setPost] = useState({});
+    const post = useSelector(singlePost)
     const user = useSelector((state) => state.auth.user);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [followUser] = useFollowUserMutation();
     const navigate = useNavigate();
 
+    const dispatch = useDispatch()
+
     const [edit, setEdit] = useState(false);
-    const [postDelete, setPostDelete] = useState(false);
+    const [deletePostOverlay, setDeletePostOverlay] = useState(false);
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -36,7 +40,7 @@ const PostPreview = ({ postId }) => {
         try {
             const response = await getSinglePost({ id }).unwrap();
             console.log(response);
-            setPost(response);
+            dispatch(setPost(response));
         } catch (err) {
             console.log(err);
             navigate("/notfound");
@@ -98,12 +102,10 @@ const PostPreview = ({ postId }) => {
                                     />
                                     {showMenu && (
                                         <Menu
-                                            post={post}
-                                            id="postMenuToggleButton"
                                             showMenu={showMenu}
                                             setShowMenu={setShowMenu}
                                             setEdit={setEdit}
-                                            setPostDelete={setPostDelete}
+                                            setDeletePostOverlay={setDeletePostOverlay}
                                         />
                                     )}
                                 </div>
@@ -159,8 +161,8 @@ const PostPreview = ({ postId }) => {
                     </div>
                 </>
             )}
-            {edit && <EditPostModal post={post} setPost={setPost} edit={edit} setEdit={setEdit} />}
-            {postDelete && <DeletePostModal post={post} setPost={setPost} postDelete={postDelete} setPostDelete={setPostDelete} />}
+            {edit && <EditPostModal edit={edit} setEdit={setEdit} />}
+            {deletePostOverlay && <DeletePostModal deletePostOverlay={deletePostOverlay} setDeletePostOverlay={setDeletePostOverlay} />}
         </div>
     );
 };

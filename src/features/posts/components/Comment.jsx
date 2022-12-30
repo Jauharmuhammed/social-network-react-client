@@ -3,6 +3,7 @@ import TimeAgo from "components/TimeAgo";
 import Replies from "./Replies";
 import { useLikeCommentMutation } from "app/api/postApiSlice";
 import { useSelector } from "react-redux";
+import DeleteCommentModal from "./DeleteCommentModal";
 
 const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
     const user = useSelector((state) => state.auth.user);
@@ -13,9 +14,11 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
     const [showReplies, setShowReplies] = useState(false);
     const [liked, setliked] = useState(false);
 
+    const [deletable, setDeletable] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
-
     const [likeComment] = useLikeCommentMutation();
+
+    const [deleteCommentOverlay, setDeleteCommentOverlay] = useState(false)
 
     async function handleLike() {
         try {
@@ -47,18 +50,16 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
         if (comment?.replies_count > 0 && comment?.replies_count < 2) {
             setShowReplies(true);
         }
-    }, [comment]);
 
-    useEffect(() => {
         const is_liked = comment?.like?.some((liked_user) => liked_user === user.user_id);
         if (is_liked) {
             setliked(true);
         }
-    }, [comment]);
 
-    useEffect(() => {
         setLikeCount(comment?.likes_count > 0 ? comment?.likes_count : "");
-    }, [comment]);
+
+        comment?.user === user?.user_id && setDeletable(true);
+    }, [comment, user.user_id]);
 
     return (
         <li className="flex flex-col gap-2">
@@ -149,6 +150,10 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
                                 {likeCount > 0 ? likeCount : ""}
                             </span>
                         </span>
+                        { deletable && <span onClick={()=> setDeleteCommentOverlay(true)} className="text-gray-400 text-sm cursor-pointer">
+                            Delete
+                        </span>}
+                        <DeleteCommentModal comment={comment} deleteCommentOverlay={deleteCommentOverlay} setDeleteCommentOverlay={setDeleteCommentOverlay} />
                     </div>
                 </div>
             </div>

@@ -42,7 +42,7 @@ const GoogleAuth = () => {
             callback: handleGoogleAuth,
         });
 
-        google.accounts.id.renderButton(document.getElementById("googleAuthButton"), {
+        google?.accounts?.id?.renderButton(document.getElementById("googleAuthButton"), {
             theme: "outline",
             size: "large",
             width: window.innerWidth > 500 ? "354" : '294',

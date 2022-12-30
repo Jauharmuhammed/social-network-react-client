@@ -9,9 +9,11 @@ import axios from "../../../lib/axios";
 import { useSelector } from "react-redux";
 import successToast from "utils/toasts/successToast";
 import BackdropSpinner from "components/BackdropSpinner";
+import { singlePost } from "../services/postSlice";
 
-const EditPostModal = ({ post, setPost, edit, setEdit }) => {
+const EditPostModal = ({ edit, setEdit }) => {
     const token = useSelector((state) => state.auth.token);
+    const post = useSelector(singlePost)
 
     const title = useRef();
     const description = useRef();
@@ -41,7 +43,6 @@ const EditPostModal = ({ post, setPost, edit, setEdit }) => {
                 successToast("Post Edited successfully");
                 setEdit(false)
                 setIsLoading(false);
-
             })
             .catch((error) => {
                 console.log(error);

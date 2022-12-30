@@ -2,8 +2,11 @@ import { forceDownload } from "utils/forceDownload";
 import React, { useState } from "react";
 import Modal from "components/Modal";
 import DeletePostModal from "./DeletePostModal";
+import { singlePost } from "../services/postSlice";
+import { useSelector } from "react-redux";
 
-const Menu = ({ post, id, showMenu, setShowMenu, setEdit, setPostDelete }) => {
+const Menu = ({ showMenu, setShowMenu, setEdit, setDeletePostOverlay }) => {
+    const post = useSelector(singlePost)
 
     function handleEditClick() {
         setEdit((prev) => !prev);
@@ -17,10 +20,10 @@ const Menu = ({ post, id, showMenu, setShowMenu, setEdit, setPostDelete }) => {
 
     function handleDeletePost() {
         setShowMenu(false);
-        setPostDelete(true);
+        setDeletePostOverlay(true);
     }
     return (
-        <Modal id={id} active={showMenu} closeActive={() => setShowMenu(false)}>
+        <Modal id='postMenuToggleButton' active={showMenu} closeActive={() => setShowMenu(false)}>
             <ul className="flex flex-col items-center list-none">
                 <li
                     onClick={handleDownload}

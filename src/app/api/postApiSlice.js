@@ -52,6 +52,12 @@ export const postApiSlice = apiSlice.injectEndpoints({
                 body: {...credentials},
             })
         }),
+        deleteComment: builder.mutation({
+            query: (id) => ({
+                url: `/api/comment/${id}/`,
+                method: 'DELETE',
+            })
+        }),
         getCommentsByPost: builder.mutation({
             query: (id) => ({
                 url: `/api/post/${id}/comments/`,
@@ -85,4 +91,5 @@ export const {
     useGetPostsByTagMutation,
     useLikeCommentMutation,
     useDeletePostMutation,
+    useDeleteCommentMutation,
 } = postApiSlice
