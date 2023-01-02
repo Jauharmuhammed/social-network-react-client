@@ -20,7 +20,7 @@ const Modal = ({children, id, active, closeActive}) => {
             }>
             {/* modal  */}
             <div
-                className='absolute mt-3 rounded-3xl p-3 bg-stone-800 text-gray w-96 z-50'>
+                className='absolute mt-3 rounded-3xl p-3 bg-stone-800 text-white w-96 z-50'>
                 {children}
            
             </div>

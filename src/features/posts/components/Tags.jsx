@@ -41,6 +41,7 @@ const Tags = ({ tags }) => {
         if (tag?.current?.scrollWidth > tag?.current?.clientWidth) {
             setRightArrow(true);
         }
+        else setRightArrow(false)
     }, [tags]);
 
     // fucntion for horizontal scroll called  when scrolled on tags

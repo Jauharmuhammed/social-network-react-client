@@ -1,25 +1,38 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Home, Admin, UserManagement, Error404, Profile, CreatePostPage, PostPage, Feed } from "pages/index";
+import {
+    Home,
+    Admin,
+    UserManagement,
+    Error404,
+    Profile,
+    CreatePostPage,
+    PostPage,
+    Feed,
+    Collection,
+} from "pages/index";
 import PrivateRoute from "utils/PrivateRoute";
 import { Toaster } from "react-hot-toast";
 import VerifyMail from "features/auth/components/VerifyMail";
 import VerifyPasswordChange from "features/auth/components/VerifyPasswordChange";
 import AdminRoute from "utils/AdminRoute";
 import { useDispatch, useSelector } from "react-redux";
-import axios from './lib/axios'
-import { logOut, setCredentials } from "features/auth/services/authSlice";
+import axios from "./lib/axios";
+import { logOut, setCollections, setCredentials } from "features/auth/services/authSlice";
+import { useCollectionsByUserQuery } from "app/api/usersApiSlice";
+import CollectionChangeModal from "features/posts/components/CollectionChangeModal";
 
 function App() {
     const token = useSelector((state) => state.auth.token);
-    const dispatch = useDispatch()
-    const [loading, setLoading] = useState(true)
-
+    const user = useSelector((state) => state.auth.user);
+    const { data: collections } = useCollectionsByUserQuery({ username: user?.username });
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true);
 
     const updateToken = () => {
-        if (!token) return
-        console.log('update token triggered');
+        if (!token) return;
+        console.log("update token triggered");
 
         axios
             .post("/token/refresh/", { refresh: token?.refresh })
@@ -28,44 +41,47 @@ function App() {
             })
             .catch((err) => {
                 console.log(err);
-                dispatch(logOut())
+                dispatch(logOut());
             });
 
         if (loading) {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
-
     useEffect(() => {
         if (loading) {
-            updateToken()
+            updateToken();
         }
 
         const fourMinutes = 1000 * 60 * 4;
         let interval = setInterval(() => {
             if (token) {
-                updateToken()
+                updateToken();
             }
         }, fourMinutes);
         return () => clearInterval(interval);
     }, [token, loading]);
 
+    useEffect(() => {
+        dispatch(setCollections(collections));
+    }, [collections]);
 
     return (
         <>
             <Toaster />
+            <CollectionChangeModal/>
 
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/" element={<PrivateRoute />}>
-
-
-                    <Route path="auth" >
+                    <Route path="auth">
                         <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
-                        <Route path="forgot/password/:uid/:token" element={<VerifyPasswordChange />} />
+                        <Route
+                            path="forgot/password/:uid/:token"
+                            element={<VerifyPasswordChange />}
+                        />
                     </Route>
-
 
                     <Route path="admin" element={<AdminRoute />}>
                         <Route index element={<Admin />} />
@@ -77,9 +93,11 @@ function App() {
                     <Route path="post/:id" element={<PostPage />} />
 
                     <Route path="tag/:tag" element={<Feed />} />
-                    
-                    <Route path=":username" element={<Profile />} />
 
+                    <Route path=":username">
+                        <Route index element={<Profile />} />
+                        <Route path=":collection" element={<Collection />} />
+                    </Route>
                 </Route>
                 <Route path="notfound" element={<Error404 />} />
                 {/* Catch all - replace with 404 component */}

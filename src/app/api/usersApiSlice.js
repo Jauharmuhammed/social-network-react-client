@@ -16,12 +16,24 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials }
             })
         }),
-        PostsByUser: builder.mutation({
+        postsByUser: builder.mutation({
             query: ({username}) => ({
-                url: `/api/post/user/${username}`,
+                url: `/api/post/user/${username}/`,
                 method: 'GET'
             })
-        })
+        }),
+        collectionsByUser: builder.query({
+            query: ({username}) => ({
+                url: `/api/collections/${username}/`,
+                method: 'GET'
+            })
+        }),
+        postsByCollection: builder.mutation({
+            query: ({username, slug}) => ({
+                url: `/api/collection/${username}/${slug}/`,
+                method: 'GET'
+            })
+        }),
     })
 }) 
 
@@ -29,4 +41,6 @@ export const {
     useGetUserDetailsMutation,
     useFollowUserMutation,
     usePostsByUserMutation,
+    useCollectionsByUserQuery,
+    usePostsByCollectionMutation,
 } = usersApiSlice

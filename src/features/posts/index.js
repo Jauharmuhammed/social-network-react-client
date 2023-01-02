@@ -6,3 +6,4 @@ export {default as Posts } from './components/Posts'
 
 
 export {default as postReducer } from './services/postSlice'
+export {default as postModalReducer } from './services/postModalSlice'

@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import { Layout } from "components/Layout";
+import Collections from "features/users/components/Collections";
 import CreatedPosts from "features/users/components/CreatedPosts";
 import UserDetails from "features/users/components/UserDetails";
 import React from "react";
@@ -24,6 +25,7 @@ const Profile = () => {
               <Button onClick={handlePills } className={`${showSaved && 'bg-white text-darkgray'}`} text='Saved' />
             </div>
             {showCreated && <CreatedPosts username={username} />}
+            {showSaved && <Collections username={username} />}
         </Layout>
     );
 };
