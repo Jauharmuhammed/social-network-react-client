@@ -3,7 +3,7 @@ import { ProfileCard } from "features/users";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Textarea from "react-expanding-textarea";
-// import {useCreatePostMutation} from "../../../app/api/postApiSlice";
+import { FileUploader } from "react-drag-drop-files";
 import { useNavigate } from "react-router-dom";
 import successToast from "utils/toasts/successToast";
 import BackdropSpinner from "components/BackdropSpinner";
@@ -22,15 +22,13 @@ const CreatePost = () => {
 
     const navigate = useNavigate();
 
-    // const [createPost, {isLoading}] = useCreatePostMutation();
-
     const title = useRef();
     const description = useRef();
     const location = useRef();
     const [image, setImage] = useState(null);
 
-    function handleImage(e) {
-        setImage(e.target.files[0]);
+    function handleImage(image) {
+        setImage(image);
     }
 
     function handleSubmit() {
@@ -65,45 +63,11 @@ const CreatePost = () => {
                 console.log(error);
                 setIsLoading(false);
             });
-
-        // fetch("http://127.0.0.1:8000/api/post/", {
-        //     method: "POST",
-        //     header: {
-        //         Authorization: `Bearer ${token?.access}`,
-        //     },
-        //     body: data,
-        // })
-        //     .then((res) => {
-        //         console.log(res);
-        //         navigate("/");
-        //         successToast("Post created successfully");
-        //         setIsLoading(false);
-        //         setImage(null);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         setIsLoading(false);
-        //         successToast(error.data);
-        //     });
-
-        // try{
-        //     const response = await createPost({
-        //         user: parseInt(user.user_id),
-        //         image: image,
-        //         title: title.current.value,
-        //         description: description.current.value,
-        //     }).unwrap()
-        //     console.log(response);
-        // }
-        // catch (err) {
-        //     console.log(err);
-        // }
     }
 
     useEffect(() => {
         title.current.focus();
     }, []);
-
 
     return (
         <div className="min-h-[700px] bg-[#323232] sm:rounded-3xl sm:my-8 xl:mx-24 p-5 text-white flex gap-10 flex-col sm:flex-row">
@@ -133,19 +97,19 @@ const CreatePost = () => {
                     </div>
                 </div>
             ) : (
-                <div className="bg-slate-200 w-100 md:w-2/5 h-96 md:h-[660px] rounded-3xl p-5 flex flex-col text-darkgray">
-                    <label
-                        className="border border-gray-400 border-dashed w-full h-4/5 rounded-2xl font-semibold flex items-center justify-center lg:p-16 text-center cursor-pointer"
-                        htmlFor="image">
-                        Drag and drop or click to upload
-                    </label>
-                    <input
-                        type="file"
-                        name="image"
-                        id="image"
-                        hidden
-                        onChange={(e) => handleImage(e)}
-                    />
+                <div className="bg-slate-200 w-100 md:w-2/5 h-96 md:h-[660px] rounded-3xl p-5 flex flex-col flex-auto text-darkgray">
+                    <FileUploader
+                        handleChange={handleImage}
+                        label="Drag and drop or click to upload"
+                        name="file"
+                        hoverTitle=' '
+                        types={["JPEG", "JPG", "PNG", "GIF"]}>
+                        <div
+                            className="border border-gray-400 border-dashed w-full h-full rounded-2xl font-semibold flex items-center justify-center py-28 md:py-[28vh] lg:px-16  text-center cursor-pointer"
+                            htmlFor="image">
+                            Drag and drop or click to upload
+                        </div>
+                    </FileUploader>
                     <p className="my-auto lg:p-10 text-center font-base text-sm">
                         We recommend using high quality file under 10MB
                     </p>
