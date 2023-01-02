@@ -4,18 +4,20 @@ import Button from "components/Button";
 import ButtonSpinner from "components/ButtonSpinner";
 import React, {useEffect, useState} from "react";
 import {useRef} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import errorToast from "utils/toasts/errorToast";
+import { addComments, increasePostCommentCount, setComments, singlePostComments } from "../services/postSlice";
 import Comment from "./Comment";
 
 const Comments = ({post}) => {
     const user = useSelector((state) => state.auth.user);
+    const comments = useSelector(singlePostComments)
     const [toggle, setToggle] = useState(false);
     const commentRef = useRef();
     const [addComment, {isLoading}] = useAddCommentMutation();
     const [getCommetnsByPost] = useGetCommentsByPostMutation();
-    const [comments, setComments] = useState([]);
     const [replyTo, setReplyTo] = useState(null);
+    const dispatch = useDispatch()
 
     async function handleSubmit() {
         if (commentRef.current.value === "" || commentRef.current.value.trim() === `@${replyTo?.username}`) return;
@@ -39,10 +41,12 @@ const Comments = ({post}) => {
             const response = await addComment(data).unwrap();
 
             if (!replyTo) {
-                setComments([response, ...comments]);
+                dispatch(addComments(response));
                 setToggle(true);
+                dispatch(increasePostCommentCount())
             } else {
                 fetchComments();
+                dispatch(increasePostCommentCount())
             }
 
             // set input as empty
@@ -57,8 +61,7 @@ const Comments = ({post}) => {
     async function fetchComments() {
         try {
             const response = await getCommetnsByPost(post?.id).unwrap();
-            console.log(response);
-            setComments(response);
+            dispatch(setComments(response))
         } catch (err) {
             console.log(err);
         }
@@ -109,7 +112,6 @@ const Comments = ({post}) => {
                             comment={comment}
                             commentRef={commentRef}
                             setReplyTo={setReplyTo}
-                            comments={comments}
                         />
                     ))}
                 </ul>

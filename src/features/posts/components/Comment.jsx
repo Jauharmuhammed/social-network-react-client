@@ -4,9 +4,11 @@ import Replies from "./Replies";
 import { useLikeCommentMutation } from "app/api/postApiSlice";
 import { useSelector } from "react-redux";
 import DeleteCommentModal from "./DeleteCommentModal";
+import { singlePostComments } from "../services/postSlice";
 
-const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
+const Comment = ({ comment, setReplyTo, commentRef }) => {
     const user = useSelector((state) => state.auth.user);
+    const comments = useSelector(singlePostComments)
 
     const [commentBody, setCommentBody] = useState("");
     const [hidden, setHidden] = useState(true);
@@ -14,7 +16,7 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
     const [showReplies, setShowReplies] = useState(false);
     const [liked, setliked] = useState(false);
 
-    const [deletable, setDeletable] = useState(false);
+    const [deletable, setDeletable] = useState(false); 
     const [likeCount, setLikeCount] = useState(0);
     const [likeComment] = useLikeCommentMutation();
 
@@ -162,7 +164,6 @@ const Comment = ({ comment, setReplyTo, commentRef, comments }) => {
                     comment={comment}
                     commentRef={commentRef}
                     setReplyTo={setReplyTo}
-                    comments={comments}
                 />
             )}
         </li>

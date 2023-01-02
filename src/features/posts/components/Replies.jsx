@@ -2,7 +2,7 @@ import {useGetRepliesMutation} from "app/api/postApiSlice";
 import React, {useEffect, useState} from "react";
 import Reply from "./Reply";
 
-const Replies = ({comment, commentRef, setReplyTo, comments}) => {
+const Replies = ({comment, commentRef, setReplyTo}) => {
     const [getReplies] = useGetRepliesMutation();
     const [replies, setReplies] = useState([]);
 
@@ -27,7 +27,7 @@ const Replies = ({comment, commentRef, setReplyTo, comments}) => {
         <ul>
             {replies &&
                 replies?.map((reply) => (
-                    <Reply key={reply.id} reply={reply} setReplies={setReplies} commentRef={commentRef} setReplyTo={setReplyTo} comments={comments} />
+                    <Reply key={reply.id} reply={reply} setReplies={setReplies} commentRef={commentRef} setReplyTo={setReplyTo}/>
                 ))}
         </ul>
     );
