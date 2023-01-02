@@ -16,7 +16,7 @@ const Modal = ({children, id, active, closeActive}) => {
             onClick={handlClose}
             className={
                 (active ? "flex" : "hidden") +
-                " fixed top-0 left-0 bg-black bg-opacity-40 backdrop-blur-sm  justify-center items-center z-50"
+                " fixed top-0 left-0 w-full bg-black bg-opacity-40 backdrop-blur-sm  justify-center items-center z-50"
             }>
             {/* modal  */}
             <div

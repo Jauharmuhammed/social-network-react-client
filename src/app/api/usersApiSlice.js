@@ -16,10 +16,17 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials }
             })
         }),
+        PostsByUser: builder.mutation({
+            query: ({username}) => ({
+                url: `/api/post/user/${username}`,
+                method: 'GET'
+            })
+        })
     })
 }) 
 
 export const {
     useGetUserDetailsMutation,
     useFollowUserMutation,
+    usePostsByUserMutation,
 } = usersApiSlice

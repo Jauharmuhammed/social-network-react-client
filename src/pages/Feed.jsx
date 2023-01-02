@@ -11,9 +11,8 @@ import {
 import Post from "features/posts/components/Post";
 import { useState } from "react";
 import BackdropSpinner from "components/BackdropSpinner";
-import { Masonry } from "@mui/lab";
 import { useParams } from "react-router-dom";
-import { Tags } from "features/posts";
+import { Posts, Tags } from "features/posts";
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
@@ -68,11 +67,7 @@ const Feed = () => {
                 <Layout>
                     <section className="py-10">
                         <div className="mb-5">{tags && <Tags tags={tags} />}</div>
-                        <Masonry columns={{ xs: 2, md: 3, lg: 5 }} spacing={2}>
-                            {posts?.map((post, index) => (
-                                <Post key={index} post={post} />
-                            ))}
-                        </Masonry>
+                        <Posts posts={posts} />
                     </section>
                 </Layout>
             )}

@@ -7,9 +7,7 @@ import LoginModal from "features/auth/components/LoginModal";
 import SignupModal from "features/auth/components/SignupModal";
 import EmailVerificationModal from "features/auth/components/EmailVerificationModal";
 import ForgotPasswordModal from "features/auth/components/ForgotPasswordModal";
-import GoogleAuth from "features/auth/components/GoogleAuth";
 import MobileVerificationModal from "features/auth/components/LoginWithOtpModal";
-import Modal from "features/auth/components/Modal";
 import { Masonry } from "@mui/lab";
 
 const LandingPage = () => {
