@@ -19,8 +19,10 @@ import EditPostModal from "./EditPostModal";
 import DeletePostModal from "./DeletePostModal";
 import { setPost, singlePost } from "../services/postSlice";
 import SaveButton from "./SaveButton";
+import { openCollectionChange } from "features/collection/services/collectionModalSlice";
 
 const PostPreview = ({ postId }) => {
+    const currentCollection = useSelector((state) => state.collection.currentCollection);
     const post = useSelector(singlePost);
     const user = useSelector((state) => state.auth.user);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -116,7 +118,29 @@ const PostPreview = ({ postId }) => {
                                     className="cursor-pointer"
                                 />
                             </div>
-                            <SaveButton post={post} />
+                            <div className="flex gap-5">
+                            <div
+                                onClick={() => dispatch(openCollectionChange())}
+                                className="flex items-center max-w-[60%]">
+                                <p className="ml-2 text-sm whitespace-nowrap max-w overflow-hidden text-ellipsis">
+                                    {currentCollection?.name}
+                                </p>
+                                <span className="cursor-pointer rotate-90">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="1.5em"
+                                        height="1.5em"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            fill="currentColor"
+                                            d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z"
+                                        />
+                                    </svg>
+                                </span>
+                            </div>
+                                <SaveButton post={post} />
+                            </div>
                         </div>
                         <h1 className="text-5xl mt-1 sm:mt-5">{post?.title}</h1>
                         {post?.location && (

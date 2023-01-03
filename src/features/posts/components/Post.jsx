@@ -1,18 +1,24 @@
+import { openCollectionChange } from "features/collection/services/collectionModalSlice";
+import { setSelectedPostToSave } from "features/collection/services/collectionSlice";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SaveButton from "./SaveButton";
 
 const Post = ({ post }) => {
-    
+    const currentCollection = useSelector((state) => state.collection.currentCollection);
     const [hover, setHover] = useState(false);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     function handleClick(e) {
         if (e.target.id === "singlePostContainer") {
             navigate(`/post/${post.id}`);
         }
     }
-
-
+    function handleCollection() {
+        dispatch(openCollectionChange())
+        dispatch(setSelectedPostToSave(post))
+    }
     return (
         <div
             onMouseEnter={() => setHover(true)}
@@ -31,7 +37,27 @@ const Post = ({ post }) => {
                         id="singlePostContainer"
                         className="absolute flex flex-col justify-between z-10 inset-0 p-2 text-white bg-black bg-opacity-50 transition-all duration-300">
                         <div id="savePost" className="flex justify-between items-center max-w-full">
-                            <SaveButton post={post}/>
+                            <div
+                                onClick={handleCollection}
+                                className="flex items-center max-w-[60%]">
+                                <p className="ml-2 text-sm whitespace-nowrap max-w overflow-hidden text-ellipsis">
+                                    {currentCollection?.name}
+                                </p>
+                                <span className="cursor-pointer rotate-90">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="1.5em"
+                                        height="1.5em"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            fill="currentColor"
+                                            d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z"
+                                        />
+                                    </svg>
+                                </span>
+                            </div>
+                            <SaveButton post={post} />
                         </div>
                         <div
                             id="postProfile"

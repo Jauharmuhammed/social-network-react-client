@@ -5,10 +5,10 @@ import { useEffect } from 'react'
 import Collection from './Collection'
 
 const Collections = ({username}) => {
-    const {data: collections_list, isLoading} = useCollectionsByUserQuery({username})
+    const {data: collections_list, isLoading, refetch} = useCollectionsByUserQuery({username})
     useEffect(() => {
-      console.log(collections_list);
-    }, [collections_list])
+      refetch()
+    }, [])
     
     if (isLoading) return <Spinner/>
   return (
