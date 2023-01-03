@@ -30,6 +30,7 @@ import {
 function App() {
     const token = useSelector((state) => state.auth.token);
     const user = useSelector((state) => state.auth.user);
+    const currentCollection = useSelector((state) => state.collection.currentCollection);
     const { data: collections } = useCollectionsByUserQuery({ username: user?.username });
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
@@ -70,7 +71,9 @@ function App() {
     useEffect(() => {
         dispatch(setCurrentUserCollections(collections));
         if (collections?.length > 0) {
-            dispatch(setCurrentCollection(collections[0]));
+            if (!currentCollection) {
+                dispatch(setCurrentCollection(collections[0]));
+            }
         }
     }, [collections]);
 

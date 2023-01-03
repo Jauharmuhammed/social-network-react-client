@@ -31,7 +31,6 @@ const Post = ({ post }) => {
                         id="singlePostContainer"
                         className="absolute flex flex-col justify-between z-10 inset-0 p-2 text-white bg-black bg-opacity-50 transition-all duration-300">
                         <div id="savePost" className="flex justify-between items-center max-w-full">
-                            
                             <SaveButton post={post}/>
                         </div>
                         <div

@@ -56,13 +56,13 @@ const SaveButton = ({ post }) => {
         } else {
             setSaved(false);
         }
-    }, [currentCollection, post, collection]);
+    }, [currentCollection, post]);
 
     return (
         <>
             <div
                 onClick={() => dispatch(openCollectionChange())}
-                className="flex items-center max-w-[75%]">
+                className="flex items-center max-w-[60%]">
                 <p className="ml-2 text-sm whitespace-nowrap max-w overflow-hidden text-ellipsis">
                     {currentCollection?.name}
                 </p>
