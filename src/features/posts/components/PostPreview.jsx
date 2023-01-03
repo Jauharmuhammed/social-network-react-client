@@ -20,6 +20,7 @@ import DeletePostModal from "./DeletePostModal";
 import { setPost, singlePost } from "../services/postSlice";
 import SaveButton from "./SaveButton";
 import { openCollectionChange } from "features/collection/services/collectionModalSlice";
+import { setSelectedPostToSave } from "features/collection/services/collectionSlice";
 
 const PostPreview = ({ postId }) => {
     const currentCollection = useSelector((state) => state.collection.currentCollection);
@@ -65,6 +66,11 @@ const PostPreview = ({ postId }) => {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    function handleCollection() {
+        dispatch(openCollectionChange())
+        dispatch(setSelectedPostToSave(post))
     }
 
     useEffect(() => {
@@ -120,8 +126,8 @@ const PostPreview = ({ postId }) => {
                             </div>
                             <div className="flex gap-5">
                             <div
-                                onClick={() => dispatch(openCollectionChange())}
-                                className="flex items-center max-w-[60%]">
+                                onClick={handleCollection}
+                                className="flex items-center max-w-[60%] cursor-pointer">
                                 <p className="ml-2 text-sm whitespace-nowrap max-w overflow-hidden text-ellipsis">
                                     {currentCollection?.name}
                                 </p>

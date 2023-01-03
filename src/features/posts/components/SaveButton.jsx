@@ -3,13 +3,15 @@ import {
     useSaveToCollectionsMutation,
 } from "app/api/collectionApiSlice";
 import Button from "components/Button";
-import { updateCurrentUserCollections } from "features/collection/services/collectionSlice";
+import {
+    setCurrentCollection,
+    updateCurrentUserCollections,
+} from "features/collection/services/collectionSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import customToast from "utils/toasts/customToast";
 
 const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
-    const collection = useSelector((state) => state.collection.currentCollection);
     const currentCollection = useSelector((state) => state.collection.currentCollection);
     const [saved, setSaved] = useState(false);
 
@@ -19,13 +21,15 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
     const dispatch = useDispatch();
 
     async function handleSave() {
-        const slug = collectionToSave ? collectionToSave.slug : collection.slug
         try {
+            const slug = collectionToSave.slug ? collectionToSave?.slug : currentCollection?.slug;
+            console.log(post?.id);
+            console.log(slug);
             if (saved) {
                 // if already saved remove from collection
                 const response = await removeFromCollection({
                     post: post?.id,
-                    slug
+                    slug,
                 });
                 console.log(response);
                 setSaved(false);
@@ -40,7 +44,10 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
                 setSaved(true);
                 if (response.data !== null || response.data !== "Post is not in the collection") {
                     dispatch(updateCurrentUserCollections(response));
-                    customToast({ imageUrl: post?.image, text: `Saved to ${collection.name}` });
+                    customToast({
+                        imageUrl: post?.image,
+                        text: `Saved to ${currentCollection.name}`,
+                    });
                 }
             }
         } catch (err) {
@@ -49,7 +56,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
     }
 
     useEffect(() => {
-        if (collectionToSave) {
+        if (collectionToSave?.posts) {
             if (collectionToSave?.posts?.some((obj) => obj === post?.id)) {
                 setSaved(true);
             } else {
@@ -62,7 +69,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
                 setSaved(false);
             }
         }
-    }, [currentCollection, post]);
+    }, [currentCollection, collectionToSave, post]);
 
     return (
         <>

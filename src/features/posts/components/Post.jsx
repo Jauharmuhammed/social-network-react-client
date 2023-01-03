@@ -39,7 +39,7 @@ const Post = ({ post }) => {
                         <div id="savePost" className="flex justify-between items-center max-w-full">
                             <div
                                 onClick={handleCollection}
-                                className="flex items-center max-w-[60%]">
+                                className="flex items-center max-w-[60%] cursor-pointer">
                                 <p className="ml-2 text-sm whitespace-nowrap max-w overflow-hidden text-ellipsis">
                                     {currentCollection?.name}
                                 </p>
