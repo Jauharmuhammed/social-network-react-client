@@ -4,6 +4,7 @@ import authReducer from "features/auth/services/authSlice";
 import authModalReducer from "features/auth/services/authModalSlice";
 import userReducer from "features/users/services/userSlice";
 import { postModalReducer, postReducer } from "features/posts";
+import { collectionModalReducer, collectionReducer } from "features/collection";
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         authModal: authModalReducer,
         user: userReducer,
         post: postReducer,
-        postModal: postModalReducer,
+        collection: collectionReducer,
+        collectionModal: collectionModalReducer,
     },
     middleware: getDefaultMiddleware => 
         getDefaultMiddleware().concat(apiSlice.middleware),

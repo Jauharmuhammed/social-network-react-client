@@ -16,7 +16,7 @@
 
 
 .contentWrapper p {
-    @apply text-base text-gray-200 font-semibold leading-relaxed tracking-wider;
+    @apply text-sm text-gray-200 font-semibold leading-relaxed tracking-wider;
 }
 
 .closeIcon {

@@ -3,7 +3,7 @@ import { useFollowUserMutation } from "app/api/usersApiSlice";
 import BackdropSpinner from "components/BackdropSpinner";
 import Button from "components/Button";
 import { ProfileCard } from "features/users";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { BiLink } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -18,16 +18,16 @@ import Tags from "./Tags";
 import EditPostModal from "./EditPostModal";
 import DeletePostModal from "./DeletePostModal";
 import { setPost, singlePost } from "../services/postSlice";
-
+import SaveButton from "./SaveButton";
 
 const PostPreview = ({ postId }) => {
-    const post = useSelector(singlePost)
+    const post = useSelector(singlePost);
     const user = useSelector((state) => state.auth.user);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
     const [followUser] = useFollowUserMutation();
     const navigate = useNavigate();
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const [edit, setEdit] = useState(false);
     const [deletePostOverlay, setDeletePostOverlay] = useState(false);
@@ -116,25 +116,27 @@ const PostPreview = ({ postId }) => {
                                     className="cursor-pointer"
                                 />
                             </div>
-                            <Button primary text="Save" className="" />
+                            <SaveButton post={post} />
                         </div>
                         <h1 className="text-5xl mt-1 sm:mt-5">{post?.title}</h1>
-                        {post?.location && <div className="flex gap-1 items-center">
-                            <span>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="1em"
-                                    height="1em"
-                                    preserveAspectRatio="xMidYMid meet"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        fill="currentColor"
-                                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5a2.5 2.5 0 0 1 0 5z"
-                                    />
-                                </svg>
-                            </span>
-                            <span>{post?.location}</span>
-                        </div>}
+                        {post?.location && (
+                            <div className="flex gap-1 items-center">
+                                <span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="1em"
+                                        height="1em"
+                                        preserveAspectRatio="xMidYMid meet"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            fill="currentColor"
+                                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5a2.5 2.5 0 0 1 0 5z"
+                                        />
+                                    </svg>
+                                </span>
+                                <span>{post?.location}</span>
+                            </div>
+                        )}
 
                         <p>{post?.description}</p>
                         <div className="flex justify-between">
@@ -162,7 +164,12 @@ const PostPreview = ({ postId }) => {
                 </>
             )}
             {edit && <EditPostModal edit={edit} setEdit={setEdit} />}
-            {deletePostOverlay && <DeletePostModal deletePostOverlay={deletePostOverlay} setDeletePostOverlay={setDeletePostOverlay} />}
+            {deletePostOverlay && (
+                <DeletePostModal
+                    deletePostOverlay={deletePostOverlay}
+                    setDeletePostOverlay={setDeletePostOverlay}
+                />
+            )}
         </div>
     );
 };

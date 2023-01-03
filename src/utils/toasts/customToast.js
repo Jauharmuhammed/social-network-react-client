@@ -24,9 +24,6 @@ const customToast = ({ imageUrl, text = '' }) =>
             {text}
           </p>
         </div>
-        {/* <div className={styles.closeIcon} onClick={() => toast.dismiss(t.id)}>
-          <MdOutlineClose />
-        </div> */}
       </div>
     ),
     { id: "unique-notification", position: "top-center" }

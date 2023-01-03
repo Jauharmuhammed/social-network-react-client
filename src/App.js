@@ -19,9 +19,13 @@ import VerifyPasswordChange from "features/auth/components/VerifyPasswordChange"
 import AdminRoute from "utils/AdminRoute";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "./lib/axios";
-import { logOut, setCollections, setCredentials } from "features/auth/services/authSlice";
+import { logOut, setCredentials } from "features/auth/services/authSlice";
 import { useCollectionsByUserQuery } from "app/api/usersApiSlice";
-import CollectionChangeModal from "features/posts/components/CollectionChangeModal";
+import CollectionChangeModal from "features/collection/components/CollectionChangeModal";
+import {
+    setCurrentCollection,
+    setCurrentUserCollections,
+} from "features/collection/services/collectionSlice";
 
 function App() {
     const token = useSelector((state) => state.auth.token);
@@ -64,13 +68,16 @@ function App() {
     }, [token, loading]);
 
     useEffect(() => {
-        dispatch(setCollections(collections));
+        dispatch(setCurrentUserCollections(collections));
+        if (collections?.length > 0) {
+            dispatch(setCurrentCollection(collections[0]));
+        }
     }, [collections]);
 
     return (
         <>
             <Toaster />
-            <CollectionChangeModal/>
+            <CollectionChangeModal />
 
             <Routes>
                 <Route path="/" element={<Home />} />
