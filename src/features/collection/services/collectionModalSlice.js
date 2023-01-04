@@ -5,6 +5,7 @@ export const collectionModalSlice = createSlice({
     initialState: {
         collectionModal: false,
         createCollectionModal: false,
+        collaboratorModal: false,
     },
     reducers: {
         openCollectionModal: (state) => {
@@ -26,6 +27,15 @@ export const collectionModalSlice = createSlice({
         closeCreateCollectionModal: (state) => {
             state.createCollectionModal = false;
         },
+        openCollaboratorModal: (state) => {
+            if (state.collaboratorModal) {
+                state.collaboratorModal = false;
+            }
+            state.collaboratorModal = true;
+        },
+        closeCollaboratorModal: (state) => {
+            state.collaboratorModal = false;
+        },
     },
 });
 
@@ -34,5 +44,7 @@ export const {
     closeCollectionModal,
     openCreateCollectionModal,
     closeCreateCollectionModal,
+    openCollaboratorModal,
+    closeCollaboratorModal,
 } = collectionModalSlice.actions;
 export default collectionModalSlice.reducer;

@@ -93,7 +93,7 @@ const Post = ({ post }) => {
                     </div>
                 )}
             </div>
-            <p className="text-white p-2 font-medium text-ellipsis overflow-hidden ">
+            <p className="text-white p-2 font-medium truncate ">
                 {post?.title}
             </p>
         </div>
