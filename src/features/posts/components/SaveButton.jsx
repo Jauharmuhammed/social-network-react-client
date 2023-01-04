@@ -34,7 +34,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
                 console.log(response);
                 setSaved(false);
                 if (response.data !== null) {
-                    dispatch(updateCurrentUserCollections(response));
+                    dispatch(updateCurrentUserCollections(response.data));
                     customToast({ imageUrl: post?.image, text: "Removed from Collection" });
                 }
             } else {
@@ -43,7 +43,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
                 console.log(response);
                 setSaved(true);
                 if (response.data !== null || response.data !== "Post is not in the collection") {
-                    dispatch(updateCurrentUserCollections(response));
+                    dispatch(updateCurrentUserCollections(response.data));
                     customToast({
                         imageUrl: post?.image,
                         text: `Saved to ${currentCollection.name}`,

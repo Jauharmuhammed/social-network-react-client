@@ -12,11 +12,16 @@ const collectionSlice = createSlice({
             state.currentUserCollections = action.payload;
         },
         updateCurrentUserCollections: (state, action) => {
+            console.log(action.payload)
             const index = state.currentUserCollections.findIndex(
-                (obj) => obj.id === action.payload.data.id
+                (obj) => obj.id === action.payload.id
             );
-            state.currentUserCollections[index] = action.payload.data;
-            state.currentCollection = action.payload.data;
+            if (index !== -1) {
+                state.currentUserCollections[index] = action.payload;
+            } else {
+                state.currentUserCollections = [action.payload, ...state.currentUserCollections];
+            }
+            state.currentCollection = action.payload;
         },
         setCurrentCollection: (state, action) => {
             state.currentCollection = action.payload;

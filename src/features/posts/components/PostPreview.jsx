@@ -19,7 +19,7 @@ import EditPostModal from "./EditPostModal";
 import DeletePostModal from "./DeletePostModal";
 import { setPost, singlePost } from "../services/postSlice";
 import SaveButton from "./SaveButton";
-import { openCollectionChange } from "features/collection/services/collectionModalSlice";
+import { openCollectionModal } from "features/collection/services/collectionModalSlice";
 import { setSelectedPostToSave } from "features/collection/services/collectionSlice";
 
 const PostPreview = ({ postId }) => {
@@ -69,7 +69,7 @@ const PostPreview = ({ postId }) => {
     }
 
     function handleCollection() {
-        dispatch(openCollectionChange())
+        dispatch(openCollectionModal())
         dispatch(setSelectedPostToSave(post))
     }
 

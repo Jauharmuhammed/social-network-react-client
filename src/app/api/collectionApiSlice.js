@@ -17,10 +17,18 @@ export const collectionApiSlice = apiSlice.injectEndpoints({
                 body: {...credentials},
             })
         }),
+        createCollection: builder.mutation({
+            query: ({credentials}) => ({
+                url: `/api/collection/`,
+                method: 'POST',
+                body: {...credentials},
+            })
+        })
     })
 }) 
 
 export const {
     useSaveToCollectionsMutation,
     useRemoveFromCollectionMutation,
+    useCreateCollectionMutation,
 } = collectionApiSlice

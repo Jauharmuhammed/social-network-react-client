@@ -3,22 +3,36 @@ import { createSlice } from "@reduxjs/toolkit";
 export const collectionModalSlice = createSlice({
     name: "collectionModal",
     initialState: {
-        collectionChangeModal: false,
+        collectionModal: false,
+        createCollectionModal: false,
     },
     reducers: {
-        openCollectionChange: (state) => {
-            if (state.collectionChangeModal){
-                state.collectionChangeModal = false
-            }else {
-                state.collectionChangeModal = true
+        openCollectionModal: (state) => {
+            if (state.collectionModal) {
+                state.collectionModal = false;
+            } else {
+                state.collectionModal = true;
             }
-            
         },
-        closeCollectionChange: (state) => {
-            state.collectionChangeModal = false
+        closeCollectionModal: (state) => {
+            state.collectionModal = false;
+        },
+        openCreateCollectionModal: (state) => {
+            if (state.collectionModal) {
+                state.collectionModal = false;
+            }
+            state.createCollectionModal = true;
+        },
+        closeCreateCollectionModal: (state) => {
+            state.createCollectionModal = false;
         },
     },
 });
 
-export const { openCollectionChange, closeCollectionChange } = collectionModalSlice.actions;
+export const {
+    openCollectionModal,
+    closeCollectionModal,
+    openCreateCollectionModal,
+    closeCreateCollectionModal,
+} = collectionModalSlice.actions;
 export default collectionModalSlice.reducer;

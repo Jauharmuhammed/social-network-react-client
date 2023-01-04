@@ -1,4 +1,4 @@
-import { openCollectionChange } from "features/collection/services/collectionModalSlice";
+import { openCollectionModal } from "features/collection/services/collectionModalSlice";
 import { setSelectedPostToSave } from "features/collection/services/collectionSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ const Post = ({ post }) => {
         }
     }
     function handleCollection() {
-        dispatch(openCollectionChange())
+        dispatch(openCollectionModal())
         dispatch(setSelectedPostToSave(post))
     }
     return (

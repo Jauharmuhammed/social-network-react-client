@@ -21,11 +21,12 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "./lib/axios";
 import { logOut, setCredentials } from "features/auth/services/authSlice";
 import { useCollectionsByUserQuery } from "app/api/usersApiSlice";
-import CollectionChangeModal from "features/collection/components/CollectionChangeModal";
+import CollectionModal from "features/collection/components/CollectionModal";
 import {
     setCurrentCollection,
     setCurrentUserCollections,
 } from "features/collection/services/collectionSlice";
+import { CreateCollectionModal } from "features/collection";
 
 function App() {
     const token = useSelector((state) => state.auth.token);
@@ -80,7 +81,8 @@ function App() {
     return (
         <>
             <Toaster />
-            <CollectionChangeModal />
+            <CollectionModal />
+            <CreateCollectionModal/>
 
             <Routes>
                 <Route path="/" element={<Home />} />
