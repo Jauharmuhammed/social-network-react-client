@@ -106,10 +106,12 @@ function App() {
 
                     <Route path="tag/:tag" element={<Feed />} />
 
+
                     <Route path=":username">
                         <Route index element={<Profile />} />
                         <Route path=":collection" element={<Collection />} />
                     </Route>
+                    
                 </Route>
                 <Route path="notfound" element={<Error404 />} />
                 {/* Catch all - replace with 404 component */}

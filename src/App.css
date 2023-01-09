@@ -6,9 +6,30 @@
     display: none !important;
 }
 
-.postPreviewTags::-webkit-scrollbar {
+
+.infinite-scroll-component::-webkit-scrollbar{
+    display: none !important;
+}
+.postPreviewTags::-webkit-scrollbar
+ {
     display: none;
 }
+
+#scrollableDiv::-webkit-scrollbar-track{
+    background-color: black !important;
+}
+
+#scrollableDiv::-webkit-scrollbar-thumb{
+    background-color: white !important;
+    border-radius: 10px;
+}
+
+#scrollableDiv::-webkit-scrollbar{
+    background-color: black !important;
+    width: .4rem;
+}
+
+
 
 .postPreviewTags {
     scroll-behavior: smooth;

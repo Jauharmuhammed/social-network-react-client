@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import Modal from 'features/auth/components/Modal'
 import Nav from './Nav'
 import classNames from 'classnames'
+import ChatLayout from 'features/chat/components/ChatLayout'
 
 export const Layout = ({children, setLoginOverlay, setSignupOverlay, landing, nonavbar, className}) => {
   return (
@@ -11,6 +12,7 @@ export const Layout = ({children, setLoginOverlay, setSignupOverlay, landing, no
         <div className={classNames(className,'lg:px-10 xl:px-24')}>{children}</div>
         <Modal></Modal>
         <Nav landing={landing}/>
+        <ChatLayout/>
     </main>
   )
 }
