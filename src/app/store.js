@@ -5,6 +5,7 @@ import authModalReducer from "features/auth/services/authModalSlice";
 import userReducer from "features/users/services/userSlice";
 import { postModalReducer, postReducer } from "features/posts";
 import { collectionModalReducer, collectionReducer } from "features/collection";
+import { chatModalReducer, chatReducer } from "features/chat";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,8 @@ export const store = configureStore({
         post: postReducer,
         collection: collectionReducer,
         collectionModal: collectionModalReducer,
+        chat: chatReducer,
+        chatModal: chatModalReducer,
     },
     middleware: getDefaultMiddleware => 
         getDefaultMiddleware().concat(apiSlice.middleware),

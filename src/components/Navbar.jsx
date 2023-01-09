@@ -3,6 +3,7 @@ import { useDispatch} from "react-redux";
 import { openLogin, openSignup } from "features/auth/services/authModalSlice";
 import Button from "./Button";
 import { logOut } from 'features/auth/services/authSlice';
+import { openChatModal } from 'features/chat/services/chatModalSlice';
 
 const Navbar = ({ landing }) => {
   const dispatch = useDispatch()
@@ -22,10 +23,16 @@ const Navbar = ({ landing }) => {
           </>
         )}
         {!landing && (
-          <Button
-            text="Log Out"
-            onClick={() => dispatch(logOut())}
-          />
+          <>
+            <Button
+              text="Messages"
+              onClick={() => dispatch(openChatModal())}
+            />
+            <Button
+              text="Log Out"
+              onClick={() => dispatch(logOut())}
+            />
+          </>
         )}
       </div>
     </nav>
