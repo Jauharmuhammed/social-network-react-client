@@ -6,7 +6,7 @@ import { setCurrentConversation } from "../services/chatSlice";
 const ActiveConversations = () => {
     const user = useSelector((state) => state.auth.user);
     const [conversations, setActiveConversations] = useState([]);
-    const [sortedConversations, setSortedConversations] = useState([])
+    const [sortedConversations, setSortedConversations] = useState([]);
     const [getActiveConversations] = useGetActiveConversationsMutation();
     const dispatch = useDispatch();
 
@@ -31,15 +31,26 @@ const ActiveConversations = () => {
     function formatMessageTimestamp(timestamp) {
         if (!timestamp) return;
         const date = new Date(timestamp);
-        return date.toLocaleTimeString('en-US',{ hour: 'numeric', minute: 'numeric', hour12: true })
+        return date.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+        });
     }
 
     useEffect(() => {
-        console.log('conversations', conversations)
-        const arr = [...conversations]
-      setSortedConversations(arr?.sort((a,b) => (a.last_message.timestamp < b.last_message.timestamp) ? 1 : ((b.last_message.timestamp < a.last_message.timestamp) ? -1 : 0)))
-    }, [conversations])
-    
+        console.log("conversations", conversations);
+        const arr = [...conversations];
+        setSortedConversations(
+            arr?.sort((a, b) =>
+                a.last_message.timestamp < b.last_message.timestamp
+                    ? 1
+                    : b.last_message.timestamp < a.last_message.timestamp
+                    ? -1
+                    : 0
+            )
+        );
+    }, [conversations]);
 
     return (
         <div>
@@ -57,14 +68,18 @@ const ActiveConversations = () => {
                         src={c.other_user.profile.profile_pic}
                         alt={c.other_user.profile.full_name}
                     />
-                    <div className='w-full'>
+                    <div className="w-full">
                         <div className="flex justify-between">
                             <h3 className="text-l font-semibold text-gray-300">
                                 {c.other_user.profile.full_name}
                             </h3>
-                            {c.unread_count > 0 && <p className="text-black text-sm rounded-full bg-custom-yellow relative w-4 h-4">
-                                <span className="absolute text-xs left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">{c.unread_count}</span>
-                            </p>}
+                            {c.unread_count > 0 && (
+                                <p className="text-black text-sm rounded-full bg-custom-yellow relative w-4 h-4">
+                                    <span className="absolute text-xs left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                                        {c.unread_count}
+                                    </span>
+                                </p>
+                            )}
                         </div>
                         <div className=" flex justify-between text-sm">
                             <p className="text-gray-500">{c.last_message?.content}</p>

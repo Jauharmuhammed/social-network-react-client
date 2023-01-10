@@ -6,6 +6,7 @@ import userReducer from "features/users/services/userSlice";
 import { postReducer } from "features/posts";
 import { collectionModalReducer, collectionReducer } from "features/collection";
 import { chatModalReducer, chatNotificationReducer, chatReducer } from "features/chat";
+import { notificationModalReducer, notificationReducer } from "features/notification";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,8 @@ export const store = configureStore({
         chat: chatReducer,
         chatModal: chatModalReducer,
         chatNotification: chatNotificationReducer,
+        notification: notificationReducer,
+        notificationModal: notificationModalReducer,
     },
     middleware: getDefaultMiddleware => 
         getDefaultMiddleware().concat(apiSlice.middleware),
