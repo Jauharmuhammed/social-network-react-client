@@ -34,28 +34,39 @@ const NotificationList = ({ connectionStatus, sendJsonMessage }) => {
     }, [connectionStatus, sendJsonMessage]);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-4 overflow-auto h-[93%] pr-2">
             {notification_list?.map((notification) => (
-                <div key={notification.id} className="flex gap-5 p-2">
-                    <Link to={`/${notification.created_by_profile.username}`}>
-                        <img
-                            className="w-10 h-10 aspect-square object-cover rounded-full"
-                            src={notification.created_by_profile.profile_pic}
-                            alt=""
-                        />
-                    </Link>
-                    <div className="flex flex-col">
-                        <p className="text-sm">
-                            <Link to={`/${notification.created_by_profile.username}`}>
-                                {notification.created_by_profile.full_name}
-                            </Link>
-                            <span className="text-gray-400"> {notification.content}</span>
-                        </p>
-                        <TimeAgo
-                            className="text-xs text-gray-600"
-                            timestamp={notification.created}
-                        />
+                <div key={notification.id} className="flex justify-between px-1.5 py-2 hover:bg-stone-800 rounded-lg">
+                    <div className="flex max-w-[82%]">
+                        <Link to={`/${notification.created_by_profile.username}`}>
+                            <img
+                                className="w-10 aspect-square object-cover rounded-full"
+                                src={notification.created_by_profile.profile_pic}
+                                alt=""
+                            />
+                        </Link>
+                        <div className="flex flex-col px-3 max-w-[85%]">
+                            <p className="text-sm ">
+                                <Link to={`/${notification.created_by_profile.username}`}>
+                                    {notification.created_by_profile.full_name}
+                                </Link>
+                                <span className="text-gray-400"> {notification.content}</span>
+                            </p>
+                            <TimeAgo
+                                className="text-xs text-gray-600"
+                                timestamp={notification.created}
+                            />
+                        </div>
                     </div>
+                    {notification.notification_type !== "follow"  && (
+                        <Link className="" to={`/post/${notification.post_details.id}`}>
+                            <img
+                                className="w-12 aspect-square object-cover rounded"
+                                src={notification.post_details.image}
+                                alt=""
+                            />
+                        </Link>
+                    )}
                 </div>
             ))}
         </div>
