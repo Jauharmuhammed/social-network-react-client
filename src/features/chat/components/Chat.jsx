@@ -170,6 +170,7 @@ export default function App() {
         async function fetchConversation() {
             try {
                 const data = await getConversation({ conversationName }).unwrap();
+                console.log(data);
                 setConversation(data);
             } catch (err) {
                 console.log(err);

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { openLogin, openSignup } from "features/auth/services/authModalSlice";
 import Button from "./Button";
 import { logOut } from 'features/auth/services/authSlice';
@@ -7,6 +7,7 @@ import { openChatModal } from 'features/chat/services/chatModalSlice';
 
 const Navbar = ({ landing }) => {
   const dispatch = useDispatch()
+  const unreadMessageCount = useSelector(state => state.chatNotification.unreadMessageCount)
 
 
   return (
@@ -24,10 +25,13 @@ const Navbar = ({ landing }) => {
         )}
         {!landing && (
           <>
-            <Button
-              text="Messages"
-              onClick={() => dispatch(openChatModal())}
-            />
+            <div className='relative'>
+              <Button
+                text="Messages"
+                onClick={() => dispatch(openChatModal())}
+              />
+              {unreadMessageCount > 0 && <span className='absolute -right-2 -top-2 px-2 bg-custom-yellow text-black rounded-full'>{unreadMessageCount}</span>}
+            </div>
             <Button
               text="Log Out"
               onClick={() => dispatch(logOut())}

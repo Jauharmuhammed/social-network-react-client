@@ -4,6 +4,7 @@ import Modal from "features/auth/components/Modal";
 import Nav from "./Nav";
 import classNames from "classnames";
 import ChatLayout from "features/chat/components/ChatLayout";
+import { useSelector } from "react-redux";
 
 export const Layout = ({
     children,
@@ -13,6 +14,7 @@ export const Layout = ({
     nonavbar,
     className,
 }) => {
+    const user = useSelector((state) => state.auth.user);
     return (
         <main className="min-h-screen bg-darkgray md:px-6 text-white">
             {!nonavbar && (
@@ -25,7 +27,7 @@ export const Layout = ({
             <div className={classNames(className, "lg:px-10 xl:px-24")}>{children}</div>
             <Modal></Modal>
             <Nav landing={landing} />
-            <ChatLayout />
+            {user && <ChatLayout />}
         </main>
     );
 };

@@ -17,6 +17,7 @@ const Conversations = () => {
         if (searchQuery === "") return setUsers([]);
         try {
             const res = await searchUsers({ q: searchQuery }).unwrap();
+            console.log(res);
             setUsers(res);
         } catch (err) {
             console.log(err);

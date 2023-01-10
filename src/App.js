@@ -27,10 +27,14 @@ import {
     setCurrentUserCollections,
 } from "features/collection/services/collectionSlice";
 import { CreateCollectionModal } from "features/collection";
+import { updateUnreadMessageCount } from "features/chat/services/chatNotificationSlice";
+import useChatNotification from "features/chat/hooks/useChatNotification";
 
 function App() {
     const token = useSelector((state) => state.auth.token);
     const user = useSelector((state) => state.auth.user);
+    const { unreadMessageCount } = useChatNotification();
+
     const currentCollection = useSelector((state) => state.collection.currentCollection);
     const { data: collections } = useCollectionsByUserQuery({ username: user?.username });
     const dispatch = useDispatch();
@@ -77,6 +81,10 @@ function App() {
             }
         }
     }, [collections]);
+
+    useEffect(() => {
+        dispatch(updateUnreadMessageCount(unreadMessageCount));
+    }, [user, unreadMessageCount]);
 
     return (
         <>
