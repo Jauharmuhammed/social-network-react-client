@@ -82,10 +82,16 @@ function App() {
         <>
             <Toaster />
             <CollectionModal />
-            <CreateCollectionModal/>
+            <CreateCollectionModal />
 
             <Routes>
                 <Route path="/" element={<Home />} />
+
+                <Route path="admin" element={<AdminRoute />}>
+                    <Route index element={<Admin />} />
+                    <Route path="user-management" element={<UserManagement />} />
+                </Route>
+
                 <Route path="/" element={<PrivateRoute />}>
                     <Route path="auth">
                         <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
@@ -95,25 +101,19 @@ function App() {
                         />
                     </Route>
 
-                    <Route path="admin" element={<AdminRoute />}>
-                        <Route index element={<Admin />} />
-                        <Route path="user-management" element={<UserManagement />} />
-                    </Route>
-
                     <Route path="create" element={<CreatePostPage />} />
 
                     <Route path="post/:id" element={<PostPage />} />
 
                     <Route path="tag/:tag" element={<Feed />} />
 
-
                     <Route path=":username">
                         <Route index element={<Profile />} />
                         <Route path=":collection" element={<Collection />} />
                     </Route>
-                    
                 </Route>
                 <Route path="notfound" element={<Error404 />} />
+
                 {/* Catch all - replace with 404 component */}
                 <Route path="*" element={<Error404 />} replace />
             </Routes>

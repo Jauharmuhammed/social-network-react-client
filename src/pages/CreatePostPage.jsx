@@ -4,7 +4,7 @@ import React from 'react'
 
 const CreatePostPage = () => {
   return (
-    <Layout nonavbar >
+    <Layout >
         <CreatePost/>
     </Layout>
   )

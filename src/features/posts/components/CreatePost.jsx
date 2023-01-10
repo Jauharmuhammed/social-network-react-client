@@ -70,7 +70,7 @@ const CreatePost = () => {
     }, []);
 
     return (
-        <div className="min-h-[700px] bg-[#323232] sm:rounded-3xl sm:my-8 xl:mx-24 p-5 text-white flex gap-10 flex-col sm:flex-row">
+        <div className="min-h-[700px] sm:rounded-3xl sm:py-8 xl:px-24 p-5 text-white flex gap-10 flex-col sm:flex-row">
             {isLoading && <BackdropSpinner />}
             {image ? (
                 <div className="w-1/2 md:w-2/5 relative rounded-3xl  h-fit overflow-hidden">

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 const PostPage = () => {
     const {id} = useParams()
   return (
-    <Layout nonavbar>
+    <Layout>
         <PostPreview postId={id}/>
     </Layout>
   )

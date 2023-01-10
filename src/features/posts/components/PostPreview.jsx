@@ -87,7 +87,7 @@ const PostPreview = ({ postId }) => {
     }
 
     return (
-        <div className="min-h-[700px] bg-[#323232] sm:rounded-3xl sm:my-8 xl:mx-24 p-5 text-white flex flex-col sm:flex-row gap-4 sm:gap-10">
+        <div className="min-h-[600px]  sm:rounded-3xl sm:py-8 xl:px-24 p-5 text-white flex flex-col sm:flex-row gap-4 sm:gap-10">
             {isLoading && isInitialLoading ? (
                 <BackdropSpinner />
             ) : (

@@ -10,11 +10,11 @@ const Navbar = ({ landing }) => {
 
 
   return (
-    <nav className="flex justify-between items-center w-full rounded-3xl h-20 bg-black bg-opacity-90 px-7 ">
+    <nav className="flex justify-between items-center w-full rounded-3xl h-20  px-7 ">
       {/* <div className="font-boogaloo text-custom-yellow text-4xl pb-2">
         showyourwork
       </div> */}
-      <div className="text-4xl text-custom-yellow font-bold">S.</div>
+      <div className="text-4xl text-custom-yellow font-bold">Showyourwork.</div>
       <div className="flex gap-5">
         {landing && (
           <>
