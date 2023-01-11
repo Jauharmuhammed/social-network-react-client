@@ -1,4 +1,5 @@
 import { useGetNotificationsMutation } from "app/api/notificationApiSlice";
+import Spinner from "components/Spinner";
 import TimeAgo from "components/TimeAgo";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +33,8 @@ const NotificationList = ({ connectionStatus, sendJsonMessage }) => {
             });
         }
     }, [connectionStatus, sendJsonMessage]);
+
+    if (isLoading) return <Spinner/>
 
     return (
         <div className="flex flex-col mt-4 overflow-auto h-[93%] pr-2 customScrollbar">

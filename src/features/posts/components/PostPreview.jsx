@@ -130,7 +130,7 @@ const PostPreview = ({ postId }) => {
                                     className="cursor-pointer"
                                 />
                             </div>
-                            <div className="flex gap-5">
+                            <div className="flex gap-5 justify-between ">
                             <div
                                 onClick={handleCollection}
                                 className="flex items-center max-w-[60%] cursor-pointer">
