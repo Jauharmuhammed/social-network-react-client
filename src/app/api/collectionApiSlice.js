@@ -19,7 +19,7 @@ export const collectionApiSlice = apiSlice.injectEndpoints({
         }),
         createCollection: builder.mutation({
             query: ({credentials}) => ({
-                url: `/api/collection/`,
+                url: `/api/collection/create`,
                 method: 'POST',
                 body: {...credentials},
             })
