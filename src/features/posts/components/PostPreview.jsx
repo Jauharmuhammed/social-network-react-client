@@ -21,6 +21,8 @@ import { setPost, singlePost } from "../services/postSlice";
 import SaveButton from "./SaveButton";
 import { openCollectionModal } from "features/collection/services/collectionModalSlice";
 import { setSelectedPostToSave } from "features/collection/services/collectionSlice";
+import { ReportModal } from "features/report";
+import { closeReportModal } from "features/report/services/reportModalSlice";
 
 const PostPreview = ({ postId }) => {
     const currentCollection = useSelector((state) => state.collection.currentCollection);
@@ -75,7 +77,7 @@ const PostPreview = ({ postId }) => {
 
     useEffect(() => {
         if (!edit) fetchSingePost(postId);
-    }, [edit]);
+    }, [edit, postId]);
 
     // fucntion to copy the current link and add to clipboard
     function handleCopyLink() {
@@ -85,6 +87,10 @@ const PostPreview = ({ postId }) => {
             text: "Link copied to clipboard",
         });
     }
+
+    useEffect(() => {
+        dispatch(closeReportModal())
+      }, [post])
 
     return (
         <div className="min-h-[600px]  sm:rounded-3xl sm:py-8 xl:px-24 p-5 text-white flex flex-col sm:flex-row gap-4 sm:gap-10">
@@ -200,6 +206,7 @@ const PostPreview = ({ postId }) => {
                     setDeletePostOverlay={setDeletePostOverlay}
                 />
             )}
+            {  post?.user !== user?.user_id && <ReportModal/>}
         </div>
     );
 };

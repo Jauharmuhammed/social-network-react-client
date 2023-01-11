@@ -4,6 +4,7 @@ import { openLogin, openSignup } from "features/auth/services/authModalSlice";
 import Button from "./Button";
 import { logOut } from 'features/auth/services/authSlice';
 import { openChatModal } from 'features/chat/services/chatModalSlice';
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ landing }) => {
   const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const Navbar = ({ landing }) => {
       {/* <div className="font-boogaloo text-custom-yellow text-4xl pb-2">
         showyourwork
       </div> */}
-      <div className="text-4xl text-custom-yellow font-bold">Showyourwork.</div>
+      <Link to='/' className="text-4xl text-custom-yellow font-bold">Showyourwork.</Link>
       <div className="flex gap-5">
         {landing && (
           <>

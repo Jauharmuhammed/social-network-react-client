@@ -15,16 +15,22 @@
     display: none;
 }
 
-#scrollableDiv::-webkit-scrollbar-track{
+#scrollableDiv::-webkit-scrollbar-track,
+.customScrollbar::-webkit-scrollbar-track
+{
     background-color: black !important;
 }
 
-#scrollableDiv::-webkit-scrollbar-thumb{
+#scrollableDiv::-webkit-scrollbar-thumb,
+.customScrollbar::-webkit-scrollbar-thumb
+{
     background-color: white !important;
     border-radius: 10px;
 }
 
-#scrollableDiv::-webkit-scrollbar{
+#scrollableDiv::-webkit-scrollbar,
+.customScrollbar::-webkit-scrollbar
+{
     background-color: black !important;
     width: .4rem;
 }
