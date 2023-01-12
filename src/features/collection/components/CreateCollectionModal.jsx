@@ -20,17 +20,22 @@ const CreateCollectionModal = () => {
     const [privateEnabled, setPrivateEnabled] = useState(false);
     const [image, setImage] = useState(null);
 
-    const [isLoading, setisLoading] = useState(false)
+    const [isLoading, setisLoading] = useState(false);
     const name = useRef();
+    const [initialLoading, setInitialLoading] = useState(false);
 
     function handleSubmit() {
-        setisLoading(true)
+        if (name.current.value === '') {
+            errorToast('Please enter a name for collection')
+        }
+        setisLoading(true);
         const formData = new FormData();
 
         formData.append("user", user.user_id);
         formData.append("cover", image);
+        formData.append("cover_url", postToSave?.image);
         formData.append("name", name.current.value);
-        formData.append("private", privateEnabled);
+        formData.append("private", privateEnabled ? 'True' : 'False');
         formData.append("active", true);
 
         axios
@@ -41,16 +46,18 @@ const CreateCollectionModal = () => {
             })
             .then((res) => {
                 console.log(res);
-                dispatch(updateCurrentUserCollections(res.data))
+                dispatch(updateCurrentUserCollections(res.data));
 
                 dispatch(closeCreateCollectionModal());
                 dispatch(openCollectionModal());
-                setisLoading(false)
+                setisLoading(false);
             })
             .catch((err) => {
-                console.log(err)
-                errorToast(err.response.data)
-                setisLoading(false)
+                console.log(err);
+                if (err.response.data === "A collection With the same name already exists") {
+                    errorToast(err.response.data);
+                }
+                setisLoading(false);
             });
     }
 
@@ -66,7 +73,7 @@ const CreateCollectionModal = () => {
 
     useEffect(() => {
         if (postToSave?.image) {
-            console.log(postToSave);
+            setInitialLoading(true);
         }
     }, [postToSave?.image]);
 
@@ -75,7 +82,7 @@ const CreateCollectionModal = () => {
             id="createCollectionModal"
             active={createCollectionModalOverlay}
             closeActive={() => dispatch(closeCreateCollectionModal())}>
-                {isLoading && <Spinner/>}
+            {isLoading && <Spinner />}
             <h3 className="text-center my-3">Create Collections</h3>
             <div className=" py-5 px-3 flex flex-col gap-5 ">
                 <input
@@ -86,16 +93,25 @@ const CreateCollectionModal = () => {
                     id="name"
                     ref={name}
                 />
-                {image ? (
+                {image || initialLoading ? (
                     <div className="w-1/2 md:w-2/5 relative rounded-3xl aspect-square overflow-hidden">
                         <img
-                            src={image ? URL.createObjectURL(image) : ""}
+                            src={
+                                image && initialLoading
+                                    ? URL.createObjectURL(image)
+                                    : image
+                                    ? URL.createObjectURL(image)
+                                    : postToSave?.image
+                            }
                             alt="uploaded"
                             className=" object-cover w-full h-full"
                         />
                         <div
                             title="Remove image?"
-                            onClick={() => setImage(null)}
+                            onClick={() => {
+                                setImage(null);
+                                setInitialLoading(false);
+                            }}
                             className="absolute bottom-5 left-1/2 -translate-x-1/2 p-3 cursor-pointer rounded-full bg-custom-yellow text-darkgray">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

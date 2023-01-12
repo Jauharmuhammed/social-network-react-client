@@ -14,7 +14,7 @@ const collectionSlice = createSlice({
         updateCurrentUserCollections: (state, action) => {
             console.log(action.payload)
             const index = state.currentUserCollections.findIndex(
-                (obj) => obj.id === action.payload.id
+                (obj) => obj.slug === action.payload.slug
             );
             if (index !== -1) {
                 state.currentUserCollections[index] = action.payload;

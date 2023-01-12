@@ -22,8 +22,8 @@ const CollectionModal = () => {
             active={collectionModalOverlay}
             closeActive={() => dispatch(closeCollectionModal())}>
             <h3 className="text-center my-3">Save to Collections</h3>
-            <div className="px-2 my-3 max-h-[55vh]">
-                <ul className="max-h-[50vh] overflow-y-auto ">
+            <div className="pl-2 pr-1 my-3 max-h-[27.5rem]">
+                <ul className="max-h-[24rem] overflow-y-auto pr-2">
                     {collections?.map((collection) => (
                         <li
                             key={collection.slug}
@@ -66,7 +66,7 @@ const CollectionModal = () => {
                 </ul>
                 <div
                     onClick={() => dispatch(openCreateCollectionModal())}
-                    className="p-2 flex justify-between hover:bg-stone-700 rounded-full cursor-pointer">
+                    className="p-2 mr-2 flex justify-between hover:bg-stone-700 rounded-full cursor-pointer">
                     <div className="flex gap-4 items-center">
                         <div className="w-12 aspect-square rounded-full bg-stone-500  text-black flex justify-center items-center">
                             <svg

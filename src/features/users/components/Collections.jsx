@@ -14,7 +14,7 @@ const Collections = ({username}) => {
   return (
     <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-3'>
         {collections_list?.map(collection => (
-            <Collection key={collection.id} collection={collection} />
+            <Collection key={collection.slug} collection={collection} />
         ))}
     </div>
   )

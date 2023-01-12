@@ -80,7 +80,7 @@ function App() {
                 dispatch(setCurrentCollection(collections[0]));
             }
         }
-    }, [collections]);
+    }, [collections, user]);
 
     useEffect(() => {
         dispatch(updateUnreadMessageCount(unreadMessageCount));
