@@ -23,7 +23,13 @@ export const collectionApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: {...credentials},
             })
-        })
+        }),
+        deleteCollection: builder.mutation({
+            query: (id) => ({
+                url: `/api/collection/${id}`,
+                method: 'DELETE',
+            })
+        }),
     })
 }) 
 
@@ -31,4 +37,5 @@ export const {
     useSaveToCollectionsMutation,
     useRemoveFromCollectionMutation,
     useCreateCollectionMutation,
+    useDeleteCollectionMutation,
 } = collectionApiSlice

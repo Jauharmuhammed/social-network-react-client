@@ -5,6 +5,8 @@ export const collectionModalSlice = createSlice({
     initialState: {
         collectionModal: false,
         createCollectionModal: false,
+        editCollectionModal: false,
+        deleteCollectionModal: false,
         collaboratorModal: false,
     },
     reducers: {
@@ -27,6 +29,24 @@ export const collectionModalSlice = createSlice({
         closeCreateCollectionModal: (state) => {
             state.createCollectionModal = false;
         },
+        openEditCollectionModal: (state) => {
+            if (state.editCollectionModal) {
+                state.editCollectionModal = false;
+            }
+            state.editCollectionModal = true;
+        },
+        closeEditCollectionModal: (state) => {
+            state.editCollectionModal = false;
+        },
+        openDeleteCollectionModal: (state) => {
+            if (state.deleteCollectionModal) {
+                state.deleteCollectionModal = false;
+            }
+            state.deleteCollectionModal = true;
+        },
+        closeDeleteCollectionModal: (state) => {
+            state.deleteCollectionModal = false;
+        },
         openCollaboratorModal: (state) => {
             if (state.collaboratorModal) {
                 state.collaboratorModal = false;
@@ -44,6 +64,10 @@ export const {
     closeCollectionModal,
     openCreateCollectionModal,
     closeCreateCollectionModal,
+    openEditCollectionModal,
+    closeEditCollectionModal,
+    openDeleteCollectionModal,
+    closeDeleteCollectionModal,
     openCollaboratorModal,
     closeCollaboratorModal,
 } = collectionModalSlice.actions;

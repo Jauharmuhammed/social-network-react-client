@@ -4,18 +4,18 @@ import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useDispatch, useSelector } from "react-redux";
-import { closeCreateCollectionModal, openCollectionModal } from "../services/collectionModalSlice";
+import { closeEditCollectionModal, openCollectionModal, openDeleteCollectionModal } from "../services/collectionModalSlice";
 import axios from "../../../lib/axios";
 import errorToast from "utils/toasts/errorToast";
 import { updateCurrentUserCollections } from "../services/collectionSlice";
+import Spinner from "components/Spinner";
 import ButtonSpinner from "components/ButtonSpinner";
 
-const CreateCollectionModal = () => {
+const EditCollectionModal = ({collection}) => {
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.token);
-    const postToSave = useSelector((state) => state.collection.selectedPostToSave);
-    const createCollectionModalOverlay = useSelector(
-        (state) => state.collectionModal.createCollectionModal
+    const editCollectionModalOverlay = useSelector(
+        (state) => state.collectionModal.editCollectionModal
     );
     const [privateEnabled, setPrivateEnabled] = useState(false);
     const [image, setImage] = useState(null);
@@ -25,21 +25,19 @@ const CreateCollectionModal = () => {
     const [initialLoading, setInitialLoading] = useState(false);
 
     function handleSubmit() {
-        if (name.current.value === "") {
-            errorToast("Please enter a name for collection");
-            return;
+        if (name.current.value === '') {
+            errorToast('Name field cannot be empty!')
         }
         setisLoading(true);
         const formData = new FormData();
 
         formData.append("user", user.user_id);
-        formData.append("cover", image);
-        formData.append("cover_url", postToSave?.image);
-        formData.append("name", name.current.value);
-        formData.append("private", privateEnabled ? "True" : "False");
+        image && formData.append("cover", image);
+        collection?.name !== name.current.value && formData.append("name", name.current.value);
+        Boolean(collection?.private) !== Boolean(privateEnabled) && formData.append("private", privateEnabled ? 'True' : 'False');
 
         axios
-            .post("/collection/create/", formData, {
+            .put(`/collection/edit/${collection?.slug}/`, formData, {
                 headers: {
                     Authorization: `Bearer ${token?.access}`,
                 },
@@ -48,8 +46,7 @@ const CreateCollectionModal = () => {
                 console.log(res);
                 dispatch(updateCurrentUserCollections(res.data));
 
-                dispatch(closeCreateCollectionModal());
-                dispatch(openCollectionModal());
+                dispatch(closeEditCollectionModal());
                 setisLoading(false);
             })
             .catch((err) => {
@@ -61,32 +58,37 @@ const CreateCollectionModal = () => {
             });
     }
 
+    function openDelete() {
+        dispatch(openDeleteCollectionModal())
+        dispatch(closeEditCollectionModal())
+    }
+
     function handleImage(image) {
         setImage(image);
     }
     const dispatch = useDispatch();
 
-    function handleCancel() {
-        dispatch(closeCreateCollectionModal());
-        dispatch(openCollectionModal());
-    }
-
     useEffect(() => {
-        if (postToSave?.image) {
+        if (collection?.cover) {
             setInitialLoading(true);
         }
-    }, [postToSave?.image]);
+    }, [collection?.cover]);
 
     useEffect(() => {
-        name.current.focus()
-    }, []);
+      name.current.focus()
+
+      if (collection?.private) {
+        setPrivateEnabled(true)
+      }
+    }, [collection])
+    
 
     return (
         <Modal
-            id="createCollectionModal"
-            active={createCollectionModalOverlay}
-            closeActive={() => dispatch(closeCreateCollectionModal())}>
-            <h3 className="text-center my-3">Create Collections</h3>
+            id="editCollectionModal"
+            active={editCollectionModalOverlay}
+            closeActive={() => dispatch(closeEditCollectionModal())}>
+            <h3 className="text-center my-3">Edit Collection</h3>
             <div className=" py-5 px-3 flex flex-col gap-5 ">
                 <input
                     className="w-full bg-transparent border rounded-3xl py-2 px-3 outline-none"
@@ -95,6 +97,7 @@ const CreateCollectionModal = () => {
                     name="name"
                     id="name"
                     ref={name}
+                    defaultValue={collection?.name}
                 />
                 {image || initialLoading ? (
                     <div className="w-1/2 md:w-2/5 relative rounded-3xl aspect-square overflow-hidden">
@@ -104,7 +107,7 @@ const CreateCollectionModal = () => {
                                     ? URL.createObjectURL(image)
                                     : image
                                     ? URL.createObjectURL(image)
-                                    : postToSave?.image
+                                    : collection?.cover
                             }
                             alt="uploaded"
                             className=" object-cover w-full h-full"
@@ -145,7 +148,7 @@ const CreateCollectionModal = () => {
                         </FileUploader>
                     </div>
                 )}
-                <label className="inline-flex relative items-center mr-5 cursor-pointer">
+                <label className="inline-flex relative items-center mr-5 cursor-pointer mb-2">
                     <input
                         type="checkbox"
                         className="sr-only peer"
@@ -159,11 +162,11 @@ const CreateCollectionModal = () => {
                         className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                     <span className="ml-2 text-sm font-medium">Pivate Collection</span>
                 </label>
-                <div className="flex gap-3 self-end">
-                    <Button onClick={handleCancel} text="Cancel" />
+                <div className="flex justify-between">
+                    <Button onClick={openDelete} text="Delete" />
                     <Button
                         onClick={handleSubmit}
-                        text={isLoading ? <ButtonSpinner/> : "Create"}
+                        text={ isLoading ? <ButtonSpinner/> :"Save"}
                         primary
                         className="bg-custom-yellow text-black"
                     />
@@ -173,4 +176,4 @@ const CreateCollectionModal = () => {
     );
 };
 
-export default CreateCollectionModal;
+export default EditCollectionModal;

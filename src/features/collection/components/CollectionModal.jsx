@@ -23,7 +23,7 @@ const CollectionModal = () => {
             closeActive={() => dispatch(closeCollectionModal())}>
             <h3 className="text-center my-3">Save to Collections</h3>
             <div className="pl-2 pr-1 my-3 max-h-[27.5rem]">
-                <ul className="max-h-[24rem] overflow-y-auto pr-2">
+                <ul className="customScrollbar max-h-[24rem] overflow-y-auto pr-2">
                     {collections?.map((collection) => (
                         <li
                             key={collection.slug}
