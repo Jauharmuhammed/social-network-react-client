@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from 'features/auth/services/authSlice'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://127.0.0.1:8000',
+    baseUrl: 'https://showyourwork.up.railway.app',
     // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token

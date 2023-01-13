@@ -49,9 +49,9 @@ const UserDetails = ({username}) => {
                     alt={`${user?.username} profile`}
                 />
                 <div className="flex flex-col justify-center items-center sm:items-start">
-                    <h1 className="text-3xl md:text-5xl font-bold ">{user?.full_name}</h1>
-                    <p className="text-gray-400 pl-1">@{user?.username}</p>
-                    <div className="font-600 pl-1">
+                    <h1 className="text-3xl md:text-5xl font-bold mb-2">{user?.full_name}</h1>
+                    <p className="text-gray-400">@{user?.username}</p>
+                    <div className="font-600">
                         <span>{user?.followers_count} followers</span>
                         <strong>&nbsp;&#183;&nbsp;</strong>
                         <span>{user?.followings_count} following</span>
