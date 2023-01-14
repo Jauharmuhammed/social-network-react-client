@@ -22,7 +22,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
 
     async function handleSave() {
         try {
-            const slug = collectionToSave.slug ? collectionToSave?.slug : currentCollection?.slug;
+            const slug = collectionToSave?.slug ? collectionToSave?.slug : currentCollection?.slug;
             console.log(post?.id);
             console.log(slug);
             if (saved) {
@@ -46,7 +46,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
                     dispatch(updateCurrentUserCollections(response.data));
                     customToast({
                         imageUrl: post?.image,
-                        text: `Saved to ${currentCollection.name}`,
+                        text: `Saved to ${currentCollection?.name}`,
                     });
                 }
             }

@@ -6,11 +6,12 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setUserDetails} from "../services/userSlice";
 
-const UserDetails = ({username}) => {
+const UserDetails = ({username, edit, setEdit}) => {
     const user = useSelector((state) => state.user.details);
     const [getUserDetails, {isLoading}] = useGetUserDetailsMutation();
     const [followUser , {isFetching}] = useFollowUserMutation();
     const dispatch = useDispatch();
+
 
     async function fetchData() {
         try {
@@ -58,7 +59,7 @@ const UserDetails = ({username}) => {
                     </div>
                     {user?.is_current_user ? (
                         <div className="py-2 flex gap-5">
-                            <Button text={"Edit Profile"} />
+                            <Button text={"Edit Profile"} onClick={()=> setEdit(true)}/>
                         </div>
                     ) : (
                         <div className="py-2 flex gap-5">
