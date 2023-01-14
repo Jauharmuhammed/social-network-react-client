@@ -13,7 +13,7 @@ const Notification = () => {
 
     const token = useSelector((state) => state.auth.token);
 
-    const { readyState, sendJsonMessage } = useWebSocket(token ? `ws://127.0.0.1:8000/notifications/` : null, {
+    const { readyState, sendJsonMessage } = useWebSocket(token ? `ws://showyourwork.jauharmuhammed.com/notifications/` : null, {
         queryParams: {
             token: token ? token?.access : "",
         },
