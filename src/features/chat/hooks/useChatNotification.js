@@ -6,7 +6,7 @@ const useChatNotification = () => {
     const [unreadMessageCount, setUnreadMessageCount] = useState(0);
     const token = useSelector(state => state.auth.token)
     
-    const { readyState } = useWebSocket(token ? `//showyourwork.jauharmuhammed.com/notifications/chat/` : null, {
+    const { readyState } = useWebSocket(token ? `wss://showyourwork.jauharmuhammed.com/notifications/chat/` : null, {
         queryParams: {
             token: token ? token?.access : "",
         },
