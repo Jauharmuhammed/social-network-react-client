@@ -34,7 +34,7 @@ export default function App() {
     }
 
     const { readyState, sendJsonMessage } = useWebSocket(
-        user ? `ws://showyourworkapi.jauharmuhammed.com/chats/${conversationName}/` : null,
+        user ? `wss://showyourworkapi.jauharmuhammed.com/chats/${conversationName}/` : null,
         {
             queryParams: {
                 token: token ? token?.access : "",
