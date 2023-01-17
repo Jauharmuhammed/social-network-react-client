@@ -22,7 +22,7 @@ const Profile = () => {
         <>
             <UserDetails username={username} edit={edit} setEdit={setEdit}/>
             {!edit &&<>
-              <div className="flex gap-5 ml-3 py-8">
+              <div className="flex justify-center md:justify-start gap-5 md:ml-3 py-4 md:py-8">
                 <Button onClick={handlePills } white className={`${showCreated && 'bg-white text-darkgray'}`} text='Created' />
                 <Button onClick={handlePills } white className={`${showSaved && 'bg-white text-darkgray'}`} text='Saved' />
               </div>

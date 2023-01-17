@@ -18,6 +18,7 @@ export const Layout = ({
     className,
 }) => {
     const user = useSelector((state) => state.auth.user);
+    const conversationName = useSelector((state) => state.chat.currentConversation);
 
     return (
         <main className="min-h-screen bg-darkgray md:px-6 text-white">
@@ -28,13 +29,13 @@ export const Layout = ({
                     setSignupOverlay={setSignupOverlay}
                 />
             )}
-            <div className={classNames(className, "lg:px-10 xl:px-24")}>
+            <div className={classNames(className, "lg:px-10 xl:px-24 pb-24 lg:pb-0")}>
                 {children}
                 <Outlet/>
             </div>
 
             <Modal></Modal>
-            <Nav landing={landing} />
+            {!conversationName &&<Nav landing={landing} />}
             {user && <ChatLayout />}
             {user && <Notification />}
         </main>

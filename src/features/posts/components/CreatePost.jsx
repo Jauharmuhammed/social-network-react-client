@@ -157,6 +157,7 @@ const CreatePost = () => {
                     <TagInput tags={tags} setTags={setTags} />
                 ) : (
                     <Button
+                    white
                         onClick={() => setAddTags(true)}
                         text="Add Tags"
                         className="place-self-start"

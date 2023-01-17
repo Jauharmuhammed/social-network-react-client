@@ -18,7 +18,7 @@ const Collections = ({ username }) => {
             ))}
         </div>
     ) : (
-        <h2 className="text-3xl text-center my-10">No collections to show! </h2>
+        <h2 className=" text-xl md:text-3xl text-center my-10">No collections to show! </h2>
     );
 };
 

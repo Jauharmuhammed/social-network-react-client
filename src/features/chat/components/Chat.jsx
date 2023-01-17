@@ -182,7 +182,7 @@ export default function App() {
 
     return (
         <>
-            <div className="h-full flex flex-col justify-between gap-2">
+            <div className="h-full flex flex-col justify-between gap-2 ">
                 {conversation && (
                     <div className="flex gap-2 items-center">
                         <span

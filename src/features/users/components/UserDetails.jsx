@@ -43,9 +43,9 @@ const UserDetails = ({username, edit, setEdit}) => {
 
     return (
         user && (
-            <div className="w-100 flex flex-col sm:flex-row justify-start items-center px-3  py-10 gap-3 sm:gap-10  text-gray-100 ">
+            <div className="w-100 flex flex-col sm:flex-row justify-start items-center px-3 py-5 md:py-10 gap-3 sm:gap-10  text-gray-100 ">
                 <img
-                    className="w-36 sm:w-56 aspect-square max-h-56 rounded-full object-cover"
+                    className="w-28 sm:w-56 aspect-square max-h-56 rounded-full object-cover"
                     src={user?.profile_pic}
                     alt={`${user?.username} profile`}
                 />

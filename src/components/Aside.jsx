@@ -6,7 +6,7 @@ const Aside = ({ children, active, closeActive, reference, ...others }) => {
 
     return (
   
-            <div ref={reference} {...others} className={classNames( active ? 'fixed' : 'hidden', "right-5 bottom-3 h-[85vh] min-h-[500] rounded-3xl p-4 bg-stone-900 text-white w-96 z-50")}>
+            <div ref={reference} {...others} className={classNames( active ? 'fixed' : 'hidden', "top-0 sm:right-5 sm:bottom-3 h-[85vh] min-h-screen sm:min-h-[500] sm:rounded-3xl p-4 bg-stone-900 text-white w-full sm:w-96 z-50")}>
                 <CloseButton onClick={closeActive} />
                 {children}
             </div>
