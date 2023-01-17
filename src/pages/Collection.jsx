@@ -1,5 +1,4 @@
 import { usePostsByCollectionMutation } from "app/api/usersApiSlice";
-import { Layout } from "components/Layout";
 import { EditCollectionModal } from "features/collection";
 import CollaboratorModal from "features/collection/components/CollaboratorModal";
 import DeleteCollectionModal from "features/collection/components/DeleteCollectionModal";
@@ -49,7 +48,6 @@ const Collection = () => {
 
     return (
         <>
-            <Layout>
                 <CollaboratorModal />
                 <div className="w-full my-16 flex flex-col items-center gap-6">
                     <div className="flex items-center gap-4 justify-center">
@@ -114,7 +112,6 @@ const Collection = () => {
                         </Link>
                     </div>
                 )}
-            </Layout>
             <EditCollectionModal collection={collectionDetails}/>
             <DeleteCollectionModal collection={collectionDetails}/>
         </>

@@ -5,6 +5,7 @@ import { closeNotificationModal } from "../services/notificationModalSlice";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { increaseUnreadNotificationCount, setUnreadNotificationCount, updateNotifications,  } from "../services/notifiicationSlice";
 import NotificationList from "./NotificationList";
+import { wsBaseUrl } from "lib/constants";
 
 const Notification = () => {
     const notificationModal = useSelector((state) => state.notificationModal.notificationModal);
@@ -13,7 +14,7 @@ const Notification = () => {
 
     const token = useSelector((state) => state.auth.token);
 
-    const { readyState, sendJsonMessage } = useWebSocket(token ? `wss://showyourworkapi.jauharmuhammed.com/ws/notifications/` : null, {
+    const { readyState, sendJsonMessage } = useWebSocket(token ? `${wsBaseUrl}/ws/notifications/` : null, {
         queryParams: {
             token: token ? token?.access : "",
         },

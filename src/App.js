@@ -29,6 +29,7 @@ import {
 import { CreateCollectionModal } from "features/collection";
 import { updateUnreadMessageCount } from "features/chat/services/chatNotificationSlice";
 import useChatNotification from "features/chat/hooks/useChatNotification";
+import { Layout } from "components/Layout";
 
 function App() {
     const token = useSelector((state) => state.auth.token);
@@ -101,23 +102,21 @@ function App() {
                 </Route>
 
                 <Route path="/" element={<PrivateRoute />}>
-                    <Route path="auth">
-                        <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
-                        <Route
-                            path="forgot/password/:uid/:token"
-                            element={<VerifyPasswordChange />}
-                        />
-                    </Route>
-
-                    <Route path="create" element={<CreatePostPage />} />
-
-                    <Route path="post/:id" element={<PostPage />} />
-
-                    <Route path="tag/:tag" element={<Feed />} />
-
-                    <Route path=":username">
-                        <Route index element={<Profile />} />
-                        <Route path=":collection" element={<Collection />} />
+                    <Route element={<Layout/>}>
+                        <Route path="auth">
+                            <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
+                            <Route
+                                path="forgot/password/:uid/:token"
+                                element={<VerifyPasswordChange />}
+                            />
+                        </Route>
+                        <Route path="create" element={<CreatePostPage />} />
+                        <Route path="post/:id" element={<PostPage />} />
+                        <Route path="tag/:tag" element={<Feed />} />
+                        <Route path=":username">
+                            <Route index element={<Profile />} />
+                            <Route path=":collection" element={<Collection />} />
+                        </Route>
                     </Route>
                 </Route>
                 <Route path="notfound" element={<Error404 />} />

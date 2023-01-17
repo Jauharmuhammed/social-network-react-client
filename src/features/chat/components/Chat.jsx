@@ -7,6 +7,7 @@ import ChatLoader from "./ChatLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetConversationMutation, useGetMessagesMutation } from "app/api/chatApiSlice";
 import { setCurrentConversation } from "../services/chatSlice";
+import { wsBaseUrl } from "lib/constants";
 
 export default function App() {
     const conversationName = useSelector((state) => state.chat.currentConversation);
@@ -34,7 +35,7 @@ export default function App() {
     }
 
     const { readyState, sendJsonMessage } = useWebSocket(
-        user ? `wss://showyourworkapi.jauharmuhammed.com/ws/chats/${conversationName}/` : null,
+        user ? `${wsBaseUrl}/ws/chats/${conversationName}/` : null,
         {
             queryParams: {
                 token: token ? token?.access : "",

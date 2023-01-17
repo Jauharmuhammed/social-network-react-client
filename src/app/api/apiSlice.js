@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from 'features/auth/services/authSlice'
+import { baseUrl } from 'lib/constants'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://showyourworkapi.jauharmuhammed.com',
+    baseUrl: baseUrl,
     // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token

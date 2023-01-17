@@ -84,6 +84,7 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
             ) : (
                 <Button
                     onClick={handleSave}
+                    white
                     text="Remove"
                     className=" px-2 py-1 text-darkgray bg-white hover:bg-opacity-90 hover:bg-white"
                     {...others}

@@ -1,5 +1,4 @@
 import Button from "components/Button";
-import { Layout } from "components/Layout";
 import Collections from "features/users/components/Collections";
 import CreatedPosts from "features/users/components/CreatedPosts";
 import EditProfile from "features/users/components/EditProfile";
@@ -20,18 +19,18 @@ const Profile = () => {
     }
 
     return (
-        <Layout>
+        <>
             <UserDetails username={username} edit={edit} setEdit={setEdit}/>
             {!edit &&<>
               <div className="flex gap-5 ml-3 py-8">
-                <Button onClick={handlePills } className={`${showCreated && 'bg-white text-darkgray'}`} text='Created' />
-                <Button onClick={handlePills } className={`${showSaved && 'bg-white text-darkgray'}`} text='Saved' />
+                <Button onClick={handlePills } white className={`${showCreated && 'bg-white text-darkgray'}`} text='Created' />
+                <Button onClick={handlePills } white className={`${showSaved && 'bg-white text-darkgray'}`} text='Saved' />
               </div>
               {showCreated && <CreatedPosts username={username} />}
               {showSaved && <Collections username={username} />}
             </>}
             {edit && <EditProfile/>}
-        </Layout>
+        </>
     );
 };
 

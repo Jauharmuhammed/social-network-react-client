@@ -1,7 +1,6 @@
 import React from "react";
 // import Post from "components/Post";
 import { useSelector } from "react-redux";
-import { Layout } from "../components/Layout";
 import { useEffect } from "react";
 import {
     useGetAllPostMutation,
@@ -59,17 +58,14 @@ const Feed = () => {
         }
     }, [tagsList]);
 
-
     return (
         <>
             {(isLoading || isTagLoading) && <BackdropSpinner />}
             {user && (
-                <Layout>
-                    <section className="py-10">
-                        <div className="mb-5">{tags && <Tags tags={tags} />}</div>
-                        <Posts posts={posts} />
-                    </section>
-                </Layout>
+                <section className="py-10 px-1 sm:px-12 md:px-14 xl:px-0">
+                    <div className="mb-5">{tags && <Tags tags={tags} />}</div>
+                    <Posts posts={posts} />
+                </section>
             )}
         </>
     );

@@ -1,13 +1,8 @@
-import { Layout } from 'components/Layout'
-import { CreatePost } from 'features/posts'
-import React from 'react'
+import { CreatePost } from "features/posts";
+import React from "react";
 
 const CreatePostPage = () => {
-  return (
-    <Layout >
-        <CreatePost/>
-    </Layout>
-  )
-}
+    return <CreatePost />;
+};
 
-export default CreatePostPage
+export default CreatePostPage;

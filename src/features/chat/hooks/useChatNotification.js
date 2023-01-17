@@ -1,3 +1,4 @@
+import { wsBaseUrl } from "lib/constants";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import useWebSocket, { ReadyState } from "react-use-websocket";
@@ -6,7 +7,7 @@ const useChatNotification = () => {
     const [unreadMessageCount, setUnreadMessageCount] = useState(0);
     const token = useSelector(state => state.auth.token)
     
-    const { readyState } = useWebSocket(token ? `wss://showyourworkapi.jauharmuhammed.com/ws/notifications/chat/` : null, {
+    const { readyState } = useWebSocket(token ? `${wsBaseUrl}/ws/notifications/chat/` : null, {
         queryParams: {
             token: token ? token?.access : "",
         },

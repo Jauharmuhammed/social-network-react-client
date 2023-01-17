@@ -59,7 +59,7 @@ const UserDetails = ({username, edit, setEdit}) => {
                     </div>
                     {user?.is_current_user ? (
                         <div className="py-2 flex gap-5">
-                            <Button text={"Edit Profile"} onClick={()=> setEdit(true)}/>
+                            <Button white text={"Edit Profile"} onClick={()=> setEdit(true)}/>
                         </div>
                     ) : (
                         <div className="py-2 flex gap-5">
