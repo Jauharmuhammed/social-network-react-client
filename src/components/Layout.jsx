@@ -18,6 +18,7 @@ export const Layout = ({
     className,
 }) => {
     const user = useSelector((state) => state.auth.user);
+    const chatModal = useSelector((state) => state.chatModal.chatModal);
     const conversationName = useSelector((state) => state.chat.currentConversation);
 
     return (
@@ -35,7 +36,7 @@ export const Layout = ({
             </div>
 
             <Modal></Modal>
-            {!conversationName &&<Nav landing={landing} />}
+            {!(chatModal && conversationName) &&<Nav landing={landing} />}
             {user && <ChatLayout />}
             {user && <Notification />}
         </main>

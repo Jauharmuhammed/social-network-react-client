@@ -62,7 +62,7 @@ const UserDetails = ({username, edit, setEdit}) => {
                             <Button white text={"Edit Profile"} onClick={()=> setEdit(true)}/>
                         </div>
                     ) : (
-                        <div className="py-2 flex gap-5">
+                        <div className="py-2 flex gap-2 md:gap-5">
                             {user.is_following ? (
                                 <Button primary text={"Following"} onClick={handleFollow} />
                             ) : (

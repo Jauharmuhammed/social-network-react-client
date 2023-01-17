@@ -50,9 +50,9 @@ const Collection = () => {
         <>
                 <CollaboratorModal />
                 <div className="w-full my-16 flex flex-col items-center gap-6">
-                    <div className="flex items-center gap-4 justify-center">
-                        <h1 className="text-5xl ml-6">{collectionDetails?.name}</h1>
-                        <span className="cursor-pointer" onClick={() => dispatch(openEditCollectionModal())}>
+                    <div className="flex items-center gap-4 justify-center ml-6">
+                        <h1 className="text-2xl md:text-5xl ">{collectionDetails?.name}</h1>
+                        {collectionDetails?.user === user?.user_id && <span className="cursor-pointer" onClick={() => dispatch(openEditCollectionModal())}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1.5em"
@@ -64,7 +64,7 @@ const Collection = () => {
                                     d="m19.3 8.925l-4.25-4.2l1.4-1.4q.575-.575 1.413-.575q.837 0 1.412.575l1.4 1.4q.575.575.6 1.388q.025.812-.55 1.387ZM4 21q-.425 0-.712-.288Q3 20.425 3 20v-2.825q0-.2.075-.387q.075-.188.225-.338l10.3-10.3l4.25 4.25l-10.3 10.3q-.15.15-.337.225q-.188.075-.388.075Z"
                                 />
                             </svg>
-                        </span>
+                        </span>}
                     </div>
                     <div
                         onClick={() => dispatch(openCollaboratorModal())}
