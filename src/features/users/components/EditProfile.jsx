@@ -163,7 +163,7 @@ const EditProfile = () => {
                                 className="bg-transparent outline-none border rounded-full py-2 px-4"
                             />
                             <p className="text-xs text-gray-500">
-                                {baseUrl}/{newUsername}
+                                {window.location.origin}/{newUsername}
                             </p>
                         </div>
                         <div className="flex flex-col gap-1 w-full mt-3">
