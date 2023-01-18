@@ -29,12 +29,14 @@ const CreatedPosts = ({ username }) => {
     return posts.length > 0 ? (
         <Posts posts={posts} />
     ) : (
-        !isLoading && <div className="flex flex-col items-center justify-center gap-2">
-            <h2 className="text-3xl  mt-32">No posts yet! </h2>
-            <Link to="/create" className="text-custom-yellow">
-                Add first post
-            </Link>
-        </div>
+        !isLoading && (
+            <div className="flex flex-col items-center justify-center gap-2">
+                <h2 className="text-3xl  mt-32">No posts yet! </h2>
+                <Link to="/create" className="text-custom-yellow">
+                    Add first post
+                </Link>
+            </div>
+        )
     );
 };
 

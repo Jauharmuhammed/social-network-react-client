@@ -30,7 +30,7 @@ export const Layout = ({
                     setSignupOverlay={setSignupOverlay}
                 />
             )}
-            <div className={classNames(className, "lg:px-10 xl:px-24 pb-24 lg:pb-0")}>
+            <div className={classNames(className, "lg:px-10 xl:px-24 pb-24 ")}>
                 {children}
                 <Outlet/>
             </div>

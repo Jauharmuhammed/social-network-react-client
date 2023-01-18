@@ -48,7 +48,6 @@ const PostPreview = ({ postId }) => {
             dispatch(setPost(response));
         } catch (err) {
             console.log(err);
-            navigate("/notfound");
         }
     }
 

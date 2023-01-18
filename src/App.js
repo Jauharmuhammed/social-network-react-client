@@ -11,6 +11,7 @@ import {
     PostPage,
     Feed,
     Collection,
+    Settings,
 } from "pages/index";
 import PrivateRoute from "utils/PrivateRoute";
 import { Toaster } from "react-hot-toast";
@@ -113,13 +114,14 @@ function App() {
                         <Route path="create" element={<CreatePostPage />} />
                         <Route path="post/:id" element={<PostPage />} />
                         <Route path="tag/:tag" element={<Feed />} />
+
+                        <Route path='settings' element={<Settings/>} />
                         <Route path=":username">
                             <Route index element={<Profile />} />
                             <Route path=":collection" element={<Collection />} />
                         </Route>
                     </Route>
                 </Route>
-                <Route path="notfound" element={<Error404 />} />
 
                 {/* Catch all - replace with 404 component */}
                 <Route path="*" element={<Error404 />} replace />

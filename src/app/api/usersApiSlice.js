@@ -9,6 +9,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        updateUserDetails: builder.mutation({
+            query: ({credentials}) => ({
+                url: `/api/profile/update/`,
+                method: 'POST',
+                body: {...credentials}
+            })
+        }),
         followUser: builder.mutation({
             query: ({username, ...credentials}) => ({
                 url: `/api/${username}/follow/`,
@@ -43,4 +50,5 @@ export const {
     usePostsByUserMutation,
     useCollectionsByUserQuery,
     usePostsByCollectionMutation,
+    useUpdateUserDetailsMutation,
 } = usersApiSlice

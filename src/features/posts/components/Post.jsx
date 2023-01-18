@@ -11,7 +11,8 @@ const Post = ({ post }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     function handleClick(e) {
-        if (e.target.id === "singlePostContainer") {
+        console.log()
+        if (e.target.id === "singlePostContainer" || window.screen.width < 640) {
             navigate(`/post/${post.id}`);
         }
     }
@@ -35,7 +36,7 @@ const Post = ({ post }) => {
                 {hover && (
                     <div
                         id="singlePostContainer"
-                        className="absolute flex flex-col justify-between z-10 inset-0 p-2 text-white bg-black bg-opacity-50 transition-all duration-300">
+                        className="absolute hidden sm:flex flex-col justify-between z-10 inset-0 p-2 text-white bg-black bg-opacity-50 transition-all duration-300">
                         <div id="savePost" className="flex justify-between items-center max-w-full">
                             <div
                                 onClick={handleCollection}
