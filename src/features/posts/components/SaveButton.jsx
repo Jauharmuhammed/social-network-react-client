@@ -27,11 +27,11 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
     async function handleSave() {
 
         // if there is no collections for the user prompt to create a new collection
-        // if (currentUserCollections?.length === 0) {
-        //     dispatch(openCollectionModal())
-        //     dispatch(setSelectedPostToSave(post))
-        //     return;
-        // }
+        if (currentUserCollections?.length === 0) {
+            dispatch(openCollectionModal())
+            dispatch(setSelectedPostToSave(post))
+            return;
+        }
         try {
             const slug = collectionToSave?.slug ? collectionToSave?.slug : currentCollection?.slug;
             console.log(post?.id);
