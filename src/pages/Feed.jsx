@@ -63,7 +63,7 @@ const Feed = () => {
             {(isLoading || isTagLoading) && <BackdropSpinner />}
             {user && (
                 <section className="sm:py-6 px-1 sm:px-12 md:px-14 xl:px-0">
-                    <div className="mb-5">{tags && <Tags tags={tags} />}</div>
+                    <div className="mb-5 px-2">{tags && <Tags tags={tags} />}</div>
                     <Posts posts={posts} />
                 </section>
             )}
