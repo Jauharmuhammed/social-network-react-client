@@ -3,13 +3,16 @@ import {
     useSaveToCollectionsMutation,
 } from "app/api/collectionApiSlice";
 import Button from "components/Button";
+import { openCollectionModal } from "features/collection/services/collectionModalSlice";
 import {
     setCurrentCollection,
+    setSelectedPostToSave,
     updateCurrentUserCollections,
 } from "features/collection/services/collectionSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import customToast from "utils/toasts/customToast";
+import errorToast from "utils/toasts/errorToast";
 
 const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
     const currentCollection = useSelector((state) => state.collection.currentCollection);
@@ -21,10 +24,16 @@ const SaveButton = ({ post, collectionToSave = {}, ...others }) => {
     const dispatch = useDispatch();
 
     async function handleSave() {
+
+        // if there is no collections for the user prompt to create a new collection
+        if (!Boolean(collectionToSave?.slug)) {
+            dispatch(openCollectionModal())
+            dispatch(setSelectedPostToSave(post))
+            return;
+        }
         try {
             const slug = collectionToSave?.slug ? collectionToSave?.slug : currentCollection?.slug;
             console.log(post?.id);
-            console.log(slug);
             if (saved) {
                 // if already saved remove from collection
                 const response = await removeFromCollection({
