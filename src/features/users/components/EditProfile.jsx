@@ -121,8 +121,8 @@ const EditProfile = () => {
                             onChange={(e) => setImage(e.target.files[0])}
                         />
                     </div>
-                    <div className="flex flex-col justify-center items-center sm:items-start w-max">
-                        <div className="flex gap-3">
+                    <div className="flex flex-col justify-center items-center sm:items-start w-full px-5 md:w-max">
+                        <div className="flex gap-3 flex-col md:flex-row w-full">
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="first_name " className="text-gray-500">
                                     First Name
@@ -179,17 +179,19 @@ const EditProfile = () => {
                                 onChange={(e) => setBio(e.target.value)}
                                 rows="10"></textarea>
                         </div>
-                        <label htmlFor="mobile " className="text-gray-500  mt-3">
-                            Mobile
-                        </label>
-                        <input
-                            value={mobile}
-                            onChange={handleMobileNumberChange}
-                            placeholder="Mobile Number"
-                            id="mobile"
-                            type="text"
-                            className="bg-transparent outline-none border rounded-full py-2 px-4 w-full"
-                        />
+                        <div className="flex flex-col gap-1 w-full mt-3">
+                            <label htmlFor="mobile " className="text-gray-500  mt-3">
+                                Mobile
+                            </label>
+                            <input
+                                value={mobile}
+                                onChange={handleMobileNumberChange}
+                                placeholder="Mobile Number"
+                                id="mobile"
+                                type="text"
+                                className="bg-transparent outline-none border rounded-full py-2 px-4 w-full"
+                            />
+                        </div>
                         <div className="flex justify-end w-full">
                             <Button onClick={handleUpdateUser} text="save" className="mt-5 " />
                         </div>
