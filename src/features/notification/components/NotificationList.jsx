@@ -39,7 +39,7 @@ const NotificationList = ({ connectionStatus, sendJsonMessage }) => {
     return (
         <div className="flex flex-col mt-4 overflow-auto h-[93%] pr-2 customScrollbar">
             {notification_list.length > 0 ? notification_list?.map((notification) => (
-                <div key={notification.id} className="flex justify-between px-1.5 py-2 hover:bg-stone-800 rounded-lg">
+                <div key={notification.id} className="flex justify-between px-1.5 py-2 sm:hover:bg-stone-800 rounded-lg">
                     <div className="flex max-w-[82%]">
                         <Link to={`/${notification.created_by_profile.username}`}>
                             <img
