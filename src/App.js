@@ -102,20 +102,18 @@ function App() {
                     <Route path="user-management" element={<UserManagement />} />
                 </Route>
 
+                <Route path="/auth">
+                    <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
+                    <Route path="forgot/password/:uid/:token" element={<VerifyPasswordChange />} />
+                </Route>
+
                 <Route path="/" element={<PrivateRoute />}>
-                    <Route element={<Layout/>}>
-                        <Route path="auth">
-                            <Route path="email/verify/:uid/:token" element={<VerifyMail />} />
-                            <Route
-                                path="forgot/password/:uid/:token"
-                                element={<VerifyPasswordChange />}
-                            />
-                        </Route>
+                    <Route element={<Layout />}>
                         <Route path="create" element={<CreatePostPage />} />
                         <Route path="post/:id" element={<PostPage />} />
                         <Route path="tag/:tag" element={<Feed />} />
 
-                        <Route path='settings' element={<Settings/>} />
+                        <Route path="settings" element={<Settings />} />
                         <Route path=":username">
                             <Route index element={<Profile />} />
                             <Route path=":collection" element={<Collection />} />
