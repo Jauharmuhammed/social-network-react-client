@@ -4,5 +4,5 @@
 
 
 // production
-export const baseUrl = 'https://showyourworkapi.jauharmuhammed.com'
-export const wsBaseUrl = 'wss://showyourworkapi.jauharmuhammed.com'
+export const baseUrl = 'https://showyourwork.api.jauharmuhammed.com'
+export const wsBaseUrl = 'wss://showyourwork.api.jauharmuhammed.com'
